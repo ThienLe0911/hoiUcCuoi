@@ -7,6 +7,7 @@ import type { Session } from "../core/session";
 import { Dialog } from "../ui/Dialog";
 
 const SPEED = 60; // px/giây
+const FADE_MS = 250; // ≤ 0,5 s (FR3.3)
 const BODY_W = 10;
 const BODY_H = 6;
 const SPRITE_W = 16;
@@ -56,6 +57,9 @@ export class AreaScene extends Phaser.Scene {
   private interactPoints: InteractPoint[] = [];
   private exits: ExitZone[] = [];
   private detachKeyboard?: () => void;
+  private transitioning = false;
+  /** Lối ra vừa bị báo khóa: chỉ báo lại sau khi người chơi rời khỏi vùng đó. */
+  private blockedExit?: string;
 
   constructor() {
     super("Area");
@@ -119,6 +123,8 @@ export class AreaScene extends Phaser.Scene {
     body.setOffset((SPRITE_W - BODY_W) / 2, SPRITE_H - BODY_H);
     this.physics.world.setBounds(0, 0, mapW, mapH);
     this.player.setCollideWorldBounds(true);
+    this.transitioning = false;
+    this.blockedExit = undefined;
     this.physics.add.collider(this.player, collision);
     this.facing = "down";
 
@@ -139,10 +145,53 @@ export class AreaScene extends Phaser.Scene {
       .setDepth(19999)
       .setVisible(false);
 
+    // vào cảnh: mờ dần vào + hiện tên khu vực
+    cam.fadeIn(FADE_MS, 0, 0, 0);
+    this.showAreaName(area.name);
+
     // đầu vào
     actions.reset();
     this.detachKeyboard = attachKeyboard(actions);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.detachKeyboard?.());
+  }
+
+  /** Đi qua một lối ra: khu vực khóa thì báo "Bị khóa", ngược lại chuyển cảnh. */
+  private useExit(zone: ExitZone): void {
+    const { state, content } = this.session;
+    const from = content.areas.get(state.areaId)!;
+    const exit = from.exits.find((e) => e.id === zone.id);
+    if (!exit) return;
+    if (state.areaLocks[exit.toArea]) {
+      this.blockedExit = zone.id;
+      const back: Record<Direction, [number, number]> = { up: [0, 10], down: [0, -10], left: [10, 0], right: [-10, 0] };
+      const [dx, dy] = back[this.facing];
+      this.player.setPosition(this.player.x + dx, this.player.y + dy);
+      this.dialog.show(["Bị khóa."]);
+      return;
+    }
+    this.transitioning = true;
+    const cam = this.cameras.main;
+    cam.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.restart({ areaId: exit.toArea, spawn: exit.toSpawn } satisfies AreaSceneData));
+    cam.fadeOut(FADE_MS, 0, 0, 0);
+  }
+
+  /** Hiện tên khu vực ở giữa phía trên vài giây rồi mờ đi. */
+  private showAreaName(name: string): void {
+    const label = this.add
+      .text(GAME_WIDTH / 2, 10, name, { fontFamily: FONT_FAMILY, fontSize: "16px", color: "#ffffff", backgroundColor: "#10182bcc", padding: { x: 6, y: 2 } })
+      .setOrigin(0.5, 0)
+      .setScrollFactor(0)
+      .setDepth(19998)
+      .setAlpha(0);
+    this.tweens.chain({
+      targets: label,
+      tweens: [
+        { alpha: 1, duration: 300 },
+        { alpha: 1, duration: 2000 },
+        { alpha: 0, duration: 500 },
+      ],
+      onComplete: () => label.destroy(),
+    });
   }
 
   private playerRect(): Phaser.Geom.Rectangle {
@@ -179,6 +228,11 @@ export class AreaScene extends Phaser.Scene {
       return;
     }
 
+    if (this.transitioning) {
+      body.setVelocity(0, 0);
+      return;
+    }
+
     // di chuyển 4 hướng
     const dir = actions.getMoveDirection();
     body.setVelocity(0, 0);
@@ -190,6 +244,18 @@ export class AreaScene extends Phaser.Scene {
     } else {
       this.player.anims.stop();
       this.player.setFrame(`player_${this.facing}_0`);
+    }
+
+    this.session.state.position = { x: Math.round(this.player.x), y: Math.round(this.player.y) };
+
+    // lối ra
+    const pr = this.playerRect();
+    const zone = this.exits.find((z) => Phaser.Geom.Intersects.RectangleToRectangle(pr, z.rect));
+    if (!zone) {
+      this.blockedExit = undefined;
+    } else if (zone.id !== this.blockedExit) {
+      this.useExit(zone);
+      if (this.transitioning) return;
     }
 
     // tương tác

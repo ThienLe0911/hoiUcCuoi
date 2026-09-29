@@ -47,6 +47,8 @@ export class BootScene extends Phaser.Scene {
     }
 
     this.registry.set("session", createSession(content));
-    this.scene.start("Area");
+    // Chỉ khi chạy dev: ?area=<id> để xem thẳng một khu vực (kể cả khu bị khóa).
+    const q = import.meta.env.DEV ? new URLSearchParams(location.search).get("area") : null;
+    this.scene.start("Area", q && content.areas.has(q) ? { areaId: q } : {});
   }
 }
