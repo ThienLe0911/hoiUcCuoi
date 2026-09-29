@@ -6,8 +6,8 @@
       "mapFile": "maps/cong-truong.tmj",
       "locked": false,
       "spawns": {
-        "default": { "x": 10, "y": 12 },
-        "from-san-chinh": { "x": 10, "y": 6 }
+        "default": { "x": 16, "y": 8 },
+        "from-san-chinh": { "x": 16, "y": 5 }
       },
       "exits": [{ "id": "to-san-chinh", "toArea": "san-chinh", "toSpawn": "from-cong-truong" }]
     },

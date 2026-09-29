@@ -8,7 +8,9 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "gen-assets": "node --experimental-strip-types tools/gen-assets.ts"
+    "gen-assets": "node --experimental-strip-types tools/gen-assets.ts",
+    "gen-maps": "node --experimental-strip-types tools/gen-maps.ts",
+    "render-maps": "node --experimental-strip-types tools/render-maps.ts"
   },
   "dependencies": {
     "phaser": "^3.90.0",
