@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Thử font tiếng Việt</title>
+<style>
+  @font-face { font-family: "VT323"; src: url("assets/fonts/VT323-Regular.ttf"); }
+  body { margin: 0; background: #222; color: #eee; font-family: sans-serif; }
+  canvas { image-rendering: pixelated; width: 1280px; height: 720px; display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="320" height="180"></canvas>
+<script>
+  document.fonts.load('10px "VT323"').then(() => {
+    const ctx = document.getElementById("c").getContext("2d");
+    ctx.fillStyle = "#1c2a4a"; ctx.fillRect(0, 0, 320, 180);
+    ctx.fillStyle = "#fff"; ctx.textBaseline = "top";
+    const lines = [
+      ["16px", "Hồi Trống Cuối"],
+      ["16px", "RÈN ĐỨC – LUYỆN TÀI"],
+      ["12px", "Ngày 1 · Thứ Hai · Trước giờ học"],
+      ["12px", "ẮẰẲẴẶ ẤẦẨẪẬ ẸẺẼẾỀỂỄỆ ỈĨỊ ỌỎỐỒỔỖỘ ỚỜỞỠỢ ỤỦŨ ỨỪỬỮỰ ỲỶỸỴ"],
+      ["12px", "ắằẳẵặ ấầẩẫậ ẹẻẽếềểễệ ỉĩị ọỏốồổỗộ ớờởỡợ ụủũ ứừửữự ỳỷỹỵ đĐ"],
+      ["10px", "Tôi muốn nói với bạn một điều khó nghe, nhưng đó là sự thật."],
+      ["10px", "Cuốn lưu bút bị mất nhiều trang. Ngôi trường xuất hiện mảnh ký ức."],
+      ["8px", "Bị khóa · Nghỉ/Chờ · Ngồi nghỉ · Hết ngày 1 · Bắt đầu · Tiếp tục"],
+      ["8px", "ẮẰẲẴẶ ẤẦẨẪẬ ẸẺẼẾỀỂỄỆ ỌỎỐỒỔỖỘ ỚỜỞỠỢ ỨỪỬỮỰ ỲỶỸỴ ắằẳẵặ ấầẩẫậ ửữự"],
+    ];
+    let y = 4;
+    for (const [size, text] of lines) {
+      ctx.font = size + ' "VT323"';
+      ctx.fillText(text, 4, y);
+      y += parseInt(size) + 4;
+    }
+  });
+</script>
+</body>
+</html>
