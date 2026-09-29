@@ -1,0 +1,69 @@
+{
+  "areas": [
+    {
+      "id": "cong-truong",
+      "name": "Cổng trường",
+      "mapFile": "maps/cong-truong.tmj",
+      "locked": false,
+      "spawns": {
+        "default": { "x": 10, "y": 12 },
+        "from-san-chinh": { "x": 10, "y": 6 }
+      },
+      "exits": [{ "id": "to-san-chinh", "toArea": "san-chinh", "toSpawn": "from-cong-truong" }]
+    },
+    {
+      "id": "san-chinh",
+      "name": "Sân chính",
+      "mapFile": "maps/san-chinh.tmj",
+      "locked": false,
+      "spawns": {
+        "default": { "x": 10, "y": 14 },
+        "from-cong-truong": { "x": 10, "y": 14 },
+        "from-hanh-lang-lop-12": { "x": 4, "y": 4 },
+        "from-san-the-chat": { "x": 17, "y": 10 }
+      },
+      "exits": [
+        { "id": "to-cong-truong", "toArea": "cong-truong", "toSpawn": "from-san-chinh" },
+        { "id": "to-hanh-lang-lop-12", "toArea": "hanh-lang-lop-12", "toSpawn": "from-san-chinh" },
+        { "id": "to-san-the-chat", "toArea": "san-the-chat", "toSpawn": "from-san-chinh" }
+      ]
+    },
+    {
+      "id": "hanh-lang-lop-12",
+      "name": "Hành lang lớp 12",
+      "mapFile": "maps/hanh-lang-lop-12.tmj",
+      "locked": false,
+      "spawns": {
+        "default": { "x": 3, "y": 8 },
+        "from-san-chinh": { "x": 3, "y": 8 },
+        "from-san-thuong": { "x": 17, "y": 3 }
+      },
+      "exits": [
+        { "id": "to-san-chinh", "toArea": "san-chinh", "toSpawn": "from-hanh-lang-lop-12" },
+        { "id": "to-san-thuong", "toArea": "san-thuong", "toSpawn": "from-hanh-lang-lop-12" }
+      ]
+    },
+    {
+      "id": "san-the-chat",
+      "name": "Sân thể chất",
+      "mapFile": "maps/san-the-chat.tmj",
+      "locked": false,
+      "spawns": {
+        "default": { "x": 3, "y": 8 },
+        "from-san-chinh": { "x": 3, "y": 8 }
+      },
+      "exits": [{ "id": "to-san-chinh", "toArea": "san-chinh", "toSpawn": "from-san-the-chat" }]
+    },
+    {
+      "id": "san-thuong",
+      "name": "Sân thượng",
+      "mapFile": "maps/san-thuong.tmj",
+      "locked": true,
+      "spawns": {
+        "default": { "x": 10, "y": 9 },
+        "from-hanh-lang-lop-12": { "x": 10, "y": 9 }
+      },
+      "exits": [{ "id": "to-hanh-lang-lop-12", "toArea": "hanh-lang-lop-12", "toSpawn": "from-san-thuong" }]
+    }
+  ]
+}
