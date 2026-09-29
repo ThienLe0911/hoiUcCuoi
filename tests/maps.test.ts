@@ -11,8 +11,8 @@ const areas = validateAreas(structuredClone(areasJson), { fileExists: () => true
 const existing = areas.filter((a) => maps.has(a.mapFile));
 
 describe("bản đồ .tmj", () => {
-  it("có ít nhất bản đồ cong-truong", () => {
-    expect(maps.has("maps/cong-truong.tmj")).toBe(true);
+  it("có đủ bản đồ cho mọi khu vực trong areas.json", () => {
+    expect(existing.map((a) => a.id)).toEqual(areas.map((a) => a.id));
   });
 
   for (const area of existing) {

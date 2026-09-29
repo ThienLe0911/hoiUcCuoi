@@ -6,10 +6,22 @@
       "mapFile": "maps/cong-truong.tmj",
       "locked": false,
       "spawns": {
-        "default": { "x": 16, "y": 8 },
-        "from-san-chinh": { "x": 16, "y": 5 }
+        "default": {
+          "x": 16,
+          "y": 8
+        },
+        "from-san-chinh": {
+          "x": 16,
+          "y": 5
+        }
       },
-      "exits": [{ "id": "to-san-chinh", "toArea": "san-chinh", "toSpawn": "from-cong-truong" }]
+      "exits": [
+        {
+          "id": "to-san-chinh",
+          "toArea": "san-chinh",
+          "toSpawn": "from-cong-truong"
+        }
+      ]
     },
     {
       "id": "san-chinh",
@@ -17,15 +29,39 @@
       "mapFile": "maps/san-chinh.tmj",
       "locked": false,
       "spawns": {
-        "default": { "x": 10, "y": 14 },
-        "from-cong-truong": { "x": 10, "y": 14 },
-        "from-hanh-lang-lop-12": { "x": 4, "y": 4 },
-        "from-san-the-chat": { "x": 17, "y": 10 }
+        "default": {
+          "x": 14,
+          "y": 17
+        },
+        "from-cong-truong": {
+          "x": 14,
+          "y": 17
+        },
+        "from-hanh-lang-lop-12": {
+          "x": 14,
+          "y": 8
+        },
+        "from-san-the-chat": {
+          "x": 27,
+          "y": 12
+        }
       },
       "exits": [
-        { "id": "to-cong-truong", "toArea": "cong-truong", "toSpawn": "from-san-chinh" },
-        { "id": "to-hanh-lang-lop-12", "toArea": "hanh-lang-lop-12", "toSpawn": "from-san-chinh" },
-        { "id": "to-san-the-chat", "toArea": "san-the-chat", "toSpawn": "from-san-chinh" }
+        {
+          "id": "to-cong-truong",
+          "toArea": "cong-truong",
+          "toSpawn": "from-san-chinh"
+        },
+        {
+          "id": "to-hanh-lang-lop-12",
+          "toArea": "hanh-lang-lop-12",
+          "toSpawn": "from-san-chinh"
+        },
+        {
+          "id": "to-san-the-chat",
+          "toArea": "san-the-chat",
+          "toSpawn": "from-san-chinh"
+        }
       ]
     },
     {
@@ -34,13 +70,30 @@
       "mapFile": "maps/hanh-lang-lop-12.tmj",
       "locked": false,
       "spawns": {
-        "default": { "x": 3, "y": 8 },
-        "from-san-chinh": { "x": 3, "y": 8 },
-        "from-san-thuong": { "x": 17, "y": 3 }
+        "default": {
+          "x": 3,
+          "y": 4
+        },
+        "from-san-chinh": {
+          "x": 3,
+          "y": 4
+        },
+        "from-san-thuong": {
+          "x": 20,
+          "y": 4
+        }
       },
       "exits": [
-        { "id": "to-san-chinh", "toArea": "san-chinh", "toSpawn": "from-hanh-lang-lop-12" },
-        { "id": "to-san-thuong", "toArea": "san-thuong", "toSpawn": "from-hanh-lang-lop-12" }
+        {
+          "id": "to-san-chinh",
+          "toArea": "san-chinh",
+          "toSpawn": "from-hanh-lang-lop-12"
+        },
+        {
+          "id": "to-san-thuong",
+          "toArea": "san-thuong",
+          "toSpawn": "from-hanh-lang-lop-12"
+        }
       ]
     },
     {
@@ -49,10 +102,22 @@
       "mapFile": "maps/san-the-chat.tmj",
       "locked": false,
       "spawns": {
-        "default": { "x": 3, "y": 8 },
-        "from-san-chinh": { "x": 3, "y": 8 }
+        "default": {
+          "x": 12,
+          "y": 11
+        },
+        "from-san-chinh": {
+          "x": 12,
+          "y": 11
+        }
       },
-      "exits": [{ "id": "to-san-chinh", "toArea": "san-chinh", "toSpawn": "from-san-the-chat" }]
+      "exits": [
+        {
+          "id": "to-san-chinh",
+          "toArea": "san-chinh",
+          "toSpawn": "from-san-the-chat"
+        }
+      ]
     },
     {
       "id": "san-thuong",
@@ -60,10 +125,22 @@
       "mapFile": "maps/san-thuong.tmj",
       "locked": true,
       "spawns": {
-        "default": { "x": 10, "y": 9 },
-        "from-hanh-lang-lop-12": { "x": 10, "y": 9 }
+        "default": {
+          "x": 10,
+          "y": 8
+        },
+        "from-hanh-lang-lop-12": {
+          "x": 10,
+          "y": 8
+        }
       },
-      "exits": [{ "id": "to-hanh-lang-lop-12", "toArea": "hanh-lang-lop-12", "toSpawn": "from-san-thuong" }]
+      "exits": [
+        {
+          "id": "to-hanh-lang-lop-12",
+          "toArea": "hanh-lang-lop-12",
+          "toSpawn": "from-san-thuong"
+        }
+      ]
     }
   ]
 }
