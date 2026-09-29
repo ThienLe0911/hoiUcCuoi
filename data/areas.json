@@ -31,18 +31,26 @@
       "spawns": {
         "default": {
           "x": 14,
-          "y": 17
+          "y": 15
         },
         "from-cong-truong": {
           "x": 14,
-          "y": 17
+          "y": 15
         },
-        "from-hanh-lang-lop-12": {
+        "from-hanh-lang-bac": {
           "x": 14,
           "y": 8
         },
+        "from-hanh-lang-nam-trai": {
+          "x": 8,
+          "y": 15
+        },
+        "from-hanh-lang-nam-phai": {
+          "x": 20,
+          "y": 15
+        },
         "from-san-the-chat": {
-          "x": 27,
+          "x": 2,
           "y": 12
         }
       },
@@ -53,9 +61,19 @@
           "toSpawn": "from-san-chinh"
         },
         {
-          "id": "to-hanh-lang-lop-12",
+          "id": "to-hanh-lang-bac",
           "toArea": "hanh-lang-lop-12",
-          "toSpawn": "from-san-chinh"
+          "toSpawn": "from-san-chinh-bac"
+        },
+        {
+          "id": "to-hanh-lang-nam-trai",
+          "toArea": "hanh-lang-lop-12",
+          "toSpawn": "from-san-chinh-nam-trai"
+        },
+        {
+          "id": "to-hanh-lang-nam-phai",
+          "toArea": "hanh-lang-lop-12",
+          "toSpawn": "from-san-chinh-nam-phai"
         },
         {
           "id": "to-san-the-chat",
@@ -71,23 +89,41 @@
       "locked": false,
       "spawns": {
         "default": {
-          "x": 3,
-          "y": 4
+          "x": 14,
+          "y": 18
         },
-        "from-san-chinh": {
-          "x": 3,
-          "y": 4
+        "from-san-chinh-bac": {
+          "x": 14,
+          "y": 18
+        },
+        "from-san-chinh-nam-trai": {
+          "x": 8,
+          "y": 18
+        },
+        "from-san-chinh-nam-phai": {
+          "x": 20,
+          "y": 18
         },
         "from-san-thuong": {
-          "x": 20,
+          "x": 25,
           "y": 4
         }
       },
       "exits": [
         {
-          "id": "to-san-chinh",
+          "id": "to-san-chinh-bac",
           "toArea": "san-chinh",
-          "toSpawn": "from-hanh-lang-lop-12"
+          "toSpawn": "from-hanh-lang-bac"
+        },
+        {
+          "id": "to-san-chinh-nam-trai",
+          "toArea": "san-chinh",
+          "toSpawn": "from-hanh-lang-nam-trai"
+        },
+        {
+          "id": "to-san-chinh-nam-phai",
+          "toArea": "san-chinh",
+          "toSpawn": "from-hanh-lang-nam-phai"
         },
         {
           "id": "to-san-thuong",
@@ -103,12 +139,12 @@
       "locked": false,
       "spawns": {
         "default": {
-          "x": 12,
-          "y": 11
+          "x": 23,
+          "y": 10
         },
         "from-san-chinh": {
-          "x": 12,
-          "y": 11
+          "x": 23,
+          "y": 10
         }
       },
       "exits": [

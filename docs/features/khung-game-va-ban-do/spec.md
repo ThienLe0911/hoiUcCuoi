@@ -38,15 +38,20 @@ Bản thử nghiệm 30–45 phút cần chứng minh phần khám phá và khô
 - FR3.1 5 khu vực MVP, mỗi khu là một tilemap Tiled (`.tmj`, tile 16×16):
   1. `cong-truong` — cổng trường, xe buýt 67, xe kem, xe cháo lòng
   2. `san-chinh` — sân giữa, cây cổ thụ, lối vào nhà chính, khẩu hiệu "RÈN ĐỨC – LUYỆN TÀI"
-  3. `hanh-lang-lop-12` — hành lang, lớp 12
+  3. `hanh-lang-lop-12` — dãy hành lang 3 tầng (tầng trệt: lớp 12; tầng 2 và 3: lớp 11), xem FR3.8
   4. `san-the-chat` — sân xanh dương, rổ bóng rổ
   5. `san-thuong` — sân thượng/dãy cũ; mặc định **khóa** (bị khóa thể hiện bằng cờ trạng thái, mở ở feature khác)
 - FR3.2 Mỗi bản đồ có các lớp: nền, vật thể/tường (va chạm), phủ trên đầu, và lớp đối tượng gồm: điểm xuất hiện, lối chuyển khu vực (`exit`), điểm tương tác (`interact`).
 - FR3.3 Lối `exit` khai báo khu vực đích và điểm xuất hiện đích; đi vào là chuyển khu vực, có hiệu ứng mờ dần ngắn (≤ 0,5 s).
 - FR3.4 Khi vào khu vực, hiện tên khu vực (tiếng Việt) vài giây.
 - FR3.5 Khu vực bị khóa: đi vào lối exit hiện thông báo "Bị khóa", không chuyển cảnh. Trạng thái khóa là dữ liệu, có thể mở bằng cờ.
-- FR3.6 Đồ thị nối khu vực đề xuất: cổng trường ↔ sân chính ↔ hành lang lớp 12; sân chính ↔ sân thể chất; hành lang lớp 12 ↔ sân thượng (khóa).
+- FR3.6 Đồ thị nối khu vực (cập nhật 2026-09-30):
+  - cổng trường ↔ sân chính (cổng chính ở giữa phía nam sân chính, đi từ cổng lên phía bắc là vào sân).
+  - sân chính ↔ hành lang lớp 12 bằng **3 lối**, đều dẫn vào **tầng trệt**: cửa chính phía bắc và **2 cầu thang phía nam** (hai bên cổng chính).
+  - sân chính ↔ sân thể chất: sân thể chất nằm ở **phía tây (bên trái)** sân chính.
+  - hành lang lớp 12 ↔ sân thượng (khóa), nối từ **tầng cao nhất** của dãy hành lang.
 - FR3.7 Dữ liệu khu vực (tên, file map, exit, điều kiện khóa) khai báo trong `data/areas.json`, kiểm tra bằng zod khi nạp (ADR 002). Sai dữ liệu → báo lỗi rõ ràng, chỉ ra file và trường sai.
+- FR3.8 Hành lang lớp 12 là **một khu vực** gồm **3 dải hành lang ngang xếp chồng** (tầng 3 trên cùng, tầng 2, tầng 1 dưới cùng). Tầng 1 (trệt) là tầng **lớp 12**; tầng 2 và tầng 3 là **lớp 11**. Các tầng nối nhau bằng **cầu thang ở hai đầu** dãy; đổi tầng bằng cách đi bộ trong cùng bản đồ, không chuyển cảnh. Ba lối từ sân chính (FR3.6) đều dẫn vào tầng 1; lối lên sân thượng nằm ở tầng cao nhất.
 
 ### FR4. Thời gian (ngày và khoảng)
 - FR4.1 Một ngày có 4 khoảng: Trước giờ học, Trong giờ học, Giờ ra chơi, Sau giờ học.
@@ -129,3 +134,9 @@ Game một người chơi, không tài khoản, không phân quyền. Toàn bộ
 3. Đồ thị nối khu vực (FR3.6): đồng ý.
 4. Sân thượng khóa mặc định, mở ở feature phiên đêm: đồng ý.
 5. Game để bạn bè chơi. Vì vậy mọi asset phải tự tạo (không dùng ảnh gốc TP Media hay ảnh chụp), font phải có giấy phép cho phát hành (FR5.3, FR6.1). Cách đưa game lên mạng để gửi link (hosting) là quyết định riêng, chưa thuộc feature này.
+
+## Thay đổi sau khi duyệt (2026-09-30)
+Người dùng yêu cầu chỉnh bố cục trường cho sát thực tế, đã cập nhật FR3.1, FR3.6, FR3.8:
+- Sân thể chất chuyển sang phía tây (trái) sân chính.
+- Sân chính có thêm 2 cầu thang ở phía nam (hai bên cổng chính) để vào hành lang lớp 12, tổng cộng 3 lối vào hành lang (đều vào tầng trệt).
+- Hành lang lớp 12 có 3 tầng: tầng trệt là lớp 12, hai tầng trên là lớp 11; là một khu vực có 3 dải hành lang xếp chồng nối bằng cầu thang (không tăng số khu vực).

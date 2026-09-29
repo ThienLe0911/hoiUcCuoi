@@ -91,17 +91,18 @@ function congTruong(): MapBuilder {
 }
 
 
-// ---------- san-chinh (30×20 ô) ----------
-// Bắc: nhà chính 3 tầng, lối vào giữa (→ hành lang lớp 12). Giữa: sân rộng, tượng, cây.
-// Nam: cổng (→ cổng trường). Đông: lối sang sân thể chất (ref-09, ref-06).
+// ---------- san-chinh (30×22 ô) ----------
+// Bắc: nhà chính, cửa giữa vào hành lang lớp 12 (tầng trệt). Nam: dãy hành lang có 2 cầu thang
+// vào hành lang lớp 12 (hai bên cổng chính ở giữa). Tây: lối sang sân thể chất (ref-09, ref-06).
 function sanChinh(): MapBuilder {
-  const m = new MapBuilder(30, 20);
+  const m = new MapBuilder(30, 22);
   const W = 30;
   m.fill("ground", 0, 0, W, 6, "wall_cream");
   m.fill("ground", 0, 6, W, 1, "paving_brown");
-  m.fill("ground", 0, 7, W, 11, "floor_corridor");
-  m.fill("ground", 0, 18, W, 2, "paving_brown");
+  m.fill("ground", 0, 7, W, 9, "floor_corridor");
+  m.fill("ground", 0, 16, W, 6, "wall_cream");
 
+  // dãy nhà bắc (y0..5)
   for (let x = 0; x < W; x++) {
     if (x % 6 === 0) {
       m.set("walls", x, 1, "pillar_blue_top");
@@ -118,12 +119,38 @@ function sanChinh(): MapBuilder {
   m.set("walls", 11, 4, "flag_red");
   m.solid(0, 0, W, 6).open(14, 5, 2, 1);
 
-  // bonsai sát chân nhà
+  // dãy nhà nam (y16..21): hành lang hở nhìn ra sân (lan can xanh ngọc), 2 cầu thang, cổng chính ở giữa
+  for (let x = 0; x < W; x++) {
+    m.set("ground", x, 16, "floor_corridor");
+    m.set("walls", x, 16, x % 6 === 0 ? "railing_post" : "railing_teal");
+    m.set("ground", x, 17, "floor_corridor");
+    m.set("ground", x, 18, "floor_corridor_shadow");
+    if (x % 6 === 0) for (let y = 19; y <= 21; y++) m.set("walls", x, y, "pillar_blue");
+    else {
+      if (x % 6 === 3) m.set("walls", x, 20, "window_teal");
+      m.set("walls", x, 21, "wall_cream_base");
+    }
+  }
+  m.solid(0, 16, W, 6);
+  for (const sx of [8, 20]) {
+    m.fill("walls", sx, 16, 2, 1, "stairs");
+    m.fill("walls", sx, 17, 2, 1, "stairs");
+    m.open(sx, 16, 2, 2);
+  }
+  // cổng chính (x=14,15) xuyên qua dãy nhà nam
+  for (let y = 16; y < 22; y++) {
+    m.set("ground", 14, y, "paving_brown").set("ground", 15, y, "paving_brown");
+    m.set("walls", 14, y, "empty").set("walls", 15, y, "empty");
+    m.set("walls", 13, y, "gate_pillar").set("walls", 16, y, "gate_pillar");
+    m.solid(13, y).solid(16, y).open(14, y, 2, 1);
+  }
+
+  // bonsai sát chân nhà bắc
   for (const x of [4, 8, 20, 24]) m.set("walls", x, 6, "bonsai").solid(x, 6);
   // tượng trước sảnh
   m.set("walls", 12, 8, "statue").solid(12, 8);
   // cây: tán phủ trên đầu, thân cản
-  for (const [cx, ty] of [[3, 9], [25, 9], [3, 14], [25, 14]] as const) {
+  for (const [cx, ty] of [[4, 9], [25, 9], [4, 14], [25, 14]] as const) {
     m.set("overlay", cx, ty - 2, "tree_canopy_tl").set("overlay", cx + 1, ty - 2, "tree_canopy_tr");
     m.set("overlay", cx, ty - 1, "tree_canopy_bl").set("overlay", cx + 1, ty - 1, "tree_canopy_br");
     m.set("walls", cx, ty, "tree_trunk").solid(cx, ty);
@@ -131,24 +158,22 @@ function sanChinh(): MapBuilder {
   // băng ghế
   for (const [x, y] of [[8, 11], [21, 11]] as const) m.set("walls", x, y, "bench").solid(x, y);
   // học sinh
-  const kids: [string, number, number][] = [["student_boy", 9, 13], ["student_girl", 19, 13], ["student_girl", 12, 15], ["student_boy", 17, 11], ["student_boy", 6, 16], ["student_girl", 22, 16]];
+  const kids: [string, number, number][] = [["student_boy", 9, 13], ["student_girl", 19, 13], ["student_girl", 12, 15], ["student_boy", 17, 11], ["student_boy", 6, 14], ["student_girl", 22, 14]];
   for (const [f, x, y] of kids) m.sprite(f, x * 16, y * 16 - 8).solid(x, y);
 
-  // tường rào + cổng phía nam (x=14,15) + lối sang đông (x=29,y=12..13)
-  for (let y = 7; y < 20; y++) {
+  // tường rào hai bên (y7..15); lối sang sân thể chất ở phía TÂY (x=0, y=12..13)
+  for (let y = 7; y < 16; y++) {
     m.set("walls", 0, y, "low_wall_cream").solid(0, y);
     m.set("walls", 29, y, y % 3 === 1 ? "low_wall_diamond" : "low_wall_cream").solid(29, y);
   }
-  m.open(29, 12, 1, 2);
-  m.fill("walls", 29, 12, 1, 2, "paving_brown").fill("ground", 29, 12, 1, 2, "paving_brown");
-  for (let x = 0; x < W; x++) m.set("walls", x, 19, x % 3 === 1 ? "low_wall_diamond" : "low_wall_cream");
-  m.solid(0, 19, W, 1).open(14, 19, 2, 1);
-  m.set("walls", 13, 19, "gate_pillar").set("walls", 16, 19, "gate_pillar");
-  m.set("walls", 14, 19, "paving_brown").set("walls", 15, 19, "paving_brown");
+  m.open(0, 12, 1, 2);
+  m.fill("walls", 0, 12, 1, 2, "empty").fill("ground", 0, 12, 1, 2, "paving_brown");
 
-  m.exit("to-cong-truong", 14, 19, 2, 1);
-  m.exit("to-hanh-lang-lop-12", 14, 5, 2, 1);
-  m.exit("to-san-the-chat", 29, 12, 1, 2);
+  m.exit("to-cong-truong", 14, 21, 2, 1);
+  m.exit("to-hanh-lang-bac", 14, 5, 2, 1);
+  m.exit("to-hanh-lang-nam-trai", 8, 17, 2, 1);
+  m.exit("to-hanh-lang-nam-phai", 20, 17, 2, 1);
+  m.exit("to-san-the-chat", 0, 12, 1, 2);
 
   m.interact({ name: "khau-hieu", tx: 12, ty: 6, tw: 6, th: 1, kind: "text", text: "RÈN ĐỨC – LUYỆN TÀI" });
   m.interact({ name: "tuong", tx: 11, ty: 7, tw: 3, th: 3, kind: "text", text: "Bức tượng trước sảnh chính. Năm nào cũng có người hẹn nhau ở đây." });
@@ -157,61 +182,101 @@ function sanChinh(): MapBuilder {
   return m;
 }
 
-// ---------- hanh-lang-lop-12 (24×12 ô) ----------
-// Hành lang 3 ô: bên trên là dãy lớp, bên dưới là lan can nhìn xuống sân (ref-05, ref-10).
-// Đầu trái: thang xuống (→ sân chính). Đầu phải: thang lên (→ sân thượng).
+// ---------- hanh-lang-lop-12 (30×26 ô) ----------
+// Một khu vực gồm 3 dải hành lang xếp chồng: tầng 3 (trên, lớp 11), tầng 2 (giữa, lớp 11),
+// tầng 1 (dưới, trệt, LỚP 12). Cầu thang ở hai đầu (x=1..2 và x=27..28) nối các tầng;
+// đi bộ để đổi tầng. Ba lối từ sân chính vào tầng 1; lối lên sân thượng ở đầu trên cầu thang phải.
 function hanhLang(): MapBuilder {
-  const m = new MapBuilder(24, 12);
-  const W = 24;
-  m.fill("ground", 0, 0, W, 3, "wall_cream");
-  m.fill("ground", 0, 3, W, 4, "floor_corridor");
-  m.fill("ground", 0, 3, W, 1, "floor_corridor_shadow");
-  m.fill("ground", 0, 7, W, 5, "paving_brown");
+  const m = new MapBuilder(30, 26);
+  const W = 30;
+  const FLOORS = [
+    { y: 0, label: "Tầng 3", cls: ["11A1", "11A2"] },
+    { y: 7, label: "Tầng 2", cls: ["11B1", "11B2"] },
+    { y: 14, label: "Tầng 1", cls: ["12A1", "12A2"] },
+  ];
+  const shaft = (x: number) => x === 1 || x === 2 || x === 27 || x === 28;
+  m.fill("ground", 0, 21, W, 5, "paving_brown"); // sân nhìn từ tầng trệt
+  m.solid(0, 0, W, 26);
 
-  for (let x = 0; x < W; x++) {
-    if (x % 4 === 0) {
-      m.set("walls", x, 0, "pillar_blue_top").set("walls", x, 1, "pillar_blue").set("walls", x, 2, "pillar_blue");
-    } else {
-      m.set("walls", x, 0, "pipe_red");
-      if (x % 4 === 2) m.set("walls", x, 1, "window_teal");
-      m.set("walls", x, 2, "wall_cream_base");
+  for (const f of FLOORS) {
+    const y0 = f.y;
+    m.fill("ground", 0, y0, W, 3, "wall_cream");
+    m.fill("ground", 0, y0 + 3, W, 4, "floor_corridor");
+    m.fill("ground", 0, y0 + 3, W, 1, "floor_corridor_shadow");
+    for (let x = 0; x < W; x++) {
+      if (shaft(x)) continue;
+      if (x % 4 === 0) {
+        m.set("walls", x, y0, "pillar_blue_top").set("walls", x, y0 + 1, "pillar_blue").set("walls", x, y0 + 2, "pillar_blue");
+      } else {
+        m.set("walls", x, y0, "pipe_red");
+        if (x % 4 === 2) m.set("walls", x, y0 + 1, "window_teal");
+        m.set("walls", x, y0 + 2, "wall_cream_base");
+      }
+      m.set("walls", x, y0 + 6, x % 4 === 0 ? "railing_post" : "railing_teal");
     }
+    m.open(1, y0 + 3, 28, 3); // hành lang đi được
+
+    // hai lớp mỗi tầng
+    const doorX = [9, 19];
+    f.cls.forEach((c, i) => {
+      const dx = doorX[i];
+      m.set("walls", dx, y0 + 2, "door_teal");
+      m.interact({
+        name: `lop-${c.toLowerCase()}`,
+        tx: dx - 1,
+        ty: y0 + 2,
+        tw: 3,
+        th: 3,
+        kind: "text",
+        text: `${f.label} – Lớp ${c}. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều.`,
+      });
+    });
+    m.interact({ name: `nhan-tang-${y0}`, tx: 3, ty: y0 + 3, tw: 3, th: 3, kind: "text", text: `${f.label} – dãy lớp ${f.label === "Tầng 1" ? "12" : "11"}.` });
   }
-  for (const x of [6, 14]) m.set("walls", x, 2, "door_teal");
-  m.solid(0, 0, W, 3);
 
-  // lan can: trụ ở vị trí cột, thanh ở giữa
-  for (let x = 0; x < W; x++) m.set("walls", x, 6, x % 4 === 0 ? "railing_post" : "railing_teal");
-  m.solid(0, 6, W, 6);
+  // cầu thang hai đầu: cột x=1..2 và x=27..28 đi được từ tầng 3 xuống tầng 1
+  for (const sx of [1, 2, 27, 28]) {
+    for (let y = 0; y <= 19; y++) {
+      m.set("walls", sx, y, "stairs");
+      m.set("ground", sx, y, "floor_corridor");
+    }
+    m.set("walls", sx, 20, sx % 2 === 0 ? "railing_post" : "railing_teal");
+    m.open(sx, 0, 1, 20);
+  }
+  m.interact({ name: "cau-thang-trai", tx: 0, ty: 3, tw: 4, th: 17, kind: "text", text: "Cầu thang lên xuống các tầng. Tầng trệt là lớp 12, hai tầng trên là lớp 11." });
 
-  // thang hai đầu (đi được)
-  for (let y = 3; y <= 5; y++) {
-    m.set("walls", 1, y, "stairs");
-    m.set("walls", 22, y, "stairs");
+  // ba lối xuống sân chính ở tầng 1 (x=8, 14, 20): cầu thang qua hàng lan can
+  for (const gx of [8, 14, 20]) {
+    m.fill("walls", gx, 20, 2, 1, "stairs").fill("ground", gx, 20, 2, 1, "floor_corridor");
+    m.fill("walls", gx, 21, 2, 1, "stairs");
+    m.open(gx, 20, 2, 2);
   }
   // sân bên dưới: cây
-  for (const cx of [3, 11, 19]) {
-    m.set("overlay", cx, 7, "tree_canopy_tl").set("overlay", cx + 1, 7, "tree_canopy_tr");
-    m.set("overlay", cx, 8, "tree_canopy_bl").set("overlay", cx + 1, 8, "tree_canopy_br");
-    m.set("walls", cx, 9, "tree_trunk");
+  for (const cx of [3, 11, 17, 25]) {
+    m.set("overlay", cx, 22, "tree_canopy_tl").set("overlay", cx + 1, 22, "tree_canopy_tr");
+    m.set("overlay", cx, 23, "tree_canopy_bl").set("overlay", cx + 1, 23, "tree_canopy_br");
+    m.set("walls", cx, 24, "tree_trunk");
   }
-  // ghế và học sinh trong hành lang
-  m.set("walls", 12, 3, "bench").solid(12, 3);
-  m.sprite("student_girl", 10 * 16, 3 * 16 - 8).solid(10, 3);
-  m.sprite("student_boy", 17 * 16, 3 * 16 - 8).solid(17, 3);
 
-  m.exit("to-san-chinh", 0, 3, 1, 3);
-  m.exit("to-san-thuong", 23, 3, 1, 3);
+  // ghế + học sinh (tầng 1 và tầng 2)
+  m.set("walls", 12, 17, "bench").solid(12, 17);
+  m.interact({ name: "bang-ghe", tx: 11, ty: 16, tw: 3, th: 3, kind: "activity", label: "Ngồi nghỉ", text: "Bạn ngồi xuống ghế hành lang tầng trệt, nghe tiếng trống xa xa.", cost: 1 });
+  m.sprite("student_girl", 6 * 16, 17 * 16 - 8).solid(6, 17);
+  m.sprite("student_boy", 23 * 16, 18 * 16 - 8).solid(23, 18);
+  m.sprite("student_boy", 15 * 16, 10 * 16 - 8).solid(15, 10);
+  m.sprite("student_girl", 22 * 16, 4 * 16 - 8).solid(22, 4);
 
-  m.interact({ name: "lop-12a1", tx: 5, ty: 2, tw: 3, th: 3, kind: "text", text: "Lớp 12A1. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều." });
-  m.interact({ name: "lop-12a2", tx: 13, ty: 2, tw: 3, th: 3, kind: "text", text: "Lớp 12A2. Trên bảng vẫn còn dòng chữ đếm ngược ngày thi." });
-  m.interact({ name: "bang-ghe", tx: 11, ty: 2, tw: 3, th: 3, kind: "activity", label: "Ngồi nghỉ", text: "Bạn ngồi xuống ghế cuối hành lang, nghe tiếng trống xa xa.", cost: 1 });
-  m.interact({ name: "lan-can", tx: 4, ty: 5, tw: 5, th: 1, kind: "text", text: "Từ lan can nhìn xuống, tán phượng che kín cả góc sân." });
+  // lối ra
+  m.exit("to-san-chinh-nam-trai", 8, 21, 2, 1);
+  m.exit("to-san-chinh-bac", 14, 21, 2, 1);
+  m.exit("to-san-chinh-nam-phai", 20, 21, 2, 1);
+  m.exit("to-san-thuong", 27, 0, 2, 1);
   return m;
 }
 
 // ---------- san-the-chat (26×14 ô) ----------
-// Sân xanh dương có vạch trắng, hai rổ bóng rổ, nhà nhiều tầng bao quanh (ref-07, ref-08).
+// Nằm phía TÂY sân chính, lối vào ở cạnh đông. Sân xanh dương có vạch trắng, hai rổ bóng rổ,
+// nhà nhiều tầng bao quanh (ref-07, ref-08).
 function sanTheChat(): MapBuilder {
   const m = new MapBuilder(26, 14);
   const W = 26;
@@ -232,30 +297,30 @@ function sanTheChat(): MapBuilder {
   // vạch sân
   for (let x = 1; x <= 24; x++) m.set("ground", x, 4, "court_line_h").set("ground", x, 12, "court_line_h");
   for (let y = 4; y <= 12; y++) m.set("ground", 1, y, "court_line_v").set("ground", 24, y, "court_line_v").set("ground", 12, y, "court_line_v");
-  m.fill("ground", 3, 6, 4, 5, "court_brown").fill("ground", 19, 6, 4, 5, "court_brown");
+  m.fill("ground", 3, 6, 4, 5, "court_brown").fill("ground", 18, 6, 4, 5, "court_brown");
   // rổ bóng rổ
-  for (const x of [2, 23]) {
+  for (const x of [2, 22]) {
     m.set("walls", x, 7, "hoop");
     m.set("walls", x, 8, "hoop_pole").solid(x, 8);
   }
 
-  // tường bao + lối vào giữa phía nam (x=12,13)
+  // tường bao + lối vào ở cạnh ĐÔNG (x=25, y=8..9)
   for (let y = 4; y < 14; y++) {
     m.set("walls", 0, y, "low_wall_cream").solid(0, y);
-    m.set("walls", 25, y, "low_wall_cream").solid(25, y);
+    m.set("walls", 25, y, y % 3 === 1 ? "low_wall_diamond" : "low_wall_cream").solid(25, y);
   }
+  m.open(25, 8, 1, 2);
+  m.fill("walls", 25, 8, 1, 2, "empty").fill("ground", 25, 8, 1, 2, "paving_brown");
   for (let x = 1; x < 25; x++) m.set("walls", x, 13, x % 3 === 1 ? "low_wall_diamond" : "low_wall_cream");
   m.solid(1, 13, 24, 1);
-  m.set("walls", 11, 13, "gate_pillar").set("walls", 14, 13, "gate_pillar");
-  m.set("walls", 12, 13, "paving_brown").set("walls", 13, 13, "paving_brown").open(12, 13, 2, 1);
   for (const x of [5, 19]) m.set("walls", x, 13, "bench").solid(x, 13);
 
   const kids: [string, number, number][] = [["student_boy", 8, 8], ["student_girl", 10, 10], ["student_boy", 16, 6], ["student_girl", 15, 9]];
   for (const [f, x, y] of kids) m.sprite(f, x * 16, y * 16 - 8).solid(x, y);
 
-  m.exit("to-san-chinh", 12, 13, 2, 1);
+  m.exit("to-san-chinh", 25, 8, 1, 2);
   m.interact({ name: "ro-trai", tx: 1, ty: 6, tw: 4, th: 4, kind: "text", text: "Rổ bóng rổ cũ, lưới đã sờn nhưng vẫn còn nguyên vành." });
-  m.interact({ name: "ro-phai", tx: 21, ty: 6, tw: 4, th: 4, kind: "text", text: "Vạch sơn đã phai, dấu giày còn in trên nền sân." });
+  m.interact({ name: "ro-phai", tx: 20, ty: 6, tw: 5, th: 4, kind: "text", text: "Vạch sơn đã phai, dấu giày còn in trên nền sân." });
   for (const [n, x] of [["bang-ghe-1", 4], ["bang-ghe-2", 18]] as const)
     m.interact({ name: n, tx: x, ty: 11, tw: 3, th: 3, kind: "activity", label: "Ngồi nghỉ", text: "Bạn ngồi nghỉ xem mọi người chơi bóng.", cost: 1 });
   return m;
