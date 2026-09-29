@@ -132,3 +132,7 @@ Các nhóm độc lập, không chung file (dùng được subagent `dev` song s
 1. Duyệt thêm hai thư viện: `vitest`, `pngjs`?
 2. Dự án chưa là git repo. Bạn muốn tôi `git init` không? (Cần cho worktree song song và để commit/theo dõi thay đổi.)
 3. Task nào bạn muốn tôi dừng lại xin duyệt giữa chừng? Đề xuất dừng ở T2 (font), T8 (xem asset), T12 (xem bản đồ).
+
+## Tiến độ (cập nhật 2026-09-30)
+Xong: T1, T2 (font VT323 được duyệt), T3, T4, T5, T6, T7, T8 (asset được duyệt), T9 (bản đồ được duyệt), T10, T11, T12. Còn: T13–T17.
+Ghi chú: T12 làm trước T10/T11 vì game kiểm tra đủ 5 file bản đồ khi khởi động.
