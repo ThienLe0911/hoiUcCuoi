@@ -44,7 +44,7 @@
       "id": "bao-ve",
       "name": "Bác bảo vệ / giám thị",
       "kind": "extra",
-      "frame": "student_boy",
+      "frame": "npc_bao_ve",
       "interactable": true,
       "line": "Vào lớp đi, sắp trống rồi đó!"
     },
@@ -52,7 +52,7 @@
       "id": "co-ban-kem",
       "name": "Cô bán kem",
       "kind": "extra",
-      "frame": "student_girl",
+      "frame": "npc_ban_kem",
       "interactable": true,
       "line": "Kem ốc quế hay kem ly đây con?"
     },
@@ -60,7 +60,7 @@
       "id": "chu-chao-long",
       "name": "Chú xe cháo lòng",
       "kind": "extra",
-      "frame": "student_boy",
+      "frame": "npc_chao_long",
       "interactable": true,
       "line": "Cháo lòng nóng đây, ăn không cháu?"
     },
@@ -68,7 +68,7 @@
       "id": "bac-tai-xe-buyt",
       "name": "Bác tài xe buýt 67",
       "kind": "extra",
-      "frame": "student_boy",
+      "frame": "npc_tai_xe",
       "interactable": true,
       "line": "Xe sắp chạy, lên nhanh nào!"
     },
@@ -76,7 +76,7 @@
       "id": "bac-lao-cong",
       "name": "Bác lao công",
       "kind": "extra",
-      "frame": "student_girl",
+      "frame": "npc_lao_cong",
       "interactable": true,
       "line": "Để bác quét cho sạch cái sân này."
     },
@@ -92,7 +92,7 @@
       "id": "co-chu-nhiem",
       "name": "Cô chủ nhiệm",
       "kind": "extra",
-      "frame": "student_girl",
+      "frame": "npc_chu_nhiem",
       "interactable": true,
       "line": "Em nhớ nộp bài đầy đủ nhé."
     },
@@ -116,7 +116,7 @@
       "id": "thay-the-duc",
       "name": "Thầy thể dục",
       "kind": "extra",
-      "frame": "student_boy",
+      "frame": "npc_the_duc",
       "interactable": true,
       "line": "Khởi động kỹ rồi hãy chơi nghe."
     }

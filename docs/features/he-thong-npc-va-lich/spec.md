@@ -59,8 +59,8 @@ Khung game (T1–T17) mới có "học sinh nền đứng yên" và đã **cố 
 - FR7.2 Trạng thái "đã trò chuyện / quan hệ" là của feature sau, không thuộc feature này.
 
 ### FR8. Asset NPC (tự tạo)
-- FR8.1 Sprite NPC tự tạo theo `docs/product/art-reference.md` (không dùng ảnh gốc). Cho phép tái dùng/nhuộm lại sprite học sinh cơ sở để phân biệt NPC; tên khung atlas ổn định để thay bản vẽ tay sau mà không đổi code (như FR6.3 khung game).
-- FR8.2 Ít nhất phân biệt được 5 NPC chính bằng mắt; NPC phụ có thể dùng vài biến thể chung.
+- FR8.1 Sprite NPC tự tạo theo `docs/product/art-reference.md` (không dùng ảnh gốc). Tên khung atlas ổn định để thay bản vẽ tay sau mà không đổi code (như FR6.3 khung game). Sprite học sinh cơ sở chỉ tái dùng cho **NPC là học sinh**.
+- FR8.2 Phân biệt được bằng mắt: 5 NPC chính, **và mọi NPC người lớn/hàng quán có sprite riêng** (bảo vệ/giám thị, lao công, bán kem, cháo lòng, tài xe buýt, chủ nhiệm, thể dục) — khác trang phục/mũ và **có đạo cụ nhận diện** (vd chổi cho lao công, mũ kê pi cho bảo vệ, tạp dề/nón cho người bán). *(Cập nhật đã duyệt 2026-09-30 — trước đó cho phép tái dùng sprite học sinh cho NPC phụ.)*
 
 ### FR9. Công cụ & kiểm thử
 - FR9.1 Module tra cứu lịch/thời tiết là **logic thuần** (không phụ thuộc Phaser) để kiểm thử đơn vị (NFR5 khung game).
