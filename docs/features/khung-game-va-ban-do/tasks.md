@@ -134,5 +134,5 @@ Các nhóm độc lập, không chung file (dùng được subagent `dev` song s
 3. Task nào bạn muốn tôi dừng lại xin duyệt giữa chừng? Đề xuất dừng ở T2 (font), T8 (xem asset), T12 (xem bản đồ).
 
 ## Tiến độ (cập nhật 2026-09-30)
-Xong: T1–T13 (font, asset, bản đồ đã được duyệt; T13 chuyển khu vực chờ duyệt). Còn: T14–T17.
+Xong: T1–T14 (bản đồ và bố cục đã được duyệt; T14 HUD, thời gian, menu chờ duyệt). Còn: T15–T17.
 Ghi chú: T12 làm trước T10/T11 vì game kiểm tra đủ file bản đồ khi khởi động. Sau khi duyệt, bố cục đổi (2026-09-30): thêm khu vực hanh-lang-lop-10 (MVP thành 6 khu vực), xem spec FR3.1, FR3.6, FR3.8.

@@ -2,9 +2,15 @@
 import Phaser from "phaser";
 import { FONT_FAMILY, GAME_HEIGHT, GAME_WIDTH, TILE } from "../config";
 import type { Direction } from "../core/actions";
+import { advancePeriods } from "../core/flow";
 import { attachKeyboard } from "../core/keyboard";
-import type { Session } from "../core/session";
+import { createSession, type Session } from "../core/session";
+import { applyTime } from "../core/state";
+import { WEEKDAY_NAMES } from "../core/time";
 import { Dialog } from "../ui/Dialog";
+import { Hud } from "../ui/Hud";
+import { Menu } from "../ui/Menu";
+import { Overlay } from "../ui/Overlay";
 
 const SPEED = 60; // px/giây
 const FADE_MS = 250; // ≤ 0,5 s (FR3.3)
@@ -53,6 +59,10 @@ export class AreaScene extends Phaser.Scene {
   private player!: Phaser.Physics.Arcade.Sprite;
   private facing: Direction = "down";
   private dialog!: Dialog;
+  private hud!: Hud;
+  private menu!: Menu;
+  private overlay!: Overlay;
+  private areaName = "";
   private prompt!: Phaser.GameObjects.Text;
   private interactPoints: InteractPoint[] = [];
   private exits: ExitZone[] = [];
@@ -137,7 +147,11 @@ export class AreaScene extends Phaser.Scene {
     cam.roundPixels = true;
 
     // giao diện
+    this.areaName = area.name;
     this.dialog = new Dialog(this);
+    this.hud = new Hud(this);
+    this.menu = new Menu(this);
+    this.overlay = new Overlay(this);
     this.prompt = this.add
       .text(8, GAME_HEIGHT - 16, "", { fontFamily: FONT_FAMILY, fontSize: "12px", color: "#ffffff", backgroundColor: "#10182bcc", padding: { x: 3, y: 1 } })
       .setOrigin(0, 0)
@@ -147,7 +161,7 @@ export class AreaScene extends Phaser.Scene {
 
     // vào cảnh: mờ dần vào + hiện tên khu vực
     cam.fadeIn(FADE_MS, 0, 0, 0);
-    this.showAreaName(area.name);
+    this.showToast(area.name);
 
     // đầu vào
     actions.reset();
@@ -175,10 +189,10 @@ export class AreaScene extends Phaser.Scene {
     cam.fadeOut(FADE_MS, 0, 0, 0);
   }
 
-  /** Hiện tên khu vực ở giữa phía trên vài giây rồi mờ đi. */
-  private showAreaName(name: string): void {
+  /** Hiện một dòng (tên khu vực, tên khoảng) ở giữa phía trên vài giây rồi mờ đi. */
+  private showToast(name: string): void {
     const label = this.add
-      .text(GAME_WIDTH / 2, 10, name, { fontFamily: FONT_FAMILY, fontSize: "16px", color: "#ffffff", backgroundColor: "#10182bcc", padding: { x: 6, y: 2 } })
+      .text(GAME_WIDTH / 2, 34, name, { fontFamily: FONT_FAMILY, fontSize: "16px", color: "#ffffff", backgroundColor: "#10182bcc", padding: { x: 6, y: 2 } })
       .setOrigin(0.5, 0)
       .setScrollFactor(0)
       .setDepth(19998)
@@ -192,6 +206,73 @@ export class AreaScene extends Phaser.Scene {
       ],
       onComplete: () => label.destroy(),
     });
+  }
+
+  /** Bỏ các lần nhấn cũ chưa xử lý để không kích hoạt nhầm khi chuyển chế độ (menu, hộp thoại...). */
+  private drainPresses(): void {
+    const a = this.session.actions;
+    for (const k of ["up", "down", "left", "right", "interact", "menu"] as const) a.consumePressed(k);
+  }
+
+  /** Tiêu hao `n` khoảng: hết khoảng cuối → tổng kết ngày; hết ngày cuối → hết thời gian. */
+  private spendPeriods(n: number): void {
+    const { time, state } = this.session;
+    const endedWeekday = WEEKDAY_NAMES[(time.day - 1) % WEEKDAY_NAMES.length];
+    const r = advancePeriods(time, n);
+    Object.assign(state, applyTime(state, time));
+    if (r.timeEnded) {
+      this.overlay.show(
+        { title: "Hết thời gian", lines: [`Đã hết ${time.totalDays} ngày học.`, "(Phần kết thúc sẽ có ở bản sau.)"], hint: this.sys.game.device.input.touch ? "Chạm để chơi lại" : "[E] Chơi lại" },
+        () => this.restartGame(),
+      );
+    } else if (r.dayEnded !== null) {
+      this.overlay.show(
+        { title: `Hết ngày ${r.dayEnded}`, lines: [endedWeekday, `Ngày mai: ${time.weekdayName}`], hint: this.sys.game.device.input.touch ? "Chạm để sang ngày mới" : "[E] Sang ngày mới" },
+        () => this.startNextDay(),
+      );
+    } else if (n > 0) {
+      this.showToast(time.periodName);
+    }
+    this.drainPresses();
+  }
+
+  /** Ngày mới luôn bắt đầu ở cổng trường, khoảng đầu tiên. */
+  private startNextDay(): void {
+    this.transitioning = true;
+    this.session.state.areaId = "cong-truong";
+    const cam = this.cameras.main;
+    cam.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.restart({ areaId: "cong-truong", spawn: "default" } satisfies AreaSceneData));
+    cam.fadeOut(FADE_MS, 0, 0, 0);
+  }
+
+  private restartGame(): void {
+    this.registry.set("session", createSession(this.session.content));
+    this.transitioning = true;
+    const cam = this.cameras.main;
+    cam.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.restart({ areaId: "cong-truong", spawn: "default" } satisfies AreaSceneData));
+    cam.fadeOut(FADE_MS, 0, 0, 0);
+  }
+
+  private openPauseMenu(): void {
+    this.drainPresses();
+    this.menu.show("Tạm dừng", [
+      { label: "Tiếp tục", onSelect: () => this.menu.close() },
+      {
+        label: "Nghỉ/Chờ (bỏ qua một khoảng)",
+        onSelect: () => {
+          this.menu.close();
+          this.dialog.show(["Bạn nghỉ một lát, chờ thời gian trôi."], () => this.spendPeriods(1));
+        },
+      },
+    ]);
+  }
+
+  private freezePlayer(): void {
+    const body = this.player.body as Phaser.Physics.Arcade.Body;
+    body.setVelocity(0, 0);
+    this.player.anims.stop();
+    this.player.setFrame(`player_${this.facing}_0`);
+    this.prompt.setVisible(false);
   }
 
   private playerRect(): Phaser.Geom.Rectangle {
@@ -215,15 +296,30 @@ export class AreaScene extends Phaser.Scene {
   }
 
   update(): void {
-    const { actions } = this.session;
+    const { actions, time } = this.session;
     const body = this.player.body as Phaser.Physics.Arcade.Body;
     this.player.setDepth(this.player.y);
+    this.hud.update(time, this.areaName);
+
+    if (this.overlay.isOpen) {
+      this.freezePlayer();
+      actions.consumePressed("menu");
+      if (actions.consumePressed("interact") && !this.transitioning) this.overlay.confirm();
+      return;
+    }
+
+    if (this.menu.isOpen) {
+      this.freezePlayer();
+      if (actions.consumePressed("up")) this.menu.move(-1);
+      if (actions.consumePressed("down")) this.menu.move(1);
+      if (actions.consumePressed("interact")) this.menu.select();
+      else if (actions.consumePressed("menu")) this.menu.close();
+      return;
+    }
 
     if (this.dialog.isOpen) {
-      body.setVelocity(0, 0);
-      this.player.anims.stop();
-      this.player.setFrame(`player_${this.facing}_0`);
-      this.prompt.setVisible(false);
+      this.freezePlayer();
+      actions.consumePressed("menu");
       if (actions.consumePressed("interact")) this.dialog.advance();
       return;
     }
@@ -248,6 +344,11 @@ export class AreaScene extends Phaser.Scene {
 
     this.session.state.position = { x: Math.round(this.player.x), y: Math.round(this.player.y) };
 
+    if (actions.consumePressed("menu")) {
+      this.openPauseMenu();
+      return;
+    }
+
     // lối ra
     const pr = this.playerRect();
     const zone = this.exits.find((z) => Phaser.Geom.Intersects.RectangleToRectangle(pr, z.rect));
@@ -268,7 +369,14 @@ export class AreaScene extends Phaser.Scene {
     }
     if (actions.consumePressed("interact") && near) {
       const pages = near.text.split("\n");
-      this.dialog.show(pages, near.kind === "activity" ? () => this.game.events.emit(ACTIVITY_EVENT, { name: near.name, label: near.label, cost: near.cost }) : undefined);
+      const onClose =
+        near.kind === "activity"
+          ? () => {
+              this.game.events.emit(ACTIVITY_EVENT, { name: near.name, label: near.label, cost: near.cost });
+              this.spendPeriods(near.cost);
+            }
+          : undefined;
+      this.dialog.show(pages, onClose);
     }
   }
 }
