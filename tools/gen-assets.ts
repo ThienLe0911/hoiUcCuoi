@@ -764,6 +764,13 @@ const PLAYER: Look = { hair: C.hair, girl: false };
 });
 put("student_boy", person("down", 0, { hair: "#3a2a22", girl: false }), 0, 24);
 put("student_girl", person("down", 0, { hair: "#1c1c26", girl: true }), 16, 24);
+// NPC chính (feature he-thong-npc-va-lich): phân biệt bằng tóc/giới (placeholder tự tạo,
+// thay bản vẽ tay sau mà không đổi code miễn giữ tên khung).
+put("npc_thu", person("down", 0, { hair: "#3a2a22", girl: true }), 32, 24); // Trịnh Minh Thư (lớp trưởng)
+put("npc_kiet", person("down", 0, { hair: "#2f2418", girl: false }), 48, 24); // Nguyễn Trần Anh Kiệt (bạn thân)
+put("npc_huy", person("down", 0, { hair: "#5a4a3a", girl: false }), 64, 24); // Lê Hoàng Huy (cá biệt)
+put("npc_ngan_trinh", person("down", 0, { hair: "#6b4a8a", girl: true }), 80, 24); // Nguyễn Ngọc Ngân Trinh (văn nghệ)
+put("npc_nguyen", person("down", 0, { hair: "#1c1c26", girl: true }), 96, 24); // Hồ Thị Phương Nguyên (biến mất)
 put("bus_67", busSprite(), 0, 48);
 put("cart_kem", cartSprite(32, "kem", C.pink, C.pinkDark, C.pink, C.white, "KEM"), 80, 48);
 put("cart_chao_long", cartSprite(40, "chao", C.gray, C.grayDark, C.yellow, C.redDark, "CHAO LONG"), 112, 48);
