@@ -14,23 +14,48 @@ const areas = validateAreas(structuredClone(areasJson), { fileExists: () => true
 const npcIds = new Set(npcs.npcs.map((n) => n.id));
 const areaIds = new Set(areas.areas.map((a) => a.id));
 
-// cellBlocked dựng từ bản đồ thật (nạp .tmj qua vite glob như src/data/content.ts).
+// bản đồ thật (nạp .tmj qua vite glob như src/data/content.ts).
 const rawMaps = import.meta.glob("../data/maps/*.tmj", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const parsedMaps = new Map<string, any>();
 const grids = new Map<string, (x: number, y: number) => boolean>();
 for (const [path, text] of Object.entries(rawMaps)) {
-  grids.set("maps/" + path.split("/").pop(), collisionGrid(JSON.parse(text)));
+  const key = "maps/" + path.split("/").pop();
+  const map = JSON.parse(text);
+  parsedMaps.set(key, map);
+  grids.set(key, collisionGrid(map));
 }
-const gridFor = (areaId: string): ((x: number, y: number) => boolean) => {
-  const a = areas.areas.find((ar) => ar.id === areaId);
-  return (a && grids.get(a.mapFile)) || (() => true);
+const mapFileFor = (areaId: string): string | undefined => areas.areas.find((ar) => ar.id === areaId)?.mapFile;
+const cellBlocked = (area: string, x: number, y: number): boolean => {
+  const f = mapFileFor(area);
+  const g = f ? grids.get(f) : undefined;
+  return g ? g(x, y) : true;
 };
-const cellBlocked = (area: string, x: number, y: number): boolean => gridFor(area)(x, y);
+const onExit = (area: string, x: number, y: number): boolean => {
+  const f = mapFileFor(area);
+  const map = f && parsedMaps.get(f);
+  const objs = map?.layers?.find((l: { name: string }) => l.name === "objects")?.objects ?? [];
+  for (const o of objs) {
+    if (o.type !== "exit") continue;
+    if (x >= o.x / 16 && x < (o.x + o.width) / 16 && y >= o.y / 16 && y < (o.y + o.height) / 16) return true;
+  }
+  return false;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function firstExitCell(areaId: string): [number, number] {
+  const map = parsedMaps.get(mapFileFor(areaId)!);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const o = map.layers.find((l: { name: string }) => l.name === "objects").objects.find((x: any) => x.type === "exit");
+  return [o.x / 16, o.y / 16];
+}
 
 const opts = {
   maxDay: 6,
   npcExists: (id: string) => npcIds.has(id),
   areaExists: (id: string) => areaIds.has(id),
   cellBlocked,
+  onExit,
 };
 
 describe("schedules.json — tra cứu (T4)", () => {
@@ -80,5 +105,18 @@ describe("schedules.json — kiểm tra hợp lệ (T5)", () => {
     const d = real();
     d.schedules.push({ ...d.schedules[0] });
     expect(() => validateSchedules(d, opts)).toThrow(/trùng mục lịch/);
+  });
+
+  it("đặt NPC lên ô lối exit bị bắt (FR4.3/BR3)", () => {
+    const d = real();
+    const [ex, ey] = firstExitCell("cong-truong");
+    d.schedules[0] = { npc: "thu", day: 1, period: 0, area: "cong-truong", x: ex, y: ey, facing: "down" };
+    expect(() => validateSchedules(d, opts)).toThrow(/lối exit/);
+  });
+
+  it("mục 'mọi thời tiết' trùng mục theo thời tiết cùng (npc,day,period) bị bắt (M2)", () => {
+    const d = real();
+    d.schedules.push({ npc: "em-lop-10", day: 5, period: 0, area: "hanh-lang-lop-10", x: 11, y: 5, facing: "down" });
+    expect(() => validateSchedules(d, opts)).toThrow(/mọi thời tiết/);
   });
 });

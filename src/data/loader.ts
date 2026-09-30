@@ -108,6 +108,8 @@ export interface ScheduleValidateOptions {
   areaExists?: (areaId: string) => boolean;
   /** Nếu có: ô (area,x,y) có bị cản không (dùng cho T5). */
   cellBlocked?: (areaId: string, x: number, y: number) => boolean;
+  /** Nếu có: ô (area,x,y) có nằm trên lối exit không (NPC không được đè, FR4.3/BR3). */
+  onExit?: (areaId: string, x: number, y: number) => boolean;
 }
 
 export function validateSchedules(raw: unknown, opts: ScheduleValidateOptions = {}): SchedulesFile {
@@ -127,7 +129,21 @@ export function validateSchedules(raw: unknown, opts: ScheduleValidateOptions = 
     if (opts.npcExists && !opts.npcExists(e.npc)) errors.push(`${at}.npc: NPC '${e.npc}' không tồn tại trong data/npcs.json`);
     if (opts.areaExists && !opts.areaExists(e.area)) errors.push(`${at}.area: khu vực '${e.area}' không tồn tại`);
     if (opts.cellBlocked && opts.cellBlocked(e.area, e.x, e.y)) errors.push(`${at}: ô (${e.x},${e.y}) trong '${e.area}' bị cản, không đặt NPC được`);
+    if (opts.onExit && opts.onExit(e.area, e.x, e.y)) errors.push(`${at}: ô (${e.x},${e.y}) trong '${e.area}' nằm trên lối exit, không đặt NPC được`);
   });
+
+  // Chống trùng: cùng (npc, day, period) không được có cả mục "mọi thời tiết" lẫn mục theo thời tiết
+  // (khi đó npcsInArea trả 2 vị trí cho 1 NPC, còn npcPosition chỉ lấy 1 → không nhất quán).
+  const byNpcDayPeriod = new Map<string, Set<string>>();
+  for (const e of data.schedules) {
+    const gk = `${e.npc}|${e.day}|${e.period}`;
+    if (!byNpcDayPeriod.has(gk)) byNpcDayPeriod.set(gk, new Set());
+    byNpcDayPeriod.get(gk)!.add(e.weather ?? "*");
+  }
+  for (const [gk, ws] of byNpcDayPeriod) {
+    if (ws.has("*") && ws.size > 1) errors.push(`${source}: (${gk}) có cả mục 'mọi thời tiết' lẫn mục theo thời tiết — gây trùng NPC`);
+  }
+
   if (errors.length) fail(source, errors);
   return data;
 }

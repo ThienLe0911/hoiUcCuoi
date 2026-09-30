@@ -8,6 +8,7 @@ import { validateAreas, validateNpcs, validateWeather, validateSchedules } from 
 import type { AreaDef, NpcDef, ScheduleEntry, WeatherFile } from "./schema";
 import { collisionGrid } from "../core/mapgrid";
 import { PERIODS_PER_DAY } from "../core/time";
+import { TOTAL_DAYS } from "../config";
 
 const rawMaps = import.meta.glob("../../data/maps/*.tmj", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
 
@@ -36,7 +37,7 @@ export function loadContent(): Content {
 
   const npcsData = validateNpcs(npcsJson);
   const npcs = new Map(npcsData.npcs.map((n) => [n.id, n]));
-  const weatherData = validateWeather(weatherJson);
+  const weatherData = validateWeather(weatherJson, { maxDay: TOTAL_DAYS });
 
   // cellBlocked dựng từ lớp collision của bản đồ mỗi khu vực (để kiểm tra vị trí lịch).
   const gridCache = new Map<string, (x: number, y: number) => boolean>();
@@ -51,10 +52,24 @@ export function loadContent(): Content {
     return grid(x, y);
   };
 
+  // onExit: ô có nằm trên vùng lối exit của khu vực không (NPC không được đè, FR4.3/BR3).
+  const onExit = (areaId: string, x: number, y: number): boolean => {
+    const area = areas.get(areaId);
+    const map = area && (maps.get(area.mapFile) as { layers?: { name: string; objects?: { type: string; x: number; y: number; width: number; height: number }[] }[] });
+    const objs = map?.layers?.find((l) => l.name === "objects")?.objects ?? [];
+    for (const o of objs) {
+      if (o.type !== "exit") continue;
+      if (x >= o.x / 16 && x < (o.x + o.width) / 16 && y >= o.y / 16 && y < (o.y + o.height) / 16) return true;
+    }
+    return false;
+  };
+
   const schedulesData = validateSchedules(schedulesJson, {
+    maxDay: TOTAL_DAYS,
     npcExists: (id) => npcs.has(id),
     areaExists: (id) => areas.has(id),
     cellBlocked,
+    onExit,
   });
 
   // period trong lịch phải nằm trong 0..PERIODS_PER_DAY-1 (an toàn kép cùng schema).
