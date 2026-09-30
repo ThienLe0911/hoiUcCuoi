@@ -11,6 +11,7 @@ import { Dialog } from "../ui/Dialog";
 import { Hud } from "../ui/Hud";
 import { Menu } from "../ui/Menu";
 import { Overlay } from "../ui/Overlay";
+import { TouchControls } from "../ui/TouchControls";
 
 const SPEED = 60; // px/giây
 const FADE_MS = 250; // ≤ 0,5 s (FR3.3)
@@ -63,6 +64,8 @@ export class AreaScene extends Phaser.Scene {
   private menu!: Menu;
   private overlay!: Overlay;
   private areaName = "";
+  private touch = false;
+  private touchControls?: TouchControls;
   private prompt!: Phaser.GameObjects.Text;
   private interactPoints: InteractPoint[] = [];
   private exits: ExitZone[] = [];
@@ -148,13 +151,14 @@ export class AreaScene extends Phaser.Scene {
 
     // giao diện
     this.areaName = area.name;
-    this.dialog = new Dialog(this);
+    this.touch = this.sys.game.device.input.touch || new URLSearchParams(location.search).has("touch");
+    this.dialog = new Dialog(this, this.touch);
     this.hud = new Hud(this);
     this.menu = new Menu(this);
     this.overlay = new Overlay(this);
     this.prompt = this.add
-      .text(8, GAME_HEIGHT - 16, "", { fontFamily: FONT_FAMILY, fontSize: "12px", color: "#ffffff", backgroundColor: "#10182bcc", padding: { x: 3, y: 1 } })
-      .setOrigin(0, 0)
+      .text(this.touch ? GAME_WIDTH - 8 : 8, this.touch ? 104 : GAME_HEIGHT - 16, "", { fontFamily: FONT_FAMILY, fontSize: "12px", color: "#ffffff", backgroundColor: "#10182bcc", padding: { x: 3, y: 1 } })
+      .setOrigin(this.touch ? 1 : 0, 0)
       .setScrollFactor(0)
       .setDepth(19999)
       .setVisible(false);
@@ -166,7 +170,18 @@ export class AreaScene extends Phaser.Scene {
     // đầu vào
     actions.reset();
     this.detachKeyboard = attachKeyboard(actions);
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.detachKeyboard?.());
+    if (this.touch) {
+      this.touchControls = new TouchControls(this, actions);
+      // màn hình phủ (tổng kết ngày...): chạm bất kỳ đâu để tiếp tục
+      this.input.on("pointerdown", () => {
+        if (this.overlay.isOpen && !this.transitioning) this.overlay.confirm();
+      });
+    }
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.detachKeyboard?.();
+      this.touchControls?.destroy();
+      this.touchControls = undefined;
+    });
   }
 
   /** Đi qua một lối ra: khu vực khóa thì báo "Bị khóa", ngược lại chuyển cảnh. */
@@ -222,12 +237,12 @@ export class AreaScene extends Phaser.Scene {
     Object.assign(state, applyTime(state, time));
     if (r.timeEnded) {
       this.overlay.show(
-        { title: "Hết thời gian", lines: [`Đã hết ${time.totalDays} ngày học.`, "(Phần kết thúc sẽ có ở bản sau.)"], hint: this.sys.game.device.input.touch ? "Chạm để chơi lại" : "[E] Chơi lại" },
+        { title: "Hết thời gian", lines: [`Đã hết ${time.totalDays} ngày học.`, "(Phần kết thúc sẽ có ở bản sau.)"], hint: this.touch ? "Chạm để chơi lại" : "[E] Chơi lại" },
         () => this.restartGame(),
       );
     } else if (r.dayEnded !== null) {
       this.overlay.show(
-        { title: `Hết ngày ${r.dayEnded}`, lines: [endedWeekday, `Ngày mai: ${time.weekdayName}`], hint: this.sys.game.device.input.touch ? "Chạm để sang ngày mới" : "[E] Sang ngày mới" },
+        { title: `Hết ngày ${r.dayEnded}`, lines: [endedWeekday, `Ngày mai: ${time.weekdayName}`], hint: this.touch ? "Chạm để sang ngày mới" : "[E] Sang ngày mới" },
         () => this.startNextDay(),
       );
     } else if (n > 0) {
@@ -300,6 +315,7 @@ export class AreaScene extends Phaser.Scene {
     const body = this.player.body as Phaser.Physics.Arcade.Body;
     this.player.setDepth(this.player.y);
     this.hud.update(time, this.areaName);
+    this.touchControls?.update();
 
     if (this.overlay.isOpen) {
       this.freezePlayer();
@@ -362,7 +378,7 @@ export class AreaScene extends Phaser.Scene {
     // tương tác
     const near = this.nearestInteract();
     if (near) {
-      const key = this.sys.game.device.input.touch ? "" : "[E] ";
+      const key = this.touch ? "" : "[E] ";
       this.prompt.setText(key + near.label).setVisible(true);
     } else {
       this.prompt.setVisible(false);

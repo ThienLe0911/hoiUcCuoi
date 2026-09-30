@@ -13,7 +13,8 @@ export class Dialog {
   private onClose?: () => void;
   private open = false;
 
-  constructor(scene: Phaser.Scene) {
+  /** `top`: đặt hộp thoại ở phía trên (khi có điều khiển cảm ứng ở phía dưới). */
+  constructor(scene: Phaser.Scene, top = false) {
     const w = GAME_WIDTH - MARGIN * 2;
     const bg = scene.add.rectangle(0, 0, w, BOX_H, 0x10182b, 0.92).setOrigin(0, 0);
     bg.setStrokeStyle(1, 0xf2e6bc);
@@ -21,7 +22,7 @@ export class Dialog {
       .text(6, 4, "", { fontFamily: FONT_FAMILY, fontSize: "12px", color: "#ffffff", wordWrap: { width: w - 20 }, lineSpacing: -2 })
       .setOrigin(0, 0);
     const hint = scene.add.text(w - 10, BOX_H - 12, "▼", { fontFamily: FONT_FAMILY, fontSize: "10px", color: "#f2e6bc" }).setOrigin(0, 0);
-    this.box = scene.add.container(MARGIN, GAME_HEIGHT - BOX_H - MARGIN, [bg, this.text, hint]);
+    this.box = scene.add.container(MARGIN, top ? 34 : GAME_HEIGHT - BOX_H - MARGIN, [bg, this.text, hint]);
     this.box.setScrollFactor(0).setDepth(20000).setVisible(false);
   }
 

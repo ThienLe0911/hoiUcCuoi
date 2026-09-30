@@ -20,6 +20,7 @@ async function start(): Promise<void> {
     backgroundColor: "#000000",
     pixelArt: true,
     roundPixels: true,
+    input: { activePointers: 4 },
     physics: { default: "arcade", arcade: { debug: false } },
     scale: {
       mode: Phaser.Scale.FIT,
