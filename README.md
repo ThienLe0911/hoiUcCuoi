@@ -13,7 +13,7 @@ npm install
 npm run dev
 ```
 
-Mở `http://localhost:5173`. Xem thẳng một khu vực (chỉ khi chạy dev): `?area=san-chinh` (các id khác: `cong-truong`, `hanh-lang-lop-12`, `hanh-lang-lop-10`, `san-the-chat`, `san-thuong`). Thử giao diện cảm ứng trên máy tính: `?touch=1`.
+Mở `http://localhost:5173`. Xem thẳng một khu vực (chỉ khi chạy dev): `?area=san-chinh` (các id khác: `cong-truong`, `hanh-lang-lop-12`, `hanh-lang-lop-10`, `san-the-chat`, `san-thuong`). Đặt thời gian để xem NPC/mưa (chỉ dev): `?day=5&period=0` (Ngày 5 mưa; kết hợp `&area=cong-truong`). Thử giao diện cảm ứng trên máy tính: `?touch=1`.
 
 Thử trên điện thoại qua Wi-Fi nội bộ:
 
@@ -73,6 +73,16 @@ Bản đồ là file Tiled JSON (`data/maps/<id>.tmj`, ô 16×16). Định dạn
 - Cách bằng code: sửa `tools/gen-maps.ts` rồi `npm run gen-maps`. Lệnh này **ghi đè** tất cả `.tmj`, đừng chạy nếu bạn đã chỉnh tay trong Tiled.
 - Lối nối khu vực, điểm xuất hiện, khu vực khóa: `data/areas.json`. Dữ liệu sai sẽ hiện lỗi chỉ rõ chỗ sai ngay khi khởi động game.
 - Sau khi sửa, chạy `npm test` (kiểm tra cấu trúc bản đồ) và `npm run render-maps` (xem ảnh).
+
+## NPC, lịch, thời tiết
+
+Nội dung NPC nằm trong `data/` (JSON + kiểm tra bằng zod khi khởi động, [ADR 004](docs/architecture/decisions/004-dinh-dang-du-lieu-noi-dung.md)):
+
+- `data/npcs.json` — danh sách NPC: `id`, `name`, `kind` (`main`/`extra`), `frame` (khung sprite), `interactable`, `line` (câu thoại tối thiểu).
+- `data/schedules.json` — lịch: mỗi mục `npc`, `day` (1–6), `period` (0–3), `area`, `x`, `y` (ô), `facing`; thêm `weather` (`sunny`/`rainy`) nếu chỉ áp dụng khi thời tiết đó.
+- `data/weather.json` — thời tiết theo ngày (MVP: Ngày 5 mưa).
+
+NPC đứng yên theo lịch, là vật cản (không đi xuyên), trò chuyện hiện thoại tối thiểu (không tiêu khoảng). Dữ liệu sai (NPC/khu vực không tồn tại, đặt vào ô tường, trùng lịch) sẽ báo lỗi chỉ rõ chỗ sai ngay khi khởi động. Xem thêm: [spec](docs/features/he-thong-npc-va-lich/spec.md), [GDD kịch bản](docs/product/kich-ban-mvp.md).
 
 ## Thay đồ họa
 

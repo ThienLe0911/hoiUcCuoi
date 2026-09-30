@@ -9,6 +9,7 @@ import { applyTime } from "../core/state";
 import { WEEKDAY_NAMES } from "../core/time";
 import { weatherOfDay } from "../core/weather";
 import { npcsInArea } from "../core/schedule";
+import { rainShown } from "../core/outdoor";
 import type { NpcDef } from "../data/schema";
 import { Dialog } from "../ui/Dialog";
 import { Hud } from "../ui/Hud";
@@ -18,7 +19,6 @@ import { Rain } from "../ui/Rain";
 import { TouchControls } from "../ui/TouchControls";
 
 const SPEED = 60; // px/giây
-const OUTDOOR_AREAS = new Set(["cong-truong", "san-chinh", "san-the-chat"]); // khu ngoài trời (mưa phủ)
 const FADE_MS = 250; // ≤ 0,5 s (FR3.3)
 const BODY_W = 10;
 const BODY_H = 6;
@@ -156,7 +156,7 @@ export class AreaScene extends Phaser.Scene {
 
     // Hiệu ứng mưa (T9): chỉ khu ngoài trời vào ngày mưa
     const weather = weatherOfDay(content.weather, this.session.time.day);
-    if (weather === "rainy" && OUTDOOR_AREAS.has(area.id)) this.rain = new Rain(this);
+    if (rainShown(area.id, weather)) this.rain = new Rain(this);
 
     // camera: bám nhân vật; khu nhỏ hơn màn hình thì căn giữa
     const cam = this.cameras.main;

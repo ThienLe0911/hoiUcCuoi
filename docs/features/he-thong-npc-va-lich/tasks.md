@@ -4,6 +4,9 @@
 - Ngày: 2026-09-30
 - Căn cứ: `spec.md` (Approved), GDD `docs/product/kich-ban-mvp.md` (Approved), ADR 001–004 (Accepted).
 
+## Tiến độ (2026-09-30)
+**Đã xong:** T1–T9, T11, T12 (84 test xanh, build 1,6 MB, kiểm chứng trực quan NPC + tương tác + mưa trong trình duyệt). T2∥T3 chạy bằng subagent `dev` (worktree), đã gộp. **Bỏ T10** (vẽ NPC trong preview — tùy chọn, không cần cho MVP). Nhánh: `feat/he-thong-npc-va-lich`.
+
 ## Thư viện
 **Không cần thư viện mới.** Hạt mưa dùng particle sẵn có của Phaser; kiểm thử dùng `vitest` (đã có). Nếu phát sinh nhu cầu lib mới khi implement sẽ hỏi duyệt trước (PM Charter mục 1).
 
