@@ -573,6 +573,9 @@ type Dir = "down" | "up" | "left" | "right";
 interface Look {
   hair: string;
   girl: boolean;
+  top?: string; // màu áo (mặc định áo trắng học sinh)
+  hat?: { kind: "cap" | "kepi" | "chef"; color: string };
+  apron?: boolean; // tạp dề trắng (người bán)
 }
 
 /** Người 16×24. frame: 0 = đứng, 1..4 = đi. */
@@ -610,12 +613,20 @@ function person(dir: Dir, frame: number, look: Look): Img {
     s.rect(5, oy + 11, 6, 4, C.pants);
     s.rect(5, oy + 14, 6, 1, C.pantsDark);
   }
-  // thân áo trắng
-  s.rect(5, oy + 6, 6, 6, C.shirt);
+  // thân áo (mặc định trắng học sinh; NPC người lớn dùng look.top)
+  const top = look.top ?? C.shirt;
+  s.rect(5, oy + 6, 6, 6, top);
   s.rect(5, oy + 11, 6, 1, C.shirtShade);
   if (!back) {
     s.px(8, oy + 7, look.girl ? C.red : C.shirtShade);
     s.px(8, oy + 8, look.girl ? C.red : C.shirtShade);
+  }
+  // tạp dề trắng (người bán): tấm trước ngực + dây
+  if (look.apron && !back) {
+    s.rect(6, oy + 7, 4, 5, C.white);
+    s.rect(6, oy + 7, 4, 1, C.shirtShade);
+    s.px(6, oy + 6, C.white);
+    s.px(9, oy + 6, C.white);
   }
   // tay
   const armL = swing > 0 ? -1 : swing < 0 ? 1 : 0;
@@ -653,8 +664,32 @@ function person(dir: Dir, frame: number, look: Look): Img {
       s.rect(11, oy + 2, 1, 5, look.hair);
     }
   }
+  // mũ (NPC người lớn): vành trên trán, tùy loại
+  if (look.hat) {
+    const { kind, color } = look.hat;
+    s.rect(4, oy - 2, 8, 3, color);
+    s.rect(4, oy - 2, 8, 1, C.white);
+    if (kind === "chef") {
+      s.rect(4, oy - 4, 8, 3, C.white);
+      s.rect(4, oy - 4, 8, 1, C.gray);
+    }
+    if ((kind === "kepi" || kind === "cap") && !back) s.rect(4, oy + 1, 9, 1, C.outline); // lưỡi trai
+  }
+
   s.outline(C.outline);
   return s;
+}
+
+/** Ghép cây chổi vào tay phải (đạo cụ cho lao công). */
+function withBroom(img: Img): Img {
+  const o = new Img(img.w, img.h);
+  o.blit(img, 0, 0);
+  // cán chổi chéo từ vai phải xuống
+  for (let i = 0; i < 12; i++) o.px(12 + Math.floor(i / 6), 10 + i, C.woodDark);
+  // chùm chổi
+  o.rect(12, 21, 4, 3, C.paverShade);
+  o.rect(12, 23, 4, 1, C.woodDark);
+  return o;
 }
 
 function busSprite(): Img {
@@ -764,6 +799,21 @@ const PLAYER: Look = { hair: C.hair, girl: false };
 });
 put("student_boy", person("down", 0, { hair: "#3a2a22", girl: false }), 0, 24);
 put("student_girl", person("down", 0, { hair: "#1c1c26", girl: true }), 16, 24);
+// NPC chính (feature he-thong-npc-va-lich): phân biệt bằng tóc/giới (placeholder tự tạo,
+// thay bản vẽ tay sau mà không đổi code miễn giữ tên khung).
+put("npc_thu", person("down", 0, { hair: "#3a2a22", girl: true }), 32, 24); // Trịnh Minh Thư (lớp trưởng)
+put("npc_kiet", person("down", 0, { hair: "#2f2418", girl: false }), 48, 24); // Nguyễn Trần Anh Kiệt (bạn thân)
+put("npc_huy", person("down", 0, { hair: "#5a4a3a", girl: false }), 64, 24); // Lê Hoàng Huy (cá biệt)
+put("npc_ngan_trinh", person("down", 0, { hair: "#6b4a8a", girl: true }), 80, 24); // Nguyễn Ngọc Ngân Trinh (văn nghệ)
+put("npc_nguyen", person("down", 0, { hair: "#1c1c26", girl: true }), 96, 24); // Hồ Thị Phương Nguyên (biến mất)
+// NPC người lớn/hàng quán: sprite riêng, khác trang phục/mũ + đạo cụ (FR8.2).
+put("npc_bao_ve", person("down", 0, { hair: "#2a2a36", girl: false, top: "#6b7a52", hat: { kind: "kepi", color: "#4a5a34" } }), 112, 24); // bảo vệ/giám thị
+put("npc_lao_cong", withBroom(person("down", 0, { hair: "#8a8a90", girl: false, top: "#5a7a4a" })), 128, 24); // lao công + chổi
+put("npc_ban_kem", person("down", 0, { hair: "#3a2a22", girl: true, top: C.pink, apron: true, hat: { kind: "chef", color: C.white } }), 144, 24); // cô bán kem
+put("npc_chao_long", person("down", 0, { hair: "#3a2a22", girl: false, top: "#a9713d", apron: true }), 160, 24); // chú cháo lòng
+put("npc_tai_xe", person("down", 0, { hair: "#2a2a36", girl: false, top: C.blue, hat: { kind: "cap", color: C.blueDark } }), 176, 24); // bác tài xe buýt
+put("npc_chu_nhiem", person("down", 0, { hair: "#2a2a36", girl: true, top: C.teal }), 192, 24); // cô chủ nhiệm
+put("npc_the_duc", person("down", 0, { hair: "#2a2a36", girl: false, top: C.red, hat: { kind: "cap", color: C.redDark } }), 208, 24); // thầy thể dục
 put("bus_67", busSprite(), 0, 48);
 put("cart_kem", cartSprite(32, "kem", C.pink, C.pinkDark, C.pink, C.white, "KEM"), 80, 48);
 put("cart_chao_long", cartSprite(40, "chao", C.gray, C.grayDark, C.yellow, C.redDark, "CHAO LONG"), 112, 48);

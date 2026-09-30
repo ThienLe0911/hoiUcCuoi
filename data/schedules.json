@@ -1,0 +1,1653 @@
+{
+  "schedules": [
+    {
+      "npc": "thu",
+      "day": 1,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 1,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 1,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 1,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 2,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 2,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 2,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 2,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 3,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 3,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 3,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 3,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 4,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 4,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 4,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 4,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 5,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 5,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 5,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 5,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 6,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 6,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 6,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thu",
+      "day": 6,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 11,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 1,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 1,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 1,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 9,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 1,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 2,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 2,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 2,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 9,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 2,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 3,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 3,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 3,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 9,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 3,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 4,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 4,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 4,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 9,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 4,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 5,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 5,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 5,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 9,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 5,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 6,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 6,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 16,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 6,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 9,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "kiet",
+      "day": 6,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 1,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 1,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 13,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 1,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 2,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 2,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 13,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 2,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 3,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 3,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 13,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 3,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 4,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 4,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 13,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 4,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 5,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 5,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 13,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 5,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 6,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 6,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 13,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "huy",
+      "day": 6,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 1,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 1,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 1,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 1,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 2,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 2,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 2,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 2,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 3,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 3,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 3,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 3,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 4,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 4,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 4,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 4,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 5,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 5,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 5,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 5,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 6,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 11,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 6,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 6,
+      "period": 2,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "ngan-trinh",
+      "day": 6,
+      "period": 3,
+      "area": "hanh-lang-lop-12",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 1,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 1,
+      "period": 1,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 2,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 2,
+      "period": 1,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 3,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 3,
+      "period": 1,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 4,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 4,
+      "period": 1,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 5,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 5,
+      "period": 1,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 6,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "bao-ve",
+      "day": 6,
+      "period": 1,
+      "area": "cong-truong",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 1,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 1,
+      "period": 2,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 2,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 2,
+      "period": 2,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 3,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 3,
+      "period": 2,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 4,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 4,
+      "period": 2,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 5,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 5,
+      "period": 2,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 6,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 6,
+      "period": 2,
+      "area": "cong-truong",
+      "x": 21,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 1,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 1,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 2,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 2,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 3,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 3,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 4,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 4,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 5,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 5,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 6,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "chu-chao-long",
+      "day": 6,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-tai-xe-buyt",
+      "day": 1,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-tai-xe-buyt",
+      "day": 2,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-tai-xe-buyt",
+      "day": 3,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-tai-xe-buyt",
+      "day": 4,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-tai-xe-buyt",
+      "day": 5,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-tai-xe-buyt",
+      "day": 6,
+      "period": 3,
+      "area": "cong-truong",
+      "x": 6,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 1,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 1,
+      "period": 3,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 2,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 2,
+      "period": 3,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 3,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 3,
+      "period": 3,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 4,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 4,
+      "period": 3,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 5,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 5,
+      "period": 3,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 6,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "bac-lao-cong",
+      "day": 6,
+      "period": 3,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 10,
+      "facing": "down"
+    },
+    {
+      "npc": "hoc-sinh-nen-1",
+      "day": 1,
+      "period": 2,
+      "area": "san-chinh",
+      "x": 21,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "hoc-sinh-nen-1",
+      "day": 2,
+      "period": 2,
+      "area": "san-chinh",
+      "x": 21,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "hoc-sinh-nen-1",
+      "day": 3,
+      "period": 2,
+      "area": "san-chinh",
+      "x": 21,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "hoc-sinh-nen-1",
+      "day": 4,
+      "period": 2,
+      "area": "san-chinh",
+      "x": 21,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "hoc-sinh-nen-1",
+      "day": 5,
+      "period": 2,
+      "area": "san-chinh",
+      "x": 21,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "hoc-sinh-nen-1",
+      "day": 6,
+      "period": 2,
+      "area": "san-chinh",
+      "x": 21,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "co-chu-nhiem",
+      "day": 1,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-chu-nhiem",
+      "day": 2,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-chu-nhiem",
+      "day": 3,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-chu-nhiem",
+      "day": 4,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-chu-nhiem",
+      "day": 5,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "co-chu-nhiem",
+      "day": 6,
+      "period": 1,
+      "area": "hanh-lang-lop-12",
+      "x": 26,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 1,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 1,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 2,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 2,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 3,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 3,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 4,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 4,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 5,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 5,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 6,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nhom-bong-ro",
+      "day": 6,
+      "period": 3,
+      "area": "san-the-chat",
+      "x": 17,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 1,
+      "period": 1,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 1,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 2,
+      "period": 1,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 2,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 3,
+      "period": 1,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 3,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 4,
+      "period": 1,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 4,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 5,
+      "period": 1,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 5,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 6,
+      "period": 1,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "thay-the-duc",
+      "day": 6,
+      "period": 2,
+      "area": "san-the-chat",
+      "x": 5,
+      "y": 5,
+      "facing": "down"
+    },
+    {
+      "npc": "nguyen",
+      "day": 1,
+      "period": 0,
+      "area": "san-chinh",
+      "x": 16,
+      "y": 7,
+      "facing": "down"
+    },
+    {
+      "npc": "em-lop-10",
+      "day": 5,
+      "period": 0,
+      "area": "hanh-lang-lop-10",
+      "x": 11,
+      "y": 5,
+      "facing": "down",
+      "weather": "rainy"
+    },
+    {
+      "npc": "em-lop-10",
+      "day": 5,
+      "period": 2,
+      "area": "hanh-lang-lop-10",
+      "x": 16,
+      "y": 5,
+      "facing": "down",
+      "weather": "rainy"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "npcs": [
+    {
+      "id": "thu",
+      "name": "Trịnh Minh Thư",
+      "kind": "main",
+      "frame": "npc_thu",
+      "interactable": true,
+      "line": "Trực nhật xong chưa? Tuần này lớp mình bị nhắc rồi đấy."
+    },
+    {
+      "id": "kiet",
+      "name": "Nguyễn Trần Anh Kiệt",
+      "kind": "main",
+      "frame": "npc_kiet",
+      "interactable": true,
+      "line": "Ê Thiện! Lát ra chơi làm ván gì không?"
+    },
+    {
+      "id": "huy",
+      "name": "Lê Hoàng Huy",
+      "kind": "main",
+      "frame": "npc_huy",
+      "interactable": true,
+      "line": "Nhìn gì? Không có gì đâu mà xem."
+    },
+    {
+      "id": "ngan-trinh",
+      "name": "Nguyễn Ngọc Ngân Trinh",
+      "kind": "main",
+      "frame": "npc_ngan_trinh",
+      "interactable": true,
+      "line": "Tiết mục bế giảng tập hoài chưa xong, mệt ghê."
+    },
+    {
+      "id": "nguyen",
+      "name": "Hồ Thị Phương Nguyên",
+      "kind": "main",
+      "frame": "npc_nguyen",
+      "interactable": true,
+      "line": "Ừ… lâu rồi mới gặp lại cậu."
+    },
+    {
+      "id": "bao-ve",
+      "name": "Bác bảo vệ / giám thị",
+      "kind": "extra",
+      "frame": "npc_bao_ve",
+      "interactable": true,
+      "line": "Vào lớp đi, sắp trống rồi đó!"
+    },
+    {
+      "id": "co-ban-kem",
+      "name": "Cô bán kem",
+      "kind": "extra",
+      "frame": "npc_ban_kem",
+      "interactable": true,
+      "line": "Kem ốc quế hay kem ly đây con?"
+    },
+    {
+      "id": "chu-chao-long",
+      "name": "Chú xe cháo lòng",
+      "kind": "extra",
+      "frame": "npc_chao_long",
+      "interactable": true,
+      "line": "Cháo lòng nóng đây, ăn không cháu?"
+    },
+    {
+      "id": "bac-tai-xe-buyt",
+      "name": "Bác tài xe buýt 67",
+      "kind": "extra",
+      "frame": "npc_tai_xe",
+      "interactable": true,
+      "line": "Xe sắp chạy, lên nhanh nào!"
+    },
+    {
+      "id": "bac-lao-cong",
+      "name": "Bác lao công",
+      "kind": "extra",
+      "frame": "npc_lao_cong",
+      "interactable": true,
+      "line": "Để bác quét cho sạch cái sân này."
+    },
+    {
+      "id": "hoc-sinh-nen-1",
+      "name": "Học sinh nền",
+      "kind": "extra",
+      "frame": "student_boy",
+      "interactable": false,
+      "line": "Nghe nói cuối tuần có bài kiểm tra đó."
+    },
+    {
+      "id": "co-chu-nhiem",
+      "name": "Cô chủ nhiệm",
+      "kind": "extra",
+      "frame": "npc_chu_nhiem",
+      "interactable": true,
+      "line": "Em nhớ nộp bài đầy đủ nhé."
+    },
+    {
+      "id": "em-lop-10",
+      "name": "Em lớp 10",
+      "kind": "extra",
+      "frame": "student_girl",
+      "interactable": true,
+      "line": "Mưa to quá, em đứng đây trú nhờ chút ạ."
+    },
+    {
+      "id": "nhom-bong-ro",
+      "name": "Nhóm bóng rổ",
+      "kind": "extra",
+      "frame": "student_boy",
+      "interactable": true,
+      "line": "Vào chơi một chân không?"
+    },
+    {
+      "id": "thay-the-duc",
+      "name": "Thầy thể dục",
+      "kind": "extra",
+      "frame": "npc_the_duc",
+      "interactable": true,
+      "line": "Khởi động kỹ rồi hãy chơi nghe."
+    }
+  ]
+}

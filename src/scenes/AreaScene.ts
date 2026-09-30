@@ -7,10 +7,15 @@ import { attachKeyboard } from "../core/keyboard";
 import { createSession, type Session } from "../core/session";
 import { applyTime } from "../core/state";
 import { WEEKDAY_NAMES } from "../core/time";
+import { weatherOfDay } from "../core/weather";
+import { npcsInArea } from "../core/schedule";
+import { rainShown } from "../core/outdoor";
+import type { NpcDef } from "../data/schema";
 import { Dialog } from "../ui/Dialog";
 import { Hud } from "../ui/Hud";
 import { Menu } from "../ui/Menu";
 import { Overlay } from "../ui/Overlay";
+import { Rain } from "../ui/Rain";
 import { TouchControls } from "../ui/TouchControls";
 
 const SPEED = 60; // px/giây
@@ -70,6 +75,9 @@ export class AreaScene extends Phaser.Scene {
   private interactPoints: InteractPoint[] = [];
   private exits: ExitZone[] = [];
   private detachKeyboard?: () => void;
+  private npcGroup!: Phaser.Physics.Arcade.Group;
+  private npcSprites: Phaser.Physics.Arcade.Sprite[] = [];
+  private rain?: Rain;
   private transitioning = false;
   /** Lối ra vừa bị báo khóa: chỉ báo lại sau khi người chơi rời khỏi vùng đó. */
   private blockedExit?: string;
@@ -141,6 +149,15 @@ export class AreaScene extends Phaser.Scene {
     this.physics.add.collider(this.player, collision);
     this.facing = "down";
 
+    // NPC theo lịch (T7): nhóm vật cản cứng, đặt theo (ngày, khoảng, thời tiết)
+    this.npcGroup = this.physics.add.group();
+    this.physics.add.collider(this.player, this.npcGroup);
+    this.refreshNpcs();
+
+    // Hiệu ứng mưa (T9): chỉ khu ngoài trời vào ngày mưa
+    const weather = weatherOfDay(content.weather, this.session.time.day);
+    if (rainShown(area.id, weather)) this.rain = new Rain(this);
+
     // camera: bám nhân vật; khu nhỏ hơn màn hình thì căn giữa
     const cam = this.cameras.main;
     const bx = mapW < GAME_WIDTH ? -(GAME_WIDTH - mapW) / 2 : 0;
@@ -181,6 +198,8 @@ export class AreaScene extends Phaser.Scene {
       this.detachKeyboard?.();
       this.touchControls?.destroy();
       this.touchControls = undefined;
+      this.rain?.destroy();
+      this.rain = undefined;
     });
   }
 
@@ -246,6 +265,7 @@ export class AreaScene extends Phaser.Scene {
         () => this.startNextDay(),
       );
     } else if (n > 0) {
+      this.refreshNpcs(); // khoảng đổi trong cùng khu vực: cập nhật NPC theo lịch mới
       this.showToast(time.periodName);
     }
     this.drainPresses();
@@ -295,6 +315,47 @@ export class AreaScene extends Phaser.Scene {
     return new Phaser.Geom.Rectangle(b.x, b.y, b.width, b.height);
   }
 
+  /** Đặt lại NPC trong khu vực theo (ngày, khoảng, thời tiết) hiện tại (T7). */
+  private refreshNpcs(): void {
+    for (const s of this.npcSprites) s.destroy();
+    this.npcSprites = [];
+    const { content, time, state } = this.session;
+    const weather = weatherOfDay(content.weather, time.day);
+    for (const p of npcsInArea(content.schedules, state.areaId, time.day, time.period, weather)) {
+      const def = content.npcs.get(p.npc);
+      if (!def) continue;
+      const s = this.physics.add.sprite(p.x * TILE + TILE / 2, p.y * TILE + TILE - 1, "sprites", def.frame);
+      s.setOrigin(0.5, 1).setDepth(p.y * TILE + TILE - 1);
+      const b = s.body as Phaser.Physics.Arcade.Body;
+      b.setSize(BODY_W, BODY_H);
+      b.setOffset((SPRITE_W - BODY_W) / 2, SPRITE_H - BODY_H);
+      b.setImmovable(true);
+      b.moves = false;
+      s.setData("npc", def);
+      this.npcGroup.add(s);
+      this.npcSprites.push(s);
+    }
+  }
+
+  /** NPC tương tác được đứng gần nhất trong tầm với (T8). */
+  private nearestNpc(): { sprite: Phaser.Physics.Arcade.Sprite; def: NpcDef } | undefined {
+    const pr = this.playerRect();
+    let best: { sprite: Phaser.Physics.Arcade.Sprite; def: NpcDef } | undefined;
+    let bestD = Infinity;
+    for (const s of this.npcSprites) {
+      const def = s.getData("npc") as NpcDef;
+      if (!def.interactable) continue;
+      const rect = new Phaser.Geom.Rectangle(s.x - TILE, s.y - TILE - 2, TILE * 2, TILE + 4);
+      if (!Phaser.Geom.Intersects.RectangleToRectangle(pr, rect)) continue;
+      const d = Phaser.Math.Distance.Between(pr.centerX, pr.centerY, s.x, s.y);
+      if (d < bestD) {
+        best = { sprite: s, def };
+        bestD = d;
+      }
+    }
+    return best;
+  }
+
   private nearestInteract(): InteractPoint | undefined {
     const pr = this.playerRect();
     let best: InteractPoint | undefined;
@@ -310,12 +371,13 @@ export class AreaScene extends Phaser.Scene {
     return best;
   }
 
-  update(): void {
+  update(_time: number, delta: number): void {
     const { actions, time } = this.session;
     const body = this.player.body as Phaser.Physics.Arcade.Body;
     this.player.setDepth(this.player.y);
     this.hud.update(time, this.areaName);
     this.touchControls?.update();
+    this.rain?.update(delta / 1000);
 
     if (this.overlay.isOpen) {
       this.freezePlayer();
@@ -375,7 +437,16 @@ export class AreaScene extends Phaser.Scene {
       if (this.transitioning) return;
     }
 
-    // tương tác
+    // tương tác NPC (ưu tiên): hiện tên, bấm Tương tác → thoại tối thiểu, không tiêu khoảng
+    const npc = this.nearestNpc();
+    if (npc) {
+      const key = this.touch ? "" : "[E] ";
+      this.prompt.setText(key + npc.def.name).setVisible(true);
+      if (actions.consumePressed("interact")) this.dialog.show([npc.def.line]);
+      return;
+    }
+
+    // tương tác với điểm tương tác của bản đồ
     const near = this.nearestInteract();
     if (near) {
       const key = this.touch ? "" : "[E] ";

@@ -1,7 +1,8 @@
 // Nạp asset, kiểm tra dữ liệu, tạo hoạt ảnh và phiên chơi rồi vào game.
 import Phaser from "phaser";
-import { FONT_FAMILY, GAME_WIDTH } from "../config";
+import { FONT_FAMILY, GAME_WIDTH, TOTAL_DAYS } from "../config";
 import { createSession } from "../core/session";
+import { applyTime } from "../core/state";
 import { loadContent } from "../data/content";
 import sprites from "../../public/assets/sprites.json";
 
@@ -46,10 +47,23 @@ export class BootScene extends Phaser.Scene {
       this.cache.tilemap.add(`map-${area.id}`, { format: Phaser.Tilemaps.Formats.TILED_JSON, data: content.maps.get(area.mapFile) });
     }
 
-    this.registry.set("session", createSession(content));
-    // Chỉ khi chạy dev: ?area=<id> để xem thẳng một khu vực (kể cả khu bị khóa).
-    const q = import.meta.env.DEV ? new URLSearchParams(location.search).get("area") : null;
-    if (q && content.areas.has(q)) this.scene.start("Area", { areaId: q });
-    else this.scene.start("Title");
+    const session = createSession(content);
+    this.registry.set("session", session);
+    // Chỉ khi chạy dev: ?area=<id> xem thẳng một khu vực; ?day=&period= đặt thời gian (xem NPC/mưa).
+    if (import.meta.env.DEV) {
+      const sp = new URLSearchParams(location.search);
+      const day = Number(sp.get("day"));
+      if (Number.isInteger(day) && day >= 1 && day <= TOTAL_DAYS) {
+        const period = Number(sp.get("period"));
+        session.time.restore({ day, period: Number.isInteger(period) ? period : 0 });
+        Object.assign(session.state, applyTime(session.state, session.time));
+      }
+      const area = sp.get("area");
+      if (area && content.areas.has(area)) {
+        this.scene.start("Area", { areaId: area });
+        return;
+      }
+    }
+    this.scene.start("Title");
   }
 }
