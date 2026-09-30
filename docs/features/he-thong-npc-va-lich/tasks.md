@@ -5,7 +5,9 @@
 - Căn cứ: `spec.md` (Approved), GDD `docs/product/kich-ban-mvp.md` (Approved), ADR 001–004 (Accepted).
 
 ## Tiến độ (2026-09-30)
-**Đã xong:** T1–T9, T11, T12 (84 test xanh, build 1,6 MB, kiểm chứng trực quan NPC + tương tác + mưa trong trình duyệt). T2∥T3 chạy bằng subagent `dev` (worktree), đã gộp. **Bỏ T10** (vẽ NPC trong preview — tùy chọn, không cần cho MVP). Nhánh: `feat/he-thong-npc-va-lich`.
+**Đã xong:** T1–T9, T11, T12; **đã /validate (PASS)** — xem `validation.md`. 96 test xanh, build 1,6 MB, chạy máy chủ tĩnh OK, kiểm chứng trực quan NPC + tương tác + mưa. T2∥T3 chạy bằng subagent `dev` (worktree), đã gộp. **Bỏ T10** (vẽ NPC trong preview — tùy chọn). Nhánh: `feat/he-thong-npc-va-lich`.
+
+Bổ sung sau review (T5 mở rộng): loader nay chặn cả **NPC đè lối exit** và **trùng thời tiết**, và truyền `maxDay` khi nạp thật (H1/M1/M2). `hoc-sinh-nen-1` để không tương tác minh chứng AC3 (M3).
 
 ## Thư viện
 **Không cần thư viện mới.** Hạt mưa dùng particle sẵn có của Phaser; kiểm thử dùng `vitest` (đã có). Nếu phát sinh nhu cầu lib mới khi implement sẽ hỏi duyệt trước (PM Charter mục 1).
