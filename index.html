@@ -8,10 +8,17 @@
       html, body { margin: 0; height: 100%; background: #000; overflow: hidden; touch-action: none; }
       #game { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
       canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
+      /* Điện thoại đang cầm dọc: nhắc xoay ngang (FR1.3) */
+      #rotate { display: none; position: fixed; inset: 0; z-index: 10; background: #10182b; color: #f2e6bc;
+        font-family: system-ui, sans-serif; text-align: center; align-items: center; justify-content: center; flex-direction: column; gap: 16px; padding: 24px; }
+      #rotate .icon { font-size: 64px; animation: turn 2s ease-in-out infinite; }
+      @keyframes turn { 0%, 30% { transform: rotate(0deg); } 60%, 100% { transform: rotate(-90deg); } }
+      @media (orientation: portrait) and (pointer: coarse) { #rotate { display: flex; } }
     </style>
   </head>
   <body>
     <div id="game"></div>
+    <div id="rotate"><div class="icon">📱</div><div>Xoay ngang điện thoại để chơi<br />Hồi Trống Cuối</div></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

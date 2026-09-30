@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { FONT_FAMILY, GAME_HEIGHT, GAME_WIDTH } from "./config";
 import { AreaScene } from "./scenes/AreaScene";
 import { BootScene } from "./scenes/BootScene";
+import { TitleScene } from "./scenes/TitleScene";
 
 async function start(): Promise<void> {
   // nạp font trước để Phaser vẽ chữ đúng ngay từ khung đầu
@@ -27,7 +28,7 @@ async function start(): Promise<void> {
       autoCenter: Phaser.Scale.CENTER_BOTH,
       zoom: Phaser.Scale.MAX_ZOOM,
     },
-    scene: [BootScene, AreaScene],
+    scene: [BootScene, TitleScene, AreaScene],
   });
   if (import.meta.env.DEV) (window as unknown as { __game: Phaser.Game }).__game = game;
 }
