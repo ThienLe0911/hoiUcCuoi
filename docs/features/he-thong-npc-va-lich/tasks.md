@@ -41,12 +41,12 @@ Atomic, kiểm chứng được, ghi rõ file tạo/sửa, phụ thuộc, và đ
 
 ### T3. Thời tiết — `data/weather.json` + `src/core/weather.ts` [∥ T2]
 - Phụ thuộc: T1.
-- Tạo: `data/weather.json` (Ngày 5 = `mua`, còn lại `nang`); `src/core/weather.ts` hàm thuần `thoiTietCuaNgay(ngay)`; `tests/weather.test.ts`.
-- Xong khi: `thoiTietCuaNgay(5)==='mua'`, các ngày khác `'nang'`; test xanh. (FR3.1–FR3.3, BR5)
+- Tạo: `data/weather.json` (Ngày 5 = `rainy`, còn lại `sunny`); `src/core/weather.ts` hàm thuần `weatherOfDay(table, day)`; `tests/weather.test.ts`. (Tên trường/giá trị tiếng Anh khớp `schema.ts`.)
+- Xong khi: `weatherOfDay(table,5)==='rainy'`, các ngày khác `'sunny'`; test xanh. (FR3.1–FR3.3, BR5)
 
 ### T4. Lịch NPC — `data/schedules.json` + `src/core/schedule.ts`
 - Phụ thuộc: T1, T2, T3.
-- Tạo: `data/schedules.json` (lịch 5 NPC chính + NPC phụ theo bảng GDD mục 5; em lớp 10 "trú mưa" có mục điều kiện `mua`); `src/core/schedule.ts` hàm thuần `viTri(npcId,ngày,khoảng,thờiTiết)` → vị trí | `"vang"` và `npcTaiKhuVuc(areaId,ngày,khoảng,thờiTiết)` → danh sách NPC; `tests/schedule.test.ts`.
+- Tạo: `data/schedules.json` (lịch 5 NPC chính + NPC phụ theo bảng GDD mục 5; em lớp 10 "trú mưa" có mục điều kiện `rainy`); `src/core/schedule.ts` hàm thuần `npcPosition(schedules,npcId,day,period,weather)` → vị trí | `null` (vắng) và `npcsInArea(schedules,areaId,day,period,weather)` → danh sách NPC; `tests/schedule.test.ts`. (Tên/giá trị tiếng Anh khớp code.)
 - Xong khi: tra cứu đúng theo dữ liệu; ngày mưa em lớp 10 có mặt, ngày nắng vắng; test xanh. (FR2.1–FR2.4, FR4.1, BR2)
 
 ### T5. Kiểm tra hợp lệ vị trí lịch
