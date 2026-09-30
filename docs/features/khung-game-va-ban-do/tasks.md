@@ -135,4 +135,4 @@ Các nhóm độc lập, không chung file (dùng được subagent `dev` song s
 
 ## Tiến độ (cập nhật 2026-09-30)
 Xong: T1–T13 (font, asset, bản đồ đã được duyệt; T13 chuyển khu vực chờ duyệt). Còn: T14–T17.
-Ghi chú: T12 làm trước T10/T11 vì game kiểm tra đủ 5 file bản đồ khi khởi động.
+Ghi chú: T12 làm trước T10/T11 vì game kiểm tra đủ file bản đồ khi khởi động. Sau khi duyệt, bố cục đổi (2026-09-30): thêm khu vực hanh-lang-lop-10 (MVP thành 6 khu vực), xem spec FR3.1, FR3.6, FR3.8.

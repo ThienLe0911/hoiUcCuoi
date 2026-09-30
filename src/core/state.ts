@@ -24,6 +24,7 @@ export function createInitialState(): GameState {
       "cong-truong": false,
       "san-chinh": false,
       "hanh-lang-lop-12": false,
+      "hanh-lang-lop-10": false,
       "san-the-chat": false,
       "san-thuong": true,
     },

@@ -5,7 +5,7 @@
 - Căn cứ: docs/vision/vision.md, ADR 001 (Phaser 3 + TS + Vite, tile 16×16), ADR 002 (dữ liệu JSON + zod), ADR 003 (lưu game localStorage), docs/product/art-reference.md
 
 ## Goal
-Dựng "bộ khung chơi được" của Hồi Trống Cuối: nhân vật đi lại trong 5 khu vực trường Trần Phú (pixel art 16×16), chuyển khu vực, và chạy vòng lặp thời gian ngày/khoảng. Chạy trên trình duyệt máy tính và điện thoại. Đây là nền cho mọi feature sau (hội thoại, quan hệ, lưu bút, mini-game, phiên đêm).
+Dựng "bộ khung chơi được" của Hồi Trống Cuối: nhân vật đi lại trong 6 khu vực trường Trần Phú (pixel art 16×16), chuyển khu vực, và chạy vòng lặp thời gian ngày/khoảng. Chạy trên trình duyệt máy tính và điện thoại. Đây là nền cho mọi feature sau (hội thoại, quan hệ, lưu bút, mini-game, phiên đêm).
 
 ## Business Context
 Bản thử nghiệm 30–45 phút cần chứng minh phần khám phá và không khí hoài niệm hấp dẫn. Người chơi chưa có gì để tương tác sâu ở feature này; mục tiêu là cảm giác "đi trong trường cũ" và cảm giác thời gian giới hạn. Chưa có asset đồ họa nào, nên feature này gồm cả bộ tile và sprite khởi đầu.
@@ -35,23 +35,25 @@ Bản thử nghiệm 30–45 phút cần chứng minh phần khám phá và khô
 - FR2.6 Camera bám theo nhân vật; khu vực nhỏ hơn màn hình thì căn giữa.
 
 ### FR3. Bản đồ và khu vực
-- FR3.1 5 khu vực MVP, mỗi khu là một tilemap Tiled (`.tmj`, tile 16×16):
+- FR3.1 6 khu vực MVP, mỗi khu là một tilemap Tiled (`.tmj`, tile 16×16):
   1. `cong-truong` — cổng trường, xe buýt 67, xe kem, xe cháo lòng
   2. `san-chinh` — sân giữa, cây cổ thụ, lối vào nhà chính, khẩu hiệu "RÈN ĐỨC – LUYỆN TÀI"
-  3. `hanh-lang-lop-12` — dãy hành lang 3 tầng (tầng trệt: lớp 12; tầng 2 và 3: lớp 11), xem FR3.8
-  4. `san-the-chat` — sân xanh dương, rổ bóng rổ
-  5. `san-thuong` — sân thượng/dãy cũ; mặc định **khóa** (bị khóa thể hiện bằng cờ trạng thái, mở ở feature khác)
+  3. `hanh-lang-lop-12` — dãy hành lang 3 tầng phía bắc, mỗi tầng 3 lớp (tầng 1 trệt: lớp 12; tầng 2: 11B1–11B3; tầng 3: 11B4–11B6), xem FR3.8
+  4. `hanh-lang-lop-10` — dãy hành lang 3 tầng phía nam, mỗi tầng 3 lớp, tổng cộng 10C1–10C9 (tầng 1: 10C1–10C3; tầng 2: 10C4–10C6; tầng 3: 10C7–10C9), xem FR3.8
+  5. `san-the-chat` — sân xanh dương, rổ bóng rổ
+  6. `san-thuong` — sân thượng/dãy cũ; mặc định **khóa** (bị khóa thể hiện bằng cờ trạng thái, mở ở feature khác)
 - FR3.2 Mỗi bản đồ có các lớp: nền, vật thể/tường (va chạm), phủ trên đầu, và lớp đối tượng gồm: điểm xuất hiện, lối chuyển khu vực (`exit`), điểm tương tác (`interact`).
 - FR3.3 Lối `exit` khai báo khu vực đích và điểm xuất hiện đích; đi vào là chuyển khu vực, có hiệu ứng mờ dần ngắn (≤ 0,5 s).
 - FR3.4 Khi vào khu vực, hiện tên khu vực (tiếng Việt) vài giây.
 - FR3.5 Khu vực bị khóa: đi vào lối exit hiện thông báo "Bị khóa", không chuyển cảnh. Trạng thái khóa là dữ liệu, có thể mở bằng cờ.
 - FR3.6 Đồ thị nối khu vực (cập nhật 2026-09-30):
   - cổng trường ↔ sân chính (cổng chính ở giữa phía nam sân chính, đi từ cổng lên phía bắc là vào sân).
-  - sân chính ↔ hành lang lớp 12 bằng **3 lối**, đều dẫn vào **tầng trệt**: cửa chính phía bắc và **2 cầu thang phía nam** (hai bên cổng chính).
+  - sân chính ↔ **hành lang lớp 12** bằng **1 lối**: cửa chính phía bắc, vào tầng trệt.
+  - sân chính ↔ **hành lang lớp 10** bằng **2 lối**: hai cầu thang phía nam (hai bên cổng chính), đều vào tầng trệt của dãy lớp 10.
   - sân chính ↔ sân thể chất: sân thể chất nằm ở **phía tây (bên trái)** sân chính.
-  - hành lang lớp 12 ↔ sân thượng (khóa), nối từ **tầng cao nhất** của dãy hành lang.
+  - hành lang lớp 12 ↔ sân thượng (khóa), nối từ **tầng cao nhất** của dãy hành lang lớp 12.
 - FR3.7 Dữ liệu khu vực (tên, file map, exit, điều kiện khóa) khai báo trong `data/areas.json`, kiểm tra bằng zod khi nạp (ADR 002). Sai dữ liệu → báo lỗi rõ ràng, chỉ ra file và trường sai.
-- FR3.8 Hành lang lớp 12 là **một khu vực** gồm **3 dải hành lang ngang xếp chồng** (tầng 3 trên cùng, tầng 2, tầng 1 dưới cùng). Tầng 1 (trệt) là tầng **lớp 12**; tầng 2 và tầng 3 là **lớp 11**. Các tầng nối nhau bằng **cầu thang ở hai đầu** dãy; đổi tầng bằng cách đi bộ trong cùng bản đồ, không chuyển cảnh. Ba lối từ sân chính (FR3.6) đều dẫn vào tầng 1; lối lên sân thượng nằm ở tầng cao nhất.
+- FR3.8 Mỗi dãy hành lang (lớp 12 và lớp 10) là **một khu vực** gồm **3 dải hành lang ngang xếp chồng** (tầng 3 trên cùng, tầng 2, tầng 1 dưới cùng), mỗi tầng **3 lớp**. Các tầng nối nhau bằng **cầu thang ở hai đầu** dãy; đổi tầng bằng cách đi bộ trong cùng bản đồ, không chuyển cảnh. Lối từ sân chính (FR3.6) đều dẫn vào tầng 1; lối lên sân thượng nằm ở tầng cao nhất của dãy lớp 12.
 
 ### FR4. Thời gian (ngày và khoảng)
 - FR4.1 Một ngày có 4 khoảng: Trước giờ học, Trong giờ học, Giờ ra chơi, Sau giờ học.
@@ -108,7 +110,7 @@ Game một người chơi, không tài khoản, không phân quyền. Toàn bộ
 - AC1. `npm run dev` mở game; tiêu đề hiện đúng tên "Hồi Trống Cuối" và dấu tiếng Việt đúng.
 - AC2. Trên máy tính, WASD/mũi tên đưa nhân vật đi 4 hướng, không xuyên tường; E/Space tương tác được với điểm tương tác đứng gần.
 - AC3. Trên điện thoại (hoặc giả lập cảm ứng), D-pad ảo và nút Tương tác cho kết quả tương tự AC2; giữ D-pad và bấm Tương tác cùng lúc vẫn hoạt động.
-- AC4. Từ cổng trường đi được tới sân chính, hành lang lớp 12, sân thể chất; từ đó đi ngược lại được. Cả 5 khu vực tồn tại; sân thượng báo "Bị khóa" khi thử vào.
+- AC4. Từ cổng trường đi được tới sân chính, hành lang lớp 12, sân thể chất; từ đó đi ngược lại được. Cả 6 khu vực tồn tại (đi được tới hành lang lớp 10 qua 2 cầu thang phía nam sân chính); sân thượng báo "Bị khóa" khi thử vào.
 - AC5. Đi lại giữa các khu vực không đổi khoảng trong HUD.
 - AC6. "Ngồi nghỉ" hoặc "Nghỉ/Chờ" đổi khoảng đúng thứ tự: Trước giờ học → Trong giờ học → Giờ ra chơi → Sau giờ học → tổng kết ngày → ngày sau, khoảng 0, ở cổng trường; thứ trong tuần cập nhật đúng.
 - AC7. Sau ngày cuối cấu hình, game phát sự kiện hết thời gian và hiện màn hình giữ chỗ, không lỗi.
@@ -139,4 +141,6 @@ Game một người chơi, không tài khoản, không phân quyền. Toàn bộ
 Người dùng yêu cầu chỉnh bố cục trường cho sát thực tế, đã cập nhật FR3.1, FR3.6, FR3.8:
 - Sân thể chất chuyển sang phía tây (trái) sân chính.
 - Sân chính có thêm 2 cầu thang ở phía nam (hai bên cổng chính) để vào hành lang lớp 12, tổng cộng 3 lối vào hành lang (đều vào tầng trệt).
-- Hành lang lớp 12 có 3 tầng: tầng trệt là lớp 12, hai tầng trên là lớp 11; là một khu vực có 3 dải hành lang xếp chồng nối bằng cầu thang (không tăng số khu vực).
+- Hành lang lớp 12 có 3 tầng: tầng trệt là lớp 12, hai tầng trên là lớp 11; là một khu vực có 3 dải hành lang xếp chồng nối bằng cầu thang.
+
+Thay đổi tiếp (cùng ngày): tầng 2 lớp 11B1–11B3, tầng 3 lớp 11B4–11B6. Hai cầu thang phía nam sân chính **không** vào hành lang lớp 12 mà vào **khu vực mới "hành lang lớp 10"** (khu lầu phía nam, 3 lầu, mỗi lầu 3 lớp, từ 10C1 đến 10C9). **Phạm vi MVP tăng từ 5 lên 6 khu vực** theo quyết định của người dùng.

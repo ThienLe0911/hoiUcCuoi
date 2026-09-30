@@ -1425,20 +1425,20 @@
     6,
     6,
     6,
+    38,
+    38,
+    6,
+    6,
     7,
     6,
     6,
     6,
     7,
+    6,
+    6,
     6,
     38,
     38,
-    7,
-    6,
-    6,
-    6,
-    7,
-    6,
     6,
     6,
     7,
@@ -1447,12 +1447,6 @@
     6,
     7,
     6,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
     0,
     0,
     0,
@@ -1469,6 +1463,12 @@
     0,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
+    38,
+    38,
     0,
     0,
     0,
@@ -2218,6 +2218,12 @@
     1,
     1,
     1,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
     1,
     1,
     1,
@@ -2242,8 +2248,8 @@
     1,
     1,
     1,
-    1,
-    1,
+    0,
+    0,
     1,
     1,
     1,
@@ -2256,12 +2262,6 @@
     1,
     0,
     0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
     1,
     1,
     1,
@@ -3197,7 +3197,7 @@
    "objects": [
     {
      "id": 1,
-     "name": "lop-11b4",
+     "name": "lop-10c7",
      "type": "interact",
      "x": 80,
      "y": 32,
@@ -3214,13 +3214,13 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 3 – Lớp 11B4. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 3 – Lớp 10C7. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
     {
      "id": 2,
-     "name": "lop-11b5",
+     "name": "lop-10c8",
      "type": "interact",
      "x": 208,
      "y": 32,
@@ -3237,13 +3237,13 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 3 – Lớp 11B5. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 3 – Lớp 10C8. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
     {
      "id": 3,
-     "name": "lop-11b6",
+     "name": "lop-10c9",
      "type": "interact",
      "x": 336,
      "y": 32,
@@ -3260,7 +3260,7 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 3 – Lớp 11B6. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 3 – Lớp 10C9. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
@@ -3283,13 +3283,13 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 3 – các lớp 11B4 đến 11B6."
+       "value": "Tầng 3 – các lớp 10C7 đến 10C9."
       }
      ]
     },
     {
      "id": 5,
-     "name": "lop-11b1",
+     "name": "lop-10c4",
      "type": "interact",
      "x": 80,
      "y": 144,
@@ -3306,13 +3306,13 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 2 – Lớp 11B1. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 2 – Lớp 10C4. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
     {
      "id": 6,
-     "name": "lop-11b2",
+     "name": "lop-10c5",
      "type": "interact",
      "x": 208,
      "y": 144,
@@ -3329,13 +3329,13 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 2 – Lớp 11B2. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 2 – Lớp 10C5. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
     {
      "id": 7,
-     "name": "lop-11b3",
+     "name": "lop-10c6",
      "type": "interact",
      "x": 336,
      "y": 144,
@@ -3352,7 +3352,7 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 2 – Lớp 11B3. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 2 – Lớp 10C6. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
@@ -3375,13 +3375,13 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 2 – các lớp 11B1 đến 11B3."
+       "value": "Tầng 2 – các lớp 10C4 đến 10C6."
       }
      ]
     },
     {
      "id": 9,
-     "name": "lop-12a1",
+     "name": "lop-10c1",
      "type": "interact",
      "x": 80,
      "y": 256,
@@ -3398,13 +3398,13 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 1 – Lớp 12A1. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 1 – Lớp 10C1. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
     {
      "id": 10,
-     "name": "lop-12a2",
+     "name": "lop-10c2",
      "type": "interact",
      "x": 208,
      "y": 256,
@@ -3421,13 +3421,13 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 1 – Lớp 12A2. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 1 – Lớp 10C2. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
     {
      "id": 11,
-     "name": "lop-12a3",
+     "name": "lop-10c3",
      "type": "interact",
      "x": 336,
      "y": 256,
@@ -3444,7 +3444,7 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 1 – Lớp 12A3. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
+       "value": "Tầng 1 – Lớp 10C3. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều."
       }
      ]
     },
@@ -3467,7 +3467,7 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Tầng 1 – các lớp 12A1 đến 12A3."
+       "value": "Tầng 1 – các lớp 10C1 đến 10C3."
       }
      ]
     },
@@ -3490,15 +3490,15 @@
       {
        "name": "text",
        "type": "string",
-       "value": "Cầu thang lên xuống các tầng. Tầng trệt là lớp 12, hai tầng trên là lớp 11."
+       "value": "Cầu thang lên xuống các tầng của khu lầu phía nam, toàn lớp 10."
       }
      ]
     },
     {
      "id": 14,
-     "name": "to-san-chinh-bac",
+     "name": "to-san-chinh-nam-trai",
      "type": "exit",
-     "x": 224,
+     "x": 128,
      "y": 336,
      "width": 32,
      "height": 16,
@@ -3507,6 +3507,17 @@
     },
     {
      "id": 15,
+     "name": "to-san-chinh-nam-phai",
+     "type": "exit",
+     "x": 320,
+     "y": 336,
+     "width": 32,
+     "height": 16,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 16,
      "name": "bang-ghe",
      "type": "interact",
      "x": 160,
@@ -3539,7 +3550,7 @@
      ]
     },
     {
-     "id": 16,
+     "id": 17,
      "name": "",
      "type": "sprite",
      "x": 80,
@@ -3557,7 +3568,7 @@
      ]
     },
     {
-     "id": 17,
+     "id": 18,
      "name": "",
      "type": "sprite",
      "x": 384,
@@ -3575,7 +3586,7 @@
      ]
     },
     {
-     "id": 18,
+     "id": 19,
      "name": "",
      "type": "sprite",
      "x": 256,
@@ -3593,7 +3604,7 @@
      ]
     },
     {
-     "id": 19,
+     "id": 20,
      "name": "",
      "type": "sprite",
      "x": 368,
@@ -3609,17 +3620,6 @@
        "value": "student_girl"
       }
      ]
-    },
-    {
-     "id": 20,
-     "name": "to-san-thuong",
-     "type": "exit",
-     "x": 432,
-     "y": 0,
-     "width": 32,
-     "height": 16,
-     "rotation": 0,
-     "visible": true
     }
    ]
   }

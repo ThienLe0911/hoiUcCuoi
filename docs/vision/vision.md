@@ -25,7 +25,7 @@ Một game pixel art hoài niệm về thời cấp ba. Nhân vật chính trở
 Địa điểm và chi tiết đặc trưng bám sát trường THPT Trần Phú. Xem các câu hỏi mở bên dưới.
 
 ## Phạm vi bản thử nghiệm (MVP, đã chọn: đúng như idea.md)
-1 tuần trong game · 5 khu vực · 6–8 NPC · 1 tuyến nhân vật chính · 3 mini-game · 1 phiên khám phá ban đêm · 2 kết thúc · chơi 30–45 phút.
+1 tuần trong game · 6 khu vực (thêm hành lang lớp 10 theo quyết định 2026-09-30) · 6–8 NPC · 1 tuyến nhân vật chính · 3 mini-game · 1 phiên khám phá ban đêm · 2 kết thúc · chơi 30–45 phút.
 
 ## Quyết định đã chốt (2026-09-30)
 - Nhân vật (bạn bè, giáo viên) là hư cấu hoàn toàn.

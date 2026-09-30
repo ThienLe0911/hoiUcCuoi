@@ -2847,7 +2847,7 @@
     },
     {
      "id": 9,
-     "name": "to-hanh-lang-nam-trai",
+     "name": "to-hanh-lang-10-trai",
      "type": "exit",
      "x": 128,
      "y": 272,
@@ -2858,7 +2858,7 @@
     },
     {
      "id": 10,
-     "name": "to-hanh-lang-nam-phai",
+     "name": "to-hanh-lang-10-phai",
      "type": "exit",
      "x": 320,
      "y": 272,

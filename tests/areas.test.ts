@@ -6,12 +6,13 @@ import { validateAreas } from "../src/data/loader";
 const real = (): any => structuredClone(areasJson);
 
 describe("areas.json", () => {
-  it("dữ liệu thật hợp lệ và có 5 khu vực, sân thượng khóa", () => {
+  it("dữ liệu thật hợp lệ và có 6 khu vực, sân thượng khóa", () => {
     const data = validateAreas(real(), { fileExists: () => true });
     expect(data.areas.map((a) => a.id)).toEqual([
       "cong-truong",
       "san-chinh",
       "hanh-lang-lop-12",
+      "hanh-lang-lop-10",
       "san-the-chat",
       "san-thuong",
     ]);

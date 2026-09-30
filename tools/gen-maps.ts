@@ -171,8 +171,8 @@ function sanChinh(): MapBuilder {
 
   m.exit("to-cong-truong", 14, 21, 2, 1);
   m.exit("to-hanh-lang-bac", 14, 5, 2, 1);
-  m.exit("to-hanh-lang-nam-trai", 8, 17, 2, 1);
-  m.exit("to-hanh-lang-nam-phai", 20, 17, 2, 1);
+  m.exit("to-hanh-lang-10-trai", 8, 17, 2, 1);
+  m.exit("to-hanh-lang-10-phai", 20, 17, 2, 1);
   m.exit("to-san-the-chat", 0, 12, 1, 2);
 
   m.interact({ name: "khau-hieu", tx: 12, ty: 6, tw: 6, th: 1, kind: "text", text: "RÈN ĐỨC – LUYỆN TÀI" });
@@ -182,24 +182,27 @@ function sanChinh(): MapBuilder {
   return m;
 }
 
-// ---------- hanh-lang-lop-12 (30×26 ô) ----------
-// Một khu vực gồm 3 dải hành lang xếp chồng: tầng 3 (trên, lớp 11), tầng 2 (giữa, lớp 11),
-// tầng 1 (dưới, trệt, LỚP 12). Cầu thang ở hai đầu (x=1..2 và x=27..28) nối các tầng;
-// đi bộ để đổi tầng. Ba lối từ sân chính vào tầng 1; lối lên sân thượng ở đầu trên cầu thang phải.
-function hanhLang(): MapBuilder {
+// ---------- dãy hành lang 3 tầng (30×26 ô): hanh-lang-lop-12 và hanh-lang-lop-10 ----------
+// Một khu vực gồm 3 dải hành lang xếp chồng (tầng 3 trên, tầng 2 giữa, tầng 1 dưới/trệt), mỗi tầng 3 lớp.
+// Cầu thang ở hai đầu (x=1..2 và x=27..28) nối các tầng; đi bộ để đổi tầng.
+// Lối từ sân chính (gaps) vào tầng 1; lối lên sân thượng (nếu có) ở đầu trên cầu thang phải.
+interface HallOptions {
+  /** Từ tầng 3 (trên) xuống tầng 1 (dưới). */
+  floors: { label: string; classes: string[] }[];
+  /** Lối xuống sân chính ở tầng 1: x của ô trái, id exit. */
+  gaps: { x: number; exit: string }[];
+  rooftopExit: boolean;
+  stairsText: string;
+}
+function hall(o: HallOptions): MapBuilder {
   const m = new MapBuilder(30, 26);
   const W = 30;
-  const FLOORS = [
-    { y: 0, label: "Tầng 3", cls: ["11A1", "11A2"] },
-    { y: 7, label: "Tầng 2", cls: ["11B1", "11B2"] },
-    { y: 14, label: "Tầng 1", cls: ["12A1", "12A2"] },
-  ];
   const shaft = (x: number) => x === 1 || x === 2 || x === 27 || x === 28;
   m.fill("ground", 0, 21, W, 5, "paving_brown"); // sân nhìn từ tầng trệt
   m.solid(0, 0, W, 26);
 
-  for (const f of FLOORS) {
-    const y0 = f.y;
+  o.floors.forEach((f, fi) => {
+    const y0 = fi * 7;
     m.fill("ground", 0, y0, W, 3, "wall_cream");
     m.fill("ground", 0, y0 + 3, W, 4, "floor_corridor");
     m.fill("ground", 0, y0 + 3, W, 1, "floor_corridor_shadow");
@@ -216,10 +219,9 @@ function hanhLang(): MapBuilder {
     }
     m.open(1, y0 + 3, 28, 3); // hành lang đi được
 
-    // hai lớp mỗi tầng
-    const doorX = [9, 19];
-    f.cls.forEach((c, i) => {
-      const dx = doorX[i];
+    // 3 lớp mỗi tầng
+    f.classes.forEach((c, i) => {
+      const dx = [6, 14, 22][i];
       m.set("walls", dx, y0 + 2, "door_teal");
       m.interact({
         name: `lop-${c.toLowerCase()}`,
@@ -231,10 +233,12 @@ function hanhLang(): MapBuilder {
         text: `${f.label} – Lớp ${c}. Cửa còn hé mở, bên trong nghe tiếng quạt trần quay đều.`,
       });
     });
-    m.interact({ name: `nhan-tang-${y0}`, tx: 3, ty: y0 + 3, tw: 3, th: 3, kind: "text", text: `${f.label} – dãy lớp ${f.label === "Tầng 1" ? "12" : "11"}.` });
-  }
+    const first = f.classes[0];
+    const last = f.classes[f.classes.length - 1];
+    m.interact({ name: `nhan-tang-${y0}`, tx: 3, ty: y0 + 3, tw: 3, th: 3, kind: "text", text: `${f.label} – các lớp ${first} đến ${last}.` });
+  });
 
-  // cầu thang hai đầu: cột x=1..2 và x=27..28 đi được từ tầng 3 xuống tầng 1
+  // cầu thang hai đầu: đi được từ tầng 3 xuống tầng 1
   for (const sx of [1, 2, 27, 28]) {
     for (let y = 0; y <= 19; y++) {
       m.set("walls", sx, y, "stairs");
@@ -243,13 +247,14 @@ function hanhLang(): MapBuilder {
     m.set("walls", sx, 20, sx % 2 === 0 ? "railing_post" : "railing_teal");
     m.open(sx, 0, 1, 20);
   }
-  m.interact({ name: "cau-thang-trai", tx: 0, ty: 3, tw: 4, th: 17, kind: "text", text: "Cầu thang lên xuống các tầng. Tầng trệt là lớp 12, hai tầng trên là lớp 11." });
+  m.interact({ name: "cau-thang-trai", tx: 0, ty: 3, tw: 4, th: 17, kind: "text", text: o.stairsText });
 
-  // ba lối xuống sân chính ở tầng 1 (x=8, 14, 20): cầu thang qua hàng lan can
-  for (const gx of [8, 14, 20]) {
-    m.fill("walls", gx, 20, 2, 1, "stairs").fill("ground", gx, 20, 2, 1, "floor_corridor");
-    m.fill("walls", gx, 21, 2, 1, "stairs");
-    m.open(gx, 20, 2, 2);
+  // lối xuống sân chính ở tầng 1: cầu thang qua hàng lan can
+  for (const g of o.gaps) {
+    m.fill("walls", g.x, 20, 2, 1, "stairs").fill("ground", g.x, 20, 2, 1, "floor_corridor");
+    m.fill("walls", g.x, 21, 2, 1, "stairs");
+    m.open(g.x, 20, 2, 2);
+    m.exit(g.exit, g.x, 21, 2, 1);
   }
   // sân bên dưới: cây
   for (const cx of [3, 11, 17, 25]) {
@@ -258,20 +263,45 @@ function hanhLang(): MapBuilder {
     m.set("walls", cx, 24, "tree_trunk");
   }
 
-  // ghế + học sinh (tầng 1 và tầng 2)
-  m.set("walls", 12, 17, "bench").solid(12, 17);
-  m.interact({ name: "bang-ghe", tx: 11, ty: 16, tw: 3, th: 3, kind: "activity", label: "Ngồi nghỉ", text: "Bạn ngồi xuống ghế hành lang tầng trệt, nghe tiếng trống xa xa.", cost: 1 });
-  m.sprite("student_girl", 6 * 16, 17 * 16 - 8).solid(6, 17);
-  m.sprite("student_boy", 23 * 16, 18 * 16 - 8).solid(23, 18);
-  m.sprite("student_boy", 15 * 16, 10 * 16 - 8).solid(15, 10);
-  m.sprite("student_girl", 22 * 16, 4 * 16 - 8).solid(22, 4);
+  // ghế + học sinh
+  m.set("walls", 11, 17, "bench").solid(11, 17);
+  m.interact({ name: "bang-ghe", tx: 10, ty: 16, tw: 3, th: 3, kind: "activity", label: "Ngồi nghỉ", text: "Bạn ngồi xuống ghế hành lang tầng trệt, nghe tiếng trống xa xa.", cost: 1 });
+  m.sprite("student_girl", 5 * 16, 17 * 16 - 8).solid(5, 17);
+  m.sprite("student_boy", 24 * 16, 18 * 16 - 8).solid(24, 18);
+  m.sprite("student_boy", 16 * 16, 11 * 16 - 8).solid(16, 11);
+  m.sprite("student_girl", 23 * 16, 4 * 16 - 8).solid(23, 4);
 
-  // lối ra
-  m.exit("to-san-chinh-nam-trai", 8, 21, 2, 1);
-  m.exit("to-san-chinh-bac", 14, 21, 2, 1);
-  m.exit("to-san-chinh-nam-phai", 20, 21, 2, 1);
-  m.exit("to-san-thuong", 27, 0, 2, 1);
+  if (o.rooftopExit) m.exit("to-san-thuong", 27, 0, 2, 1);
   return m;
+}
+
+function hanhLang12(): MapBuilder {
+  return hall({
+    floors: [
+      { label: "Tầng 3", classes: ["11B4", "11B5", "11B6"] },
+      { label: "Tầng 2", classes: ["11B1", "11B2", "11B3"] },
+      { label: "Tầng 1", classes: ["12A1", "12A2", "12A3"] },
+    ],
+    gaps: [{ x: 14, exit: "to-san-chinh-bac" }],
+    rooftopExit: true,
+    stairsText: "Cầu thang lên xuống các tầng. Tầng trệt là lớp 12, hai tầng trên là lớp 11.",
+  });
+}
+
+function hanhLang10(): MapBuilder {
+  return hall({
+    floors: [
+      { label: "Tầng 3", classes: ["10C7", "10C8", "10C9"] },
+      { label: "Tầng 2", classes: ["10C4", "10C5", "10C6"] },
+      { label: "Tầng 1", classes: ["10C1", "10C2", "10C3"] },
+    ],
+    gaps: [
+      { x: 8, exit: "to-san-chinh-nam-trai" },
+      { x: 20, exit: "to-san-chinh-nam-phai" },
+    ],
+    rooftopExit: false,
+    stairsText: "Cầu thang lên xuống các tầng của khu lầu phía nam, toàn lớp 10.",
+  });
 }
 
 // ---------- san-the-chat (26×14 ô) ----------
@@ -351,7 +381,8 @@ function sanThuong(): MapBuilder {
 const maps: Record<string, MapBuilder> = {
   "cong-truong": congTruong(),
   "san-chinh": sanChinh(),
-  "hanh-lang-lop-12": hanhLang(),
+  "hanh-lang-lop-12": hanhLang12(),
+  "hanh-lang-lop-10": hanhLang10(),
   "san-the-chat": sanTheChat(),
   "san-thuong": sanThuong(),
 };
