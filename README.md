@@ -107,7 +107,9 @@ Mỗi file `data/dialogues/<id>.json` là **một cây thoại** (kiểm tra b�
 - Mỗi node có **một trong hai**: `next` (id node kế hoặc `"end"`) hoặc `choices` (tối đa **4**). `speaker` là id NPC hoặc `"narration"`; `lines` là các trang chữ.
 - Lựa chọn: `label`, `goto`, tùy chọn `isAction` (lựa chọn bằng hành động, hiện tiền tố `»`), `condition` (`flag` / `allOf` / `anyOf` / `not`; lựa chọn chưa thỏa điều kiện bị ẩn), `effects.setFlags` (đặt cờ cốt truyện).
 - Cờ nằm trong `GameState.flags` (lưu bản 2; save bản 1 được tự nâng cấp). Node mà mọi lựa chọn đều ẩn đi tiếp `fallbackGoto` hoặc kết thúc, nên không bao giờ kẹt; vòng lặp không có lối ra sẽ bị loader báo lỗi.
-- Chỉ số quan hệ (`effects.relationship`, điều kiện `relationship`) đã chừa chỗ trong schema nhưng **chưa áp dụng** (feature quan hệ).
+- **Sau khi sửa hoặc thêm hội thoại, chạy `npm test`**: loader chỉ bắt được lỗi cấu trúc, còn test tự duyệt mọi tổ hợp cờ trên mọi cây trong `data/dialogues` để bắt chỗ kẹt (kể cả khi lối thoát duy nhất là một lựa chọn có điều kiện).
+- Giới hạn hiển thị (có test canh): mỗi trang thoại ≤ 100 ký tự, nhãn lựa chọn ≤ 34 ký tự, lời dẫn của node 4 lựa chọn ≤ 56 ký tự (1 dòng, để hộp không đè D-pad cảm ứng).
+- Chỉ số quan hệ (`effects.relationship`, điều kiện `relationship`) đã chừa chỗ trong schema nhưng **chưa áp dụng** (feature quan hệ); điều kiện `relationship` hiện coi là thỏa.
 - Ví dụ thật: `data/dialogues/` (Kiệt mở đầu, "Huy bị nghi", bác lao công). Xem [spec](docs/features/he-thong-hoi-thoai/spec.md).
 
 ## Thay đồ họa

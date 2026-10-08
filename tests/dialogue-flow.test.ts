@@ -46,6 +46,13 @@ describe("dữ liệu hội thoại thật (T4/T5)", () => {
     expect(thu.line).not.toBe("");
   });
 
+  it("node 4 lựa chọn có lời dẫn ≤ 1 dòng (≤ 56 ký tự) để hộp không đè D-pad ở chế độ cảm ứng", () => {
+    // Hộp rộng 304px, chữ 12px → ~58 ký tự/dòng. Đo thật: lời dẫn 52 ký tự của 'chon-hanh-dong' vừa 1 dòng, hộp cao 71px.
+    const fourChoiceNodes = [...content.dialogues.values()].flatMap((t) => t.nodes.filter((n) => (n.choices?.length ?? 0) === 4).map((n) => ({ t, n })));
+    expect(fourChoiceNodes.length, "phải có ít nhất một node 4 lựa chọn để canh (không pass rỗng)").toBeGreaterThan(0);
+    for (const { t, n } of fourChoiceNodes) expect(n.lines.at(-1)!.length, `${t.id}/${n.id}`).toBeLessThanOrEqual(56);
+  });
+
   it("mọi node tối đa 4 lựa chọn; lời thoại không có trang rỗng", () => {
     for (const t of content.dialogues.values()) {
       for (const n of t.nodes) {

@@ -6,7 +6,10 @@ import { FONT_FAMILY, GAME_HEIGHT, GAME_WIDTH } from "../config";
 const BOX_H = 44;
 const MARGIN = 8;
 const TOP_Y = 34; // vị trí khi đặt phía trên (có điều khiển cảm ứng ở dưới)
-const ROW_H = 12; // 4 lựa chọn + lời dẫn vẫn kết thúc trên y≈105 khi đặt phía trên → không chạm D-pad cảm ứng (y ≥ 100)
+// Khoảng cách dòng lựa chọn. Node 4 lựa chọn + lời dẫn 1 dòng → hộp cao 71px; khi đặt phía trên (cảm ứng) hộp kết thúc ở y=105
+// và dòng cuối ở ≈y101, còn D-pad (tâm y=136, r=36) chỉ chạm tới y=100 sát x=42. Lời dẫn 2 dòng sẽ đè D-pad, nên lời dẫn của node
+// 4 lựa chọn phải ≤ 1 dòng (tests/dialogue-flow.test.ts canh quy tắc này).
+const ROW_H = 12;
 const SPEAKER_H = 11;
 
 export interface DialogChoiceItem {
