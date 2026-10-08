@@ -36,7 +36,7 @@ Bản thử nghiệm 30–45 phút cần chứng minh phần khám phá và khô
 
 ### FR3. Bản đồ và khu vực
 - FR3.1 6 khu vực MVP, mỗi khu là một tilemap Tiled (`.tmj`, tile 16×16):
-  1. `cong-truong` — cổng trường, xe buýt 67, xe kem, xe cháo lòng
+  1. `cong-truong` — cổng trường **theo ảnh pixel mẫu ref-01 của người dùng** (xem "Thay đổi 2026-10-08" cuối tệp): mặt tiền tường trắng có lưới xanh và khung đỏ, cổng lớn mái vòm cong biển "TRẦN PHÚ", hai cây lớn trong bồn gạch, xe buýt 67, xe kem, xe cháo lòng
   2. `san-chinh` — sân giữa, cây cổ thụ, lối vào nhà chính, khẩu hiệu "RÈN ĐỨC – LUYỆN TÀI"
   3. `hanh-lang-lop-12` — dãy hành lang 3 tầng phía bắc, mỗi tầng 3 lớp (tầng 1 trệt: lớp 12; tầng 2: 11B1–11B3; tầng 3: 11B4–11B6), xem FR3.8
   4. `hanh-lang-lop-10` — dãy hành lang 3 tầng phía nam, mỗi tầng 3 lớp, tổng cộng 10C1–10C9 (tầng 1: 10C1–10C3; tầng 2: 10C4–10C6; tầng 3: 10C7–10C9), xem FR3.8
@@ -73,6 +73,7 @@ Bản thử nghiệm 30–45 phút cần chứng minh phần khám phá và khô
 
 ### FR6. Bộ asset khởi đầu (tự tạo)
 - FR6.1 Bộ tile 16×16 tự tạo (không dùng lại ảnh gốc của TP Media hay ảnh chụp): tường kem, cột xanh da trời, lan can xanh ngọc, sàn hành lang, gạch sân, gạch tường thấp có họa tiết thoi xanh, cây, bonsai, cổng sắt xanh, ghế, bàn, sân xanh dương, rổ bóng rổ, cửa, cỏ, đường nhựa và vạch kẻ.
+- FR6.1b (bổ sung 2026-10-08, cổng trường theo ref-01) Tile/sprite tự vẽ thêm: nền xám phía sau, tường gạch men trắng, lưới xanh, khung tranh đỏ có thoi xanh, bồn cây gạch, **sprite cổng chính** (mái vòm cong, biển xanh "TRẦN PHÚ", cột gạch xanh, song sắt, cánh cổng xanh nhiều ô kính) và **sprite cây lớn**. Chỉ tham khảo bố cục/màu từ ảnh mẫu, **không dùng lại ảnh**; chữ trên biển và mọi chi tiết do script sinh.
 - FR6.2 Sprite nhân vật chính (học sinh áo trắng), sprite xe buýt 67, xe kem, xe cháo lòng, 1–2 sprite học sinh nền (đứng yên) để bản đồ không trống.
 - FR6.3 Bảng màu theo docs/product/art-reference.md; mỗi asset dễ thay thế bằng bản vẽ tay sau này mà không đổi code (đặt tên và tọa độ atlas ổn định).
 - FR6.4 Phương thức tạo (script sinh hay vẽ tay) do đề xuất tại tasks.md; kết quả cuối phải là file PNG atlas + `.tmj`.
@@ -144,3 +145,11 @@ Người dùng yêu cầu chỉnh bố cục trường cho sát thực tế, đ�
 - Hành lang lớp 12 có 3 tầng: tầng trệt là lớp 12, hai tầng trên là lớp 11; là một khu vực có 3 dải hành lang xếp chồng nối bằng cầu thang.
 
 Thay đổi tiếp (cùng ngày): tầng 2 lớp 11B1–11B3, tầng 3 lớp 11B4–11B6. Hai cầu thang phía nam sân chính **không** vào hành lang lớp 12 mà vào **khu vực mới "hành lang lớp 10"** (khu lầu phía nam, 3 lầu, mỗi lầu 3 lớp, từ 10C1 đến 10C9). **Phạm vi MVP tăng từ 5 lên 6 khu vực** theo quyết định của người dùng.
+
+## Thay đổi 2026-10-08 — thiết kế lại cổng trường theo ảnh mẫu ref-01
+Người dùng thấy cổng trường chưa giống trường cũ và gửi lại ảnh pixel mẫu (cùng ảnh `ref-01`). Bản trước dựng theo ảnh thật ref-03 (mái vòm trắng, biển nâu) nên lệch. Đã cập nhật FR3.1(1), FR6.1b:
+- **Bố cục `cong-truong` (vẫn 32×16 ô, giữ nguyên 6 khu vực và đồ thị nối):** nền xám phía sau (hàng 0–1) → mặt tiền tường gạch men trắng (hàng 2–3) → lưới xanh (hàng 4–5) → dải khung tranh đỏ có thoi xanh (hàng 6); **cổng chính ở giữa** (ô 11–20, tâm giữa ô 15 và 16) gồm mái vòm cong, biển xanh "TRẦN PHÚ", bốn cột gạch xanh, song sắt, cánh cổng xanh nhiều ô kính; **hai cây lớn trong bồn gạch** (ô 8–10 và 21–23, hàng 7); vỉa hè gạch nâu hai bên (hàng 7–8) và lối xe nhựa ở giữa trước cổng; đường, xe buýt 67, xe máy, vạch qua đường, hàng bụi cây phía dưới **giữ nguyên** (hàng 9–15); xe kem ở rìa trái, xe cháo lòng ở rìa phải.
+- **Lối vào sân chính** dời từ hàng 4 xuống **ô (15–16, 6)** (chân cánh cổng); điểm xuất hiện `from-san-chinh` dời xuống (16, 7). Điểm xuất hiện mặc định (16, 8) giữ nguyên.
+- Phần còn lại của mặt tiền là **tường cản** (không đi được); chỉ vỉa hè, lối xe và đường đi được.
+- Vị trí các NPC/đối tượng nằm ở khu này được cập nhật theo bố cục mới (lịch NPC cổng trường, băng ghế, điểm tương tác, học sinh nền); không đổi quy tắc nào ở BR1–BR5.
+- Không thay đổi: kiến trúc, quy ước dữ liệu, luồng thời gian, các khu vực khác.

@@ -4,9 +4,9 @@
 
 | Ảnh | Nội dung |
 |-----|----------|
-| ref-01 | Ảnh pixel gốc của người dùng: cổng, xe buýt 67, kem, cháo lòng |
+| ref-01 | Ảnh pixel gốc của người dùng, **là mẫu chính cho khu `cong-truong`** (người dùng xác nhận 2026-10-08): mặt tiền tường gạch men trắng + lưới xanh + khung tranh đỏ có thoi xanh; cổng lớn mái vòm cong màu be/hồng, biển xanh "TRẦN PHÚ" chữ vàng, cột gạch xanh nhạt, song sắt đen, cánh cổng xanh nhiều ô kính; hai cây lớn trong bồn gạch nâu; xe buýt 67 xanh lá có hộp mái; xe kem hồng; xe cháo lòng; vỉa hè gạch nâu, lối xe xám ở giữa, đường có vạch đứt và vạch qua đường, hàng bụi dưới cùng |
 | ref-02 | Dãy nhà 3–4 tầng nhìn từ vườn cây: hành lang mở, cột xanh, chậu bonsai, tháp chùa phía xa |
-| ref-03 | Cổng thật: mái vòm trắng, bảng nâu, băng rôn đỏ, cổng sắt xanh, tường thấp có họa tiết thoi xanh |
+| ref-03 | Cổng thật (ảnh chụp): mái vòm trắng, bảng nâu, băng rôn đỏ, cổng sắt xanh, tường thấp có họa tiết thoi xanh. **Không còn dùng cho `cong-truong`** (lệch ảnh pixel mẫu); có thể dùng cho chi tiết khác |
 | ref-04 | Toàn cảnh từ trên cao: sân giữa nhiều cây lớn, mái tôn xanh dài, mái ngói đỏ |
 | ref-05 | Hành lang: cột xanh, lan can xanh ngọc, sàn gạch kem, ống cứu hỏa đỏ |
 | ref-06 | Dãy nhà 4–5 tầng nhìn từ sân, hàng cây cao, cột xanh |

@@ -399,6 +399,175 @@ function bushImg(): Img {
 }
 const BUSH = bushImg();
 
+// ---------- Cổng trường theo ảnh mẫu ref-01 (tự vẽ, chỉ tham khảo bố cục/màu) ----------
+// Sprite 176×96 đặt tại (168, 0) trên bản đồ cong-truong (xem tools/gen-maps.ts): phủ ô 11–20, hàng 0–5.
+// Từ trên xuống: mái vòm cong · biển xanh "TRẦN PHÚ" · phào be · song sắt · cánh cổng xanh nhiều ô kính,
+// kẹp giữa 4 cột gạch xanh nhạt.
+const SIGN_FONT: Record<string, string[]> = {
+  T: ["####", ".##.", ".##.", ".##.", ".##.", ".##.", ".##."],
+  R: ["###.", "#..#", "#..#", "###.", "#.#.", "#..#", "#..#"],
+  A: [".##.", "#..#", "#..#", "####", "#..#", "#..#", "#..#"],
+  N: ["#..#", "##.#", "##.#", "#.##", "#.##", "#..#", "#..#"],
+  P: ["###.", "#..#", "#..#", "###.", "#...", "#...", "#..."],
+  H: ["#..#", "#..#", "#..#", "####", "#..#", "#..#", "#..#"],
+  U: ["#..#", "#..#", "#..#", "#..#", "#..#", "#..#", ".##."],
+};
+
+function gateSprite(): Img {
+  const g = new Img(176, 96);
+
+  // mái vòm cong: dày ở giữa, mỏng dần và hạ thấp về hai đầu
+  const ARCH = { light: "#fde9cd", face: "#f4cfa6", under: "#e8b48a", deep: "#cf8f66" };
+  for (let x = 0; x < 176; x++) {
+    const u = (x - 87.5) / 88;
+    const top = Math.round(38 * u * u);
+    const thick = Math.round(14 - 8 * u * u);
+    for (let j = 0; j < thick; j++) {
+      const c = j < 2 ? ARCH.light : j >= thick - 1 ? ARCH.deep : j >= thick - 3 ? ARCH.under : ARCH.face;
+      g.px(x, top + j, c);
+    }
+  }
+
+  // biển xanh: viền trắng, dòng chữ nhỏ (mô phỏng), chữ lớn vàng "TRẦN PHÚ" có dấu
+  const SX = 56;
+  const SY = 20;
+  const SW = 64;
+  const SH = 18;
+  g.rect(SX, SY, SW, SH, "#2a58b5");
+  g.rect(SX + 1, SY + 1, SW - 2, 1, "#4d7fd6");
+  g.rect(SX + 1, SY + SH - 2, SW - 2, 1, "#1b3d87");
+  g.box(SX, SY, SW, SH, "#e9f1ff");
+  for (let x = SX + 5; x < SX + SW - 7; x += 3) g.rect(x, SY + 3, 2, 1, "#f3d44a");
+  const glyphX: Record<string, number> = {};
+  let cx = SX + Math.round((SW - 38) / 2);
+  const letters: [string, number, number][] = [];
+  for (const ch of "TRAN PHU") {
+    if (ch === " ") {
+      cx += 4;
+      continue;
+    }
+    glyphX[ch] = cx;
+    letters.push([ch, cx, SY + 8]);
+    cx += 5;
+  }
+  const drawWord = (dx: number, dy: number, main: string, hi: string | null) => {
+    for (const [ch, x, y] of letters) {
+      SIGN_FONT[ch].forEach((row, j) => [...row].forEach((v, i) => v === "#" && g.px(x + i + dx, y + j + dy, j === 0 && hi ? hi : main)));
+    }
+    const a = glyphX.A;
+    const u = glyphX.U;
+    for (const [px, py] of [[a + 1, SY + 6], [a + 2, SY + 6], [a, SY + 7], [a + 3, SY + 7], [a + 4, SY + 5], [u + 3, SY + 6], [u + 2, SY + 7]]) g.px(px + dx, py + dy, main);
+  };
+  drawWord(1, 1, "#13306e", null); // bóng chữ
+  drawWord(0, 0, "#f8dc4a", "#fff3b0");
+
+  // phào be ngay dưới biển
+  g.rect(22, 38, 132, 2, C.creamLight);
+  g.rect(22, 40, 132, 1, C.creamDark);
+  g.rect(22, 41, 132, 5, C.cream);
+  g.rect(22, 41, 132, 1, C.creamLight);
+  g.rect(22, 45, 132, 1, C.creamShade);
+  g.rect(22, 46, 132, 1, C.creamDark);
+
+  // song sắt đen trên nền tường trắng
+  g.rect(22, 54, 132, 14, "#e6e9ef");
+  for (let x = 23; x < 153; x += 3) g.rect(x, 55, 1, 12, "#232635");
+  g.rect(22, 54, 132, 2, "#2d3142");
+  g.rect(22, 54, 132, 1, "#4b5168");
+  g.rect(22, 66, 132, 1, "#2d3142");
+
+  // cánh cổng xanh nhiều ô kính
+  const DOOR = "#3b8de0";
+  const DOOR_L = "#6cb0f3";
+  const DOOR_D = "#2a68b8";
+  const DOOR_DD = "#1d4a8a";
+  const GLASS = "#ade0fb";
+  const GLASS_L = "#eaf8ff";
+  const GLASS_D = "#78bde8";
+  const pane = (x: number, y: number, w: number, h: number) => {
+    g.rect(x, y, w, h, GLASS);
+    g.rect(x, y, w, 1, GLASS_D);
+    g.rect(x, y, 1, h, GLASS_D);
+    g.rect(x + w - 1, y + 1, 1, h - 1, GLASS_L);
+    g.px(x + 2, y + 2, GLASS_L);
+    g.px(x + 3, y + 1, GLASS_L);
+  };
+  const leaf = (x0: number, w: number, panesX: number[], paneW: number) => {
+    g.rect(x0, 68, w, 28, DOOR);
+    g.rect(x0, 68, w, 1, DOOR_L);
+    g.rect(x0, 68, 1, 28, DOOR_L);
+    g.rect(x0 + w - 1, 68, 1, 28, DOOR_D);
+    g.rect(x0, 94, w, 2, DOOR_D);
+    g.rect(x0, 95, w, 1, DOOR_DD);
+    for (const px of panesX) for (const py of [71, 83]) pane(x0 + px, py, paneW, 9);
+  };
+  leaf(22, 20, [3, 11], 6);
+  leaf(134, 20, [3, 11], 6);
+  leaf(54, 34, [4, 13, 22], 7);
+  leaf(88, 34, [4, 13, 22], 7);
+  g.rect(87, 68, 1, 28, DOOR_DD); // khe giữa hai cánh
+
+  // 4 cột gạch xanh nhạt, mũ cột và chân cột
+  const pillar = (x: number) => {
+    const top = 24;
+    for (let y = top; y < 96; y++) {
+      const rowIdx = Math.floor((y - top) / 4);
+      for (let i = 0; i < 12; i++) {
+        let c: string = C.sky;
+        if (i === 0) c = C.skyPale;
+        else if (i === 1) c = C.skyLight;
+        else if (i === 11) c = C.skyDeep;
+        else if (i >= 9) c = C.skyShade;
+        g.px(x + i, y, c);
+      }
+      if ((y - top) % 4 === 3) g.rect(x, y, 12, 1, C.skyDeep);
+      else for (const jx of rowIdx % 2 === 0 ? [3, 9] : [6]) g.px(x + jx, y, C.skyShade);
+    }
+    g.rect(x, 92, 12, 4, mix(C.skyShade, C.skyDeep, 0.4));
+    g.rect(x, 92, 12, 1, C.skyShade);
+    g.rect(x - 1, 21, 14, 4, C.skyLight);
+    g.rect(x - 1, 21, 14, 1, C.skyPale);
+    g.rect(x - 1, 24, 14, 1, C.skyShade);
+    g.rect(x + 11, 22, 2, 3, C.skyShade);
+  };
+  for (const x of [10, 42, 122, 154]) pillar(x);
+
+  g.outline(C.ink, 0.6);
+  return g;
+}
+
+/** Cây lớn 48×64 (tán rộng, thân cong, một cụm lá nhỏ bên thân), gốc nằm giữa đáy ảnh. */
+function bigTree(): Img {
+  const t = new Img(48, 64);
+  for (let y = 30; y < 63; y++) {
+    const k = (y - 30) / 33;
+    const cx = 24 + Math.round(2.5 * Math.sin(k * 3.2));
+    const half = 3 + Math.round(k * 1.5) + (y > 56 ? Math.round((y - 56) * 0.8) : 0);
+    for (let x = cx - half; x <= cx + half; x++) {
+      const rel = (x - (cx - half)) / (half * 2);
+      const c = rel < 0.25 ? C.trunkLight : rel > 0.7 ? C.trunkDark : C.trunk;
+      t.px(x, y, hash(x, y, 41) > 0.93 ? C.trunkDark : c);
+    }
+  }
+  for (let i = 0; i < 8; i++) t.px(21 - i, 44 - Math.floor(i * 0.6), C.trunk);
+  foliage(t, [[24, 11, 9.5], [13, 17, 8.5], [35, 17, 8.5], [24, 20, 11], [14, 27, 7.5], [34, 27, 7.5], [24, 31, 8]], 8);
+  foliage(t, [[14, 45, 4.5], [10, 48, 3.5]], 9);
+  t.outline(C.leafDeep, 0.55);
+  t.shadow(24, 62.3, 11, 1.6);
+  return t;
+}
+
+/** Khung tranh đỏ của dải tường: thanh đỏ trên/dưới, ruột kem. */
+function muralBase(t: Img): void {
+  t.rect(0, 0, 16, 16, "#f6e9c9");
+  t.rect(0, 0, 16, 2, "#a82d2d");
+  t.rect(0, 0, 16, 1, "#d84a4a");
+  t.rect(0, 2, 16, 1, "#7a1e1e");
+  t.rect(0, 14, 16, 2, "#a82d2d");
+  t.rect(0, 14, 16, 1, "#c93b3b");
+  speck(t, 51, 0.04, "#ecdcb6", 0, 3, 16, 11);
+}
+
 // Phông chữ 3×5 tối giản cho biển hiệu.
 const FONT: Record<string, string[]> = {
   "6": ["111", "100", "111", "101", "111"],
@@ -885,6 +1054,87 @@ const TILE_DRAWERS: [string, Draw][] = [
     t.rect(0, 0, 16, 16, "#f3f0e6");
     speck(t, 11, 0.035, "#e2dece");
     speck(t, 23, 0.02, "#fbf9f2");
+  }],
+  // ---- mặt tiền cổng trường theo ref-01 (thêm 2026-10-08; thêm ở cuối để giữ chỉ số các tile cũ) ----
+  ["backdrop_gray", (t) => {
+    t.rect(0, 0, 16, 16, "#878a92");
+    speck(t, 31, 0.03, "#7d8089");
+    speck(t, 32, 0.02, "#92959d");
+  }],
+  ["wall_white_tile", (t) => {
+    // gạch men trắng 8×8: mép trên-trái sáng, dưới-phải đổ bóng
+    for (let by = 0; by < 2; by++)
+      for (let bx = 0; bx < 2; bx++) {
+        const ox = bx * 8;
+        const oy = by * 8;
+        t.rect(ox, oy, 8, 8, "#f1f3f7");
+        t.rect(ox, oy, 8, 1, "#ffffff");
+        t.rect(ox, oy, 1, 8, "#ffffff");
+        t.rect(ox, oy + 7, 8, 1, "#c4c9d4");
+        t.rect(ox + 7, oy, 1, 8, "#c4c9d4");
+        t.px(ox + 7, oy, "#dde1e9");
+        t.px(ox, oy + 7, "#dde1e9");
+        speck(t, 33 + bx * 5 + by * 3, 0.05, "#e4e7ee", ox + 1, oy + 1, 6, 6);
+      }
+  }],
+  ["lattice_blue", (t) => {
+    // lưới xanh trên nền tường trắng: thanh ngang trên, song dọc đều, thanh ngang giữa
+    t.rect(0, 0, 16, 16, "#eef0f5");
+    for (let x = 1; x < 16; x += 4) {
+      t.rect(x, 3, 1, 13, C.skyLight);
+      t.rect(x + 1, 3, 1, 13, C.sky);
+    }
+    t.rect(0, 0, 16, 1, C.skyLight);
+    t.rect(0, 1, 16, 2, C.sky);
+    t.rect(0, 3, 16, 1, C.skyDeep);
+    t.rect(0, 9, 16, 1, C.skyShade);
+    t.rect(0, 10, 16, 1, C.skyDeep);
+  }],
+  ["lattice_blue_base", (t) => {
+    // nửa dưới lưới + chân tường bê tông xám
+    t.rect(0, 0, 16, 16, "#eef0f5");
+    for (let x = 1; x < 16; x += 4) {
+      t.rect(x, 0, 1, 9, C.skyLight);
+      t.rect(x + 1, 0, 1, 9, C.sky);
+    }
+    t.rect(0, 7, 16, 2, C.skyShade);
+    t.rect(0, 7, 16, 1, C.skyLight);
+    t.rect(0, 9, 16, 1, C.skyDeep);
+    t.rect(0, 10, 16, 6, "#b9bdc8");
+    t.rect(0, 10, 16, 1, "#dfe2ea");
+    t.rect(0, 15, 16, 1, "#8e93a2");
+    speck(t, 36, 0.06, "#a9aebb", 0, 11, 16, 4);
+  }],
+  ["mural_cream", muralBase],
+  ["mural_diamond", (t) => {
+    muralBase(t);
+    for (let dy = -3; dy <= 3; dy++) {
+      const half = Math.round(6 * (1 - Math.abs(dy) / 3.6));
+      t.rect(8 - half, 8 + dy, half * 2, 1, dy < 0 ? "#3fb0ee" : dy === 0 ? "#2d94de" : "#2368b8");
+    }
+  }],
+  ["mural_post", (t) => {
+    muralBase(t);
+    t.rect(6, 0, 4, 16, "#a82d2d");
+    t.rect(6, 0, 1, 16, "#d84a4a");
+    t.rect(9, 0, 1, 16, "#7a1e1e");
+  }],
+  ["planter_brick", (t) => {
+    // bồn cây gạch nâu nhìn thẳng: đất tối ở trên, thành gạch so le bên dưới
+    t.rect(0, 3, 16, 5, "#4a3022");
+    speck(t, 37, 0.1, "#5e3f2c", 0, 4, 16, 3);
+    t.rect(0, 3, 16, 1, "#8a5a3a");
+    t.rect(0, 8, 16, 8, "#9c5f3a");
+    t.rect(0, 8, 16, 1, "#c98b5e");
+    for (let row = 0; row < 2; row++) {
+      const y = 9 + row * 4;
+      t.rect(0, y + 3, 16, 1, "#6a3f26");
+      for (let x = row % 2 === 0 ? 5 : 9; x < 16; x += 8) t.rect(x, y, 1, 3, "#6a3f26");
+      t.rect(0, y, 16, 1, "#b0724a");
+    }
+    t.rect(0, 15, 16, 1, "#5a3320");
+    t.rect(0, 3, 1, 13, "#6a3f26");
+    t.rect(15, 3, 1, 13, "#6a3f26");
   }],
 ];
 
@@ -1452,7 +1702,7 @@ function bikeSprite(): Img {
 
 // ---------- Atlas ----------
 const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
-const atlas = new Img(320, 96);
+const atlas = new Img(320, 192);
 function put(name: string, img: Img, x: number, y: number): void {
   atlas.blit(img, x, y);
   frames[name] = { x, y, w: img.w, h: img.h };
@@ -1483,6 +1733,11 @@ put("bus_67", busSprite(), 0, 48);
 put("cart_kem", cartSprite(32, "kem", C.pink, C.pinkDark, C.pink, C.white, "KEM"), 80, 48);
 put("cart_chao_long", cartSprite(40, "chao", C.gray, C.grayDark, C.yellow, C.redDark, "CHAO LONG"), 112, 48);
 put("motorbike", bikeSprite(), 152, 48);
+// Cổng trường theo ref-01 (2026-10-08): cổng chính 176×96 và cây lớn 48×64 (bản phải là bản lật).
+put("gate_main", gateSprite(), 0, 96);
+const TREE = bigTree();
+put("tree_big", TREE, 176, 96);
+put("tree_big_r", TREE.flipX(), 224, 96);
 
 // ---------- Ghi file ----------
 mkdirSync("public/assets", { recursive: true });
