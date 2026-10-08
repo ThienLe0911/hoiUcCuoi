@@ -42,6 +42,7 @@ Trên điện thoại hãy xoay ngang. Trong menu có "Nghỉ/Chờ" để bỏ 
 
 ```bash
 npm test            # kiểm thử đơn vị (vitest)
+npm run e2e         # kiểm thử end-to-end bằng trình duyệt thật (Playwright), xem mục bên dưới
 npm run build       # kiểm tra kiểu + build ra thư mục dist/
 npm run preview     # chạy thử bản build
 npm run gen-assets  # sinh lại tileset và sprite (tools/gen-assets.ts)
@@ -50,6 +51,16 @@ npm run render-maps # vẽ ảnh xem trước bản đồ vào docs/features/khu
 ```
 
 Bản build trong `dist/` là tệp tĩnh, có thể đưa lên bất kỳ máy chủ web tĩnh nào (đường dẫn tương đối).
+
+### Kiểm thử end-to-end (Playwright)
+
+Lần đầu trên máy mới: `npm install` rồi `npx playwright install chromium` (~100 MB, lưu ở cache của người dùng, không nằm trong repo). Sau đó `npm run e2e`.
+
+- Playwright tự bật dev server ở cổng riêng **5199** (không dùng lại server nào đang chạy) và tự tắt khi xong. Cổng 5199 phải rảnh.
+- Phải chạy trên **dev server** vì `?area=&day=&period=` và `window.__game` chỉ có ở chế độ dev.
+- Kịch bản nằm trong `e2e/*.e2e.ts` (đuôi `.e2e.ts` để vitest không nhặt nhầm): `hoi-thoai.e2e.ts` (bàn phím, đi bộ thật tới Kiệt, 4 hành động của Huy, điều kiện flag, NPC thường, vòng lặp bác lao công) và `hoi-thoai-cam-ung.e2e.ts` (chạm thật qua CDP, kiểm bố cục hộp thoại so với D-pad). Sau mỗi test có kiểm tra không có `console.error`/`pageerror`.
+- Một số test dịch người chơi tới cạnh NPC bằng `placePlayer` (đích ở dải hành lang tầng trên khó đi tới); riêng cảnh Kiệt đi bộ thật bằng phím.
+- Kiểm kiểu cho e2e: `npx tsc -p e2e`.
 
 ## Cấu trúc
 

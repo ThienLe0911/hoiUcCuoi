@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "e2e": "playwright test",
     "gen-assets": "node --experimental-strip-types tools/gen-assets.ts",
     "gen-maps": "node --experimental-strip-types tools/gen-maps.ts",
     "render-maps": "node --experimental-strip-types tools/render-maps.ts"
@@ -17,6 +18,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.0",
     "pngjs": "^7.0.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.1",

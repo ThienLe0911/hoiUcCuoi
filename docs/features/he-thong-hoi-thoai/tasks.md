@@ -5,7 +5,8 @@
 - Căn cứ: `spec.md` (Approved), GDD `docs/product/kich-ban-mvp.md` (Approved), ADR 001–004 (Accepted).
 
 ## Tiến độ (2026-10-08)
-**Đã cài đủ T1–T9** (làm tuần tự, không dùng subagent). 154 test xanh, `tsc` sạch, build 1,6 MB. Nhánh: `feat/he-thong-hoi-thoai` (làm trong git worktree riêng vì thư mục chính đang có phiên khác làm việc). **Chưa /validate, chưa push.**
+**Đã cài đủ T1–T9** (làm tuần tự, không dùng subagent) và **đã /validate: PASS** (xem `validation.md`). 205 test đơn vị xanh + 14 test e2e Playwright xanh, `tsc` sạch, build 1,6 MB. Nhánh: `feat/he-thong-hoi-thoai` (làm trong git worktree riêng vì thư mục chính đang có phiên khác làm việc). **Chưa push.**
+- Sau /validate đợt 1, người dùng duyệt cài `@playwright/test` (2026-10-08): thêm `playwright.config.ts`, thư mục `e2e/`, script `npm run e2e`, README mục e2e; ảnh bằng chứng bố cục cảm ứng ở `evidence/`.
 - T8 được làm cùng đợt với T4/T5 (đủ thành phần); thêm `tests/dialogue-schema.test.ts` (T2) ngoài danh sách file dự kiến.
 - Kiểm chứng trực quan trong trình duyệt: hộp thoại có tên người nói, danh sách lựa chọn, lựa chọn hành động (`»`, xanh nhạt), điều kiện flag xuyên cảnh Kiệt→Huy, không tiêu khoảng, nhấn ↓ lúc đọc không dồn sang lúc chọn. Bố cục cảm ứng (hộp phía trên) chỉ kiểm bằng số đo, chưa chụp.
 - Hạn chế đã biết: mỗi NPC chỉ gắn **một** cây thoại, chưa chọn theo ngày/điều kiện (cây "Huy bị nghi" sẽ chạy cả ngày 1); chọn cây theo ngày/sự kiện thuộc feature nhiệm vụ/sự kiện sau.
