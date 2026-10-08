@@ -1,0 +1,112 @@
+{
+  "id": "huy-bi-nghi",
+  "nodes": [
+    {
+      "id": "mo-dau",
+      "speaker": "narration",
+      "lines": ["Cả lớp xì xào: có người nói Huy là kẻ làm lộ đề kiểm tra.", "Huy ngồi ở cuối lớp, cúi gằm mặt, không nói một lời."],
+      "next": "huy-len-tieng"
+    },
+    {
+      "id": "huy-len-tieng",
+      "speaker": "huy",
+      "lines": ["Nhìn gì? Muốn nói gì thì nói thẳng đi."],
+      "next": "tiep-can"
+    },
+    {
+      "id": "tiep-can",
+      "speaker": "narration",
+      "lines": ["Mình nên bắt đầu từ đâu?"],
+      "choices": [
+        { "label": "Hỏi thẳng: cậu có làm không?", "goto": "huy-tra-loi" },
+        {
+          "label": "Nhắc chuyện Kiệt né tránh",
+          "condition": { "flag": "ngay1.nhac-be-giang" },
+          "effects": { "setFlags": { "ngay3.nghi-kiet-giau": true } },
+          "goto": "huy-ve-kiet"
+        }
+      ]
+    },
+    {
+      "id": "huy-tra-loi",
+      "speaker": "huy",
+      "lines": ["Tôi mà làm thì đã chẳng ngồi đây chịu trận.", "Nhưng nói thì ai tin?"],
+      "next": "chon-hanh-dong"
+    },
+    {
+      "id": "huy-ve-kiet",
+      "speaker": "huy",
+      "lines": ["Kiệt né à? Thằng đó biết nhiều hơn nó chịu nói đấy.", "Nhưng đừng hỏi thêm, tôi không có bằng chứng."],
+      "next": "chon-hanh-dong"
+    },
+    {
+      "id": "chon-hanh-dong",
+      "speaker": "narration",
+      "lines": ["Cô chủ nhiệm sắp bước vào lớp. Phải quyết định ngay."],
+      "choices": [
+        { "label": "Đứng ra nhận thay Huy", "isAction": true, "effects": { "setFlags": { "ngay3.nhan-thay": true } }, "goto": "nhan-thay" },
+        { "label": "Đưa mảnh giấy cho cô", "isAction": true, "effects": { "setFlags": { "ngay3.dua-bang-chung": true } }, "goto": "bang-chung" },
+        { "label": "Im lặng, giữ bí mật", "isAction": true, "effects": { "setFlags": { "ngay3.im-lang": true } }, "goto": "im-lang" },
+        { "label": "Âm thầm đi điều tra", "isAction": true, "effects": { "setFlags": { "ngay3.dieu-tra": true } }, "goto": "dieu-tra" }
+      ]
+    },
+    {
+      "id": "nhan-thay",
+      "speaker": "co-chu-nhiem",
+      "lines": ["Em nhận? Vậy chiều nay em lên phòng giáo vụ gặp cô."],
+      "next": "nhan-thay-2"
+    },
+    {
+      "id": "nhan-thay-2",
+      "speaker": "huy",
+      "lines": ["Cậu điên à? Ai nhờ cậu gánh hộ?", "...Nhưng cảm ơn."],
+      "next": "nhan-thay-3"
+    },
+    {
+      "id": "nhan-thay-3",
+      "speaker": "narration",
+      "lines": ["Huy thoát nghi ngờ. Còn mình thì mang tiếng, và cô nhìn mình khác đi."],
+      "next": "end"
+    },
+    {
+      "id": "bang-chung",
+      "speaker": "co-chu-nhiem",
+      "lines": ["Mảnh giấy này... cô sẽ xem lại. Huy, em không còn bị nghi nữa."],
+      "next": "bang-chung-2"
+    },
+    {
+      "id": "bang-chung-2",
+      "speaker": "huy",
+      "lines": ["Cậu lôi thứ đó ra... Giờ người ta biết hết chuyện nhà tôi rồi."],
+      "next": "bang-chung-3"
+    },
+    {
+      "id": "bang-chung-3",
+      "speaker": "narration",
+      "lines": ["Sự thật rõ hơn, nhưng bí mật của người khác đã bị phơi ra. Mình không rút lại được nữa."],
+      "next": "end"
+    },
+    {
+      "id": "im-lang",
+      "speaker": "narration",
+      "lines": [
+        "Mình cúi đầu. Cô chủ nhiệm hỏi, cả lớp im phăng phắc.",
+        "Huy bị phạt đứng cuối lớp. Cậu ấy không nhìn mình.",
+        "Bí mật kia vẫn an toàn. Nhưng lòng mình nặng hơn."
+      ],
+      "next": "end"
+    },
+    {
+      "id": "dieu-tra",
+      "speaker": "narration",
+      "lines": ["Mình chưa nói gì, chỉ ghi nhớ từng chi tiết.", "Huy bị cô giữ lại sau giờ học. Mình cần manh mối trước khi muộn."],
+      "next": "dieu-tra-2"
+    },
+    {
+      "id": "dieu-tra-2",
+      "speaker": "huy",
+      "lines": ["Đừng dính vào. Cậu không gánh nổi đâu."],
+      "next": "end"
+    }
+  ]
+}
