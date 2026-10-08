@@ -2,6 +2,7 @@
 import Phaser from "phaser";
 import { FONT_FAMILY, GAME_HEIGHT, GAME_WIDTH, TILE } from "../config";
 import type { Direction } from "../core/actions";
+import { DialogueRunner } from "../core/dialogue";
 import { advancePeriods } from "../core/flow";
 import { attachKeyboard } from "../core/keyboard";
 import { createSession, type Session } from "../core/session";
@@ -310,6 +311,35 @@ export class AreaScene extends Phaser.Scene {
     this.prompt.setVisible(false);
   }
 
+  /** Nói chuyện với NPC: có cây thoại thì chạy cây thoại, không thì chỉ hiện câu thoại tối thiểu. Không tiêu khoảng. */
+  private talkTo(def: NpcDef): void {
+    const tree = def.dialogue ? this.session.content.dialogues.get(def.dialogue) : undefined;
+    if (!tree) {
+      this.dialog.show([def.line]);
+      return;
+    }
+    this.runDialogueNode(new DialogueRunner(tree, this.session.state.flags));
+  }
+
+  /** Hiện node hiện tại của hội thoại; khi đóng/chọn xong thì sang node kế, hết cây thì thôi. Hiệu ứng ghi thẳng vào state.flags. */
+  private runDialogueNode(runner: DialogueRunner): void {
+    const node = runner.node;
+    if (!node) return;
+    this.drainPresses();
+    const speaker = node.speaker === "narration" ? undefined : this.session.content.npcs.get(node.speaker)?.name;
+    const choices = runner.choices;
+    this.dialog.showNode({
+      speaker,
+      pages: node.lines,
+      choices: choices.map((c) => ({ label: c.label, isAction: c.isAction })),
+      onDone: (index) => {
+        if (choices.length > 0 && index !== undefined) runner.choose(index);
+        else runner.advance();
+        this.runDialogueNode(runner);
+      },
+    });
+  }
+
   private playerRect(): Phaser.Geom.Rectangle {
     const b = this.player.body as Phaser.Physics.Arcade.Body;
     return new Phaser.Geom.Rectangle(b.x, b.y, b.width, b.height);
@@ -398,6 +428,13 @@ export class AreaScene extends Phaser.Scene {
     if (this.dialog.isOpen) {
       this.freezePlayer();
       actions.consumePressed("menu");
+      // luôn tiêu thụ lên/xuống: nhấn lúc đang đọc trang không được "dồn" sang lúc hiện lựa chọn
+      const up = actions.consumePressed("up");
+      const down = actions.consumePressed("down");
+      if (this.dialog.isChoosing) {
+        if (up) this.dialog.move(-1);
+        if (down) this.dialog.move(1);
+      }
       if (actions.consumePressed("interact")) this.dialog.advance();
       return;
     }
@@ -437,12 +474,12 @@ export class AreaScene extends Phaser.Scene {
       if (this.transitioning) return;
     }
 
-    // tương tác NPC (ưu tiên): hiện tên, bấm Tương tác → thoại tối thiểu, không tiêu khoảng
+    // tương tác NPC (ưu tiên): hiện tên, bấm Tương tác → cây thoại (nếu có) hoặc thoại tối thiểu; không tiêu khoảng
     const npc = this.nearestNpc();
     if (npc) {
       const key = this.touch ? "" : "[E] ";
       this.prompt.setText(key + npc.def.name).setVisible(true);
-      if (actions.consumePressed("interact")) this.dialog.show([npc.def.line]);
+      if (actions.consumePressed("interact")) this.talkTo(npc.def);
       return;
     }
 

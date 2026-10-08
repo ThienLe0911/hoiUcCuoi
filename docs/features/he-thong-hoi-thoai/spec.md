@@ -32,7 +32,7 @@ Khung game + feature NPC mới chỉ cho NPC nói **một câu placeholder**. Tr
 
 ### FR3. Hiệu ứng lựa chọn (`effects`)
 - FR3.1 `setFlags`: map `tên-flag → bool`, áp vào `GameState.flags` khi chọn (dùng ngay).
-- FR3.2 Chừa sẵn trường `relationship` (vd `{ npcId, thanThiet?, tinTuong?, apLuc? }`) trong schema cho feature `he-thong-quan-he`; feature này **đọc được nhưng không áp dụng** (bỏ qua, không lỗi).
+- FR3.2 Chừa sẵn trường `relationship` (`{ npc, closeness?, trust?, pressure? }` = Thân thiết / Tin tưởng / Áp lực; khóa tiếng Anh theo quy ước schema, cập nhật 2026-10-08) trong schema cho feature `he-thong-quan-he`; feature này **đọc được nhưng không áp dụng** (bỏ qua, không lỗi).
 - FR3.3 Hiệu ứng là **dữ liệu**, không hard-code (ADR 004).
 
 ### FR4. Kho flag trong trạng thái game (nâng cấp save)

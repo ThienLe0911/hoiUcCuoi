@@ -4,6 +4,12 @@
 - Ngày: 2026-10-01
 - Căn cứ: `spec.md` (Approved), GDD `docs/product/kich-ban-mvp.md` (Approved), ADR 001–004 (Accepted).
 
+## Tiến độ (2026-10-08)
+**Đã cài đủ T1–T9** (làm tuần tự, không dùng subagent). 154 test xanh, `tsc` sạch, build 1,6 MB. Nhánh: `feat/he-thong-hoi-thoai` (làm trong git worktree riêng vì thư mục chính đang có phiên khác làm việc). **Chưa /validate, chưa push.**
+- T8 được làm cùng đợt với T4/T5 (đủ thành phần); thêm `tests/dialogue-schema.test.ts` (T2) ngoài danh sách file dự kiến.
+- Kiểm chứng trực quan trong trình duyệt: hộp thoại có tên người nói, danh sách lựa chọn, lựa chọn hành động (`»`, xanh nhạt), điều kiện flag xuyên cảnh Kiệt→Huy, không tiêu khoảng, nhấn ↓ lúc đọc không dồn sang lúc chọn. Bố cục cảm ứng (hộp phía trên) chỉ kiểm bằng số đo, chưa chụp.
+- Hạn chế đã biết: mỗi NPC chỉ gắn **một** cây thoại, chưa chọn theo ngày/điều kiện (cây "Huy bị nghi" sẽ chạy cả ngày 1); chọn cây theo ngày/sự kiện thuộc feature nhiệm vụ/sự kiện sau.
+
 ## Thư viện
 **Không cần thư viện mới** (zod, vitest đã có). Nếu phát sinh sẽ hỏi duyệt trước (PM Charter mục 1).
 

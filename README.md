@@ -78,11 +78,37 @@ Bản đồ là file Tiled JSON (`data/maps/<id>.tmj`, ô 16×16). Định dạn
 
 Nội dung NPC nằm trong `data/` (JSON + kiểm tra bằng zod khi khởi động, [ADR 004](docs/architecture/decisions/004-dinh-dang-du-lieu-noi-dung.md)):
 
-- `data/npcs.json` — danh sách NPC: `id`, `name`, `kind` (`main`/`extra`), `frame` (khung sprite), `interactable`, `line` (câu thoại tối thiểu).
+- `data/npcs.json` — danh sách NPC: `id`, `name`, `kind` (`main`/`extra`), `frame` (khung sprite), `interactable`, `line` (câu thoại tối thiểu), `dialogue` (tùy chọn: id cây thoại, xem mục Hội thoại).
 - `data/schedules.json` — lịch: mỗi mục `npc`, `day` (1–6), `period` (0–3), `area`, `x`, `y` (ô), `facing`; thêm `weather` (`sunny`/`rainy`) nếu chỉ áp dụng khi thời tiết đó.
 - `data/weather.json` — thời tiết theo ngày (MVP: Ngày 5 mưa).
 
 NPC đứng yên theo lịch, là vật cản (không đi xuyên), trò chuyện hiện thoại tối thiểu (không tiêu khoảng). Dữ liệu sai (NPC/khu vực không tồn tại, đặt vào ô tường, trùng lịch) sẽ báo lỗi chỉ rõ chỗ sai ngay khi khởi động. Xem thêm: [spec](docs/features/he-thong-npc-va-lich/spec.md), [GDD kịch bản](docs/product/kich-ban-mvp.md).
+
+## Hội thoại nhánh
+
+Mỗi file `data/dialogues/<id>.json` là **một cây thoại** (kiểm tra bằng zod + liên kết khi khởi động). NPC có trường `dialogue` thì bấm Tương tác sẽ chạy cây thoại thay cho câu `line`. Hội thoại **không tiêu khoảng**.
+
+```json
+{
+  "id": "vi-du",
+  "nodes": [
+    { "id": "mo-dau", "speaker": "kiet", "lines": ["Ê Thiện!"], "next": "chon" },
+    {
+      "id": "chon", "speaker": "narration", "lines": ["Mình nên đáp thế nào?"],
+      "choices": [
+        { "label": "Đùa lại", "effects": { "setFlags": { "ngay1.dua-lai": true } }, "goto": "end" },
+        { "label": "Nhắc chuyện cũ", "isAction": true, "condition": { "flag": "ngay1.dua-lai" }, "goto": "end" }
+      ]
+    }
+  ]
+}
+```
+
+- Mỗi node có **một trong hai**: `next` (id node kế hoặc `"end"`) hoặc `choices` (tối đa **4**). `speaker` là id NPC hoặc `"narration"`; `lines` là các trang chữ.
+- Lựa chọn: `label`, `goto`, tùy chọn `isAction` (lựa chọn bằng hành động, hiện tiền tố `»`), `condition` (`flag` / `allOf` / `anyOf` / `not`; lựa chọn chưa thỏa điều kiện bị ẩn), `effects.setFlags` (đặt cờ cốt truyện).
+- Cờ nằm trong `GameState.flags` (lưu bản 2; save bản 1 được tự nâng cấp). Node mà mọi lựa chọn đều ẩn đi tiếp `fallbackGoto` hoặc kết thúc, nên không bao giờ kẹt; vòng lặp không có lối ra sẽ bị loader báo lỗi.
+- Chỉ số quan hệ (`effects.relationship`, điều kiện `relationship`) đã chừa chỗ trong schema nhưng **chưa áp dụng** (feature quan hệ).
+- Ví dụ thật: `data/dialogues/` (Kiệt mở đầu, "Huy bị nghi", bác lao công). Xem [spec](docs/features/he-thong-hoi-thoai/spec.md).
 
 ## Thay đồ họa
 
