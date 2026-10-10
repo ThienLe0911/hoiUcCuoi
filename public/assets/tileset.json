@@ -64,6 +64,21 @@
     "mural_cream": 58,
     "mural_diamond": 59,
     "mural_post": 60,
-    "planter_brick": 61
+    "planter_brick": 61,
+    "facade_roof": 62,
+    "facade_window": 63,
+    "facade_window_ground": 64,
+    "facade_slab": 65,
+    "pillar_brick": 66,
+    "pillar_brick_top": 67,
+    "yard_concrete": 68,
+    "yard_line_h": 69,
+    "yard_line_v": 70,
+    "yard_line_tl": 71,
+    "yard_line_tr": 72,
+    "yard_line_bl": 73,
+    "yard_line_br": 74,
+    "stairs_rail_l": 75,
+    "stairs_rail_r": 76
   }
 }

@@ -599,6 +599,281 @@ function drawText(img: Img, text: string, x: number, y: number, color: string): 
   }
 }
 
+
+// ---------- Sân chính và hành lang theo phong cách cổng trường (2026-10-10) ----------
+// Phông 3×5 cho biển tên lớp và khẩu hiệu (chỉ gồm ký tự cần dùng).
+const PLATE_FONT: Record<string, string[]> = {
+  "0": ["111", "101", "101", "101", "111"],
+  "1": ["010", "110", "010", "010", "111"],
+  "2": ["111", "001", "111", "100", "111"],
+  "3": ["111", "001", "111", "001", "111"],
+  "4": ["101", "101", "111", "001", "001"],
+  "5": ["111", "100", "111", "001", "111"],
+  "6": ["111", "100", "111", "101", "111"],
+  "7": ["111", "001", "010", "010", "010"],
+  "8": ["111", "101", "111", "101", "111"],
+  "9": ["111", "101", "111", "001", "111"],
+  A: ["010", "101", "111", "101", "101"],
+  B: ["110", "101", "110", "101", "110"],
+  C: ["111", "100", "100", "100", "111"],
+  D: ["110", "101", "101", "101", "110"],
+  E: ["111", "100", "110", "100", "111"],
+  I: ["111", "010", "010", "010", "111"],
+  L: ["100", "100", "100", "100", "111"],
+  N: ["111", "101", "101", "101", "101"],
+  R: ["110", "101", "110", "101", "101"],
+  T: ["111", "010", "010", "010", "010"],
+  U: ["101", "101", "101", "101", "111"],
+  Y: ["101", "101", "010", "010", "010"],
+  "-": ["000", "000", "111", "000", "000"],
+  " ": ["000", "000", "000", "000", "000"],
+};
+/** Vẽ chữ bằng PLATE_FONT (bước 4px). Dấu: ` huyền, ' sắc, ^ mũ, . nặng (dưới), = gạch ngang của Đ. */
+function plateText(img: Img, text: [string, string][], x: number, y: number, color: string): void {
+  let cx = x;
+  for (const [ch, accent] of text) {
+    const g = PLATE_FONT[ch];
+    if (!g) throw new Error(`PLATE_FONT thiếu ký tự '${ch}'`);
+    g.forEach((row, j) => [...row].forEach((v, i) => v === "1" && img.px(cx + i, y + j, color)));
+    for (const a of accent) {
+      if (a === "`") (img.px(cx, y - 2, color), img.px(cx + 1, y - 1, color));
+      else if (a === "'") (img.px(cx + 2, y - 2, color), img.px(cx + 1, y - 1, color));
+      else if (a === "^") (img.px(cx + 1, y - 2, color), img.px(cx, y - 1, color), img.px(cx + 2, y - 1, color));
+      else if (a === ".") img.px(cx + 1, y + 6, color);
+      else if (a === "=") img.px(cx - 1, y + 2, color);
+    }
+    cx += 4;
+  }
+}
+const textOf = (s: string): [string, string][] => [...s].map((c) => [c, ""]);
+
+/** Cột gạch xanh nhạt (cùng kiểu cột cổng): thân rộng w, từ y0 đến y1; tùy chọn mũ cột. */
+function brickPillar(g: Img, x: number, y0: number, y1: number, w: number, cap: boolean): void {
+  for (let y = y0; y < y1; y++) {
+    const rowIdx = Math.floor((y - y0) / 4);
+    for (let i = 0; i < w; i++) {
+      let c: string = C.sky;
+      if (i === 0) c = C.skyPale;
+      else if (i === 1) c = C.skyLight;
+      else if (i === w - 1) c = C.skyDeep;
+      else if (i >= w - 3) c = C.skyShade;
+      g.px(x + i, y, c);
+    }
+    if ((y - y0) % 4 === 3) g.rect(x, y, w, 1, C.skyDeep);
+    else for (const jx of rowIdx % 2 === 0 ? [3, w - 3] : [Math.floor(w / 2)]) g.px(x + jx, y, C.skyShade);
+  }
+  g.rect(x, y1 - 4, w, 4, mix(C.skyShade, C.skyDeep, 0.4)); // chân cột
+  g.rect(x, y1 - 4, w, 1, C.skyShade);
+  if (cap) {
+    g.rect(x - 1, y0 - 3, w + 2, 4, C.skyLight);
+    g.rect(x - 1, y0 - 3, w + 2, 1, C.skyPale);
+    g.rect(x - 1, y0, w + 2, 1, C.skyShade);
+    g.rect(x + w - 1, y0 - 2, 2, 3, C.skyShade);
+  }
+}
+
+/** Dải cửa sổ liền nhau (mỗi ô hai ô kính 6px); `ground` thêm bệ bê tông xám như chân tường cổng. */
+function facadeWindow(t: Img, ground: boolean): void {
+  wallBg(t);
+  t.rect(0, 2, 16, 1, C.creamDark);
+  t.rect(0, 3, 16, 1, C.tealLight);
+  t.rect(0, 4, 16, 1, C.teal);
+  t.rect(0, 11, 16, 1, C.tealDark);
+  t.rect(0, 12, 16, 1, C.tealDeep);
+  for (const x0 of [1, 9]) {
+    t.rect(x0, 5, 6, 6, C.skyLight);
+    t.rect(x0, 5, 6, 2, C.sky);
+    t.px(x0 + 1, 9, C.white);
+    t.px(x0 + 2, 8, C.white);
+    t.px(x0 + 4, 9, C.skyPale);
+    t.px(x0 + 5, 8, C.skyPale);
+  }
+  t.rect(7, 5, 1, 6, C.teal);
+  t.rect(8, 5, 1, 6, C.tealDark);
+  t.rect(0, 5, 1, 6, C.teal);
+  t.rect(15, 5, 1, 6, C.tealDark);
+  if (ground) {
+    t.rect(0, 13, 16, 3, "#b9bdc8");
+    t.rect(0, 13, 16, 1, "#dfe2ea");
+    t.rect(0, 15, 16, 1, "#8e93a2");
+    speck(t, 71, 0.06, "#a9aebb", 0, 14, 16, 1);
+  } else {
+    t.rect(0, 13, 16, 1, C.creamLight);
+    t.rect(0, 14, 16, 1, C.creamDark);
+    t.rect(0, 15, 16, 1, C.creamShade);
+  }
+}
+/** Sàn ban công giữa các tầng: mép sàn kem, lan can xanh ngọc. */
+function facadeSlab(t: Img): void {
+  wallBg(t);
+  t.rect(0, 0, 16, 2, C.creamShade);
+  t.rect(0, 2, 16, 1, C.creamLight);
+  t.rect(0, 3, 16, 1, C.cream);
+  t.rect(0, 4, 16, 1, C.tealLight);
+  t.rect(0, 5, 16, 1, C.teal);
+  t.rect(0, 6, 16, 1, C.tealDeep);
+  for (let x = 1; x < 16; x += 4) {
+    t.rect(x, 7, 1, 6, C.teal);
+    t.rect(x + 1, 7, 1, 6, C.tealDark);
+  }
+  t.rect(0, 13, 16, 1, C.teal);
+  t.rect(0, 14, 16, 1, C.tealDeep);
+  t.rect(0, 15, 16, 1, C.creamDark);
+}
+function yardBg(t: Img): void {
+  t.rect(0, 0, 16, 16, "#d9d0b9");
+  t.rect(15, 0, 1, 16, "#c8bea4");
+  t.rect(0, 15, 16, 1, "#c8bea4");
+  speck(t, 61, 0.05, "#cfc5ab", 0, 0, 15, 15);
+  speck(t, 62, 0.03, "#e6dec9", 0, 0, 15, 15);
+}
+/** Ô sân có vạch sơn trắng mảnh (1px): l/r/u/d = vạch đi tới cạnh trái/phải/trên/dưới ô. */
+function yardLine(t: Img, l: boolean, r: boolean, u: boolean, d: boolean): void {
+  yardBg(t);
+  const w = "#f3f0e2";
+  t.px(7, 7, w);
+  t.px(8, 7, w);
+  t.px(7, 8, w);
+  if (l) t.rect(0, 7, 8, 1, w);
+  if (r) t.rect(8, 7, 8, 1, w);
+  if (u) t.rect(7, 0, 1, 8, w);
+  if (d) t.rect(7, 8, 1, 8, w);
+}
+/** Bậc thang có tay vịn xanh ngọc ở một bên. */
+function stairsRail(t: Img, left: boolean): void {
+  for (let i = 0; i < 4; i++) {
+    t.rect(0, i * 4, 16, 1, C.floorLight);
+    t.rect(0, i * 4 + 1, 16, 2, C.floor);
+    t.rect(0, i * 4 + 3, 16, 1, C.floorDark);
+  }
+  const x = left ? 0 : 13;
+  t.rect(x, 0, 3, 16, C.teal);
+  t.rect(left ? x : x + 2, 0, 1, 16, C.tealLight);
+  t.rect(left ? x + 2 : x, 0, 1, 16, C.tealDark);
+  t.rect(left ? 3 : 12, 0, 1, 16, C.floorShade);
+}
+
+/** Sảnh chính nhà chính (sân chính): 128×96, đặt ở px (176, 0) trên bản đồ, nền trong suốt để dải cửa sổ hai bên lộ ra. */
+function hallSprite(): Img {
+  const g = new Img(128, 96);
+  // khối giữa
+  g.rect(16, 22, 96, 74, C.cream);
+  for (let y = 22; y < 96; y++)
+    for (let x = 16; x < 112; x++) {
+      const h = hash(x, y, 81);
+      if (h > 0.975) g.px(x, y, C.creamShade);
+      else if (h < 0.02) g.px(x, y, C.creamLight);
+    }
+  // mái đua
+  g.rect(14, 16, 100, 1, "#fff6dc");
+  g.rect(14, 17, 100, 2, C.creamLight);
+  g.rect(14, 19, 100, 1, C.cream);
+  g.rect(14, 20, 100, 1, C.creamDark);
+  g.rect(14, 21, 100, 1, C.creamDeep);
+  g.rect(16, 22, 96, 2, C.creamShade);
+
+  // cờ đỏ sao vàng trên đỉnh
+  g.rect(64, 0, 1, 16, C.grayDark);
+  g.px(64, 0, C.yellow);
+  for (let x = 0; x < 16; x++) {
+    const wave = Math.round(Math.sin(x * 0.55) * 0.9);
+    const tone = Math.sin(x * 0.55 + 0.9);
+    for (let y = 0; y < 10; y++) g.px(65 + x, 2 + y + wave, tone > 0.3 ? C.redLight : tone < -0.4 ? C.redDark : C.red);
+  }
+  const star = [[0, -3], [0, -2], [-1, -1], [0, -1], [1, -1], [-2, -1], [2, -1], [-1, 0], [0, 0], [1, 0], [-1, 1], [1, 1]];
+  for (const [dx, dy] of star) g.px(73 + dx, 7 + dy + Math.round(Math.sin(8 * 0.55) * 0.9), C.yellow);
+
+  // biển xanh "RÈN ĐỨC – LUYỆN TÀI"
+  const SX = 16;
+  const SY = 24;
+  const SW = 96;
+  const SH = 18;
+  g.rect(SX, SY, SW, SH, "#2a58b5");
+  g.rect(SX + 1, SY + 1, SW - 2, 1, "#4d7fd6");
+  g.rect(SX + 1, SY + SH - 2, SW - 2, 1, "#1b3d87");
+  g.box(SX, SY, SW, SH, "#e9f1ff");
+  const motto: [string, string][] = [
+    ["R", ""], ["E", "`"], ["N", ""], [" ", ""], ["D", "="], ["U", "'"], ["C", ""], [" ", ""], ["-", ""], [" ", ""],
+    ["L", ""], ["U", ""], ["Y", ""], ["E", "^."], ["N", ""], [" ", ""], ["T", ""], ["A", "`"], ["I", ""],
+  ];
+  const tx = SX + Math.round((SW - (motto.length * 4 - 1)) / 2);
+  plateText(g, motto, tx + 1, SY + 6, "#13306e");
+  plateText(g, motto, tx, SY + 5, "#f8dc4a");
+
+  // phào dưới biển
+  g.rect(14, 42, 100, 1, "#fff6dc");
+  g.rect(14, 43, 100, 3, C.cream);
+  g.rect(14, 46, 100, 1, C.creamDark);
+  g.rect(14, 47, 100, 1, C.creamDeep);
+
+  // cửa sổ hai bên lối vào (hai tầng)
+  const win = (x: number, y: number) => {
+    g.rect(x, y, 8, 11, C.tealDark);
+    g.rect(x, y, 8, 1, C.teal);
+    g.rect(x + 1, y + 1, 6, 9, C.skyLight);
+    g.rect(x + 1, y + 1, 6, 3, C.sky);
+    g.rect(x + 1, y + 5, 6, 1, C.teal);
+    g.px(x + 2, y + 8, C.white);
+    g.px(x + 3, y + 7, C.white);
+    g.rect(x - 1, y + 11, 10, 1, C.creamLight);
+    g.rect(x - 1, y + 12, 10, 1, C.creamDark);
+  };
+  for (const x of [28, 92]) {
+    win(x, 54);
+    win(x, 72);
+  }
+
+  // lối vào: nền đỏ, vòng huy hiệu, cửa xanh ngọc
+  g.rect(48, 51, 32, 45, "#c6402b");
+  g.rect(48, 51, 32, 1, "#e8704a");
+  g.rect(48, 51, 1, 45, "#e8704a");
+  g.rect(79, 51, 1, 45, "#8a2a1c");
+  for (let x = 51; x < 77; x += 3) g.rect(x, 55, 2, 1, "#f1c24a"); // dải hoa văn vàng
+  g.rect(51, 57, 26, 1, "#8a2a1c");
+  g.disc(64, 63, 4.2, "#f1c24a");
+  g.disc(64, 63, 3, "#c6402b");
+  g.disc(64, 63, 1.6, "#f1c24a");
+  const leaf = (x0: number) => {
+    g.rect(x0, 70, 12, 26, C.teal);
+    g.rect(x0, 70, 12, 1, C.tealLight);
+    g.rect(x0, 70, 1, 26, C.tealLight);
+    g.rect(x0 + 11, 70, 1, 26, C.tealDark);
+    g.rect(x0 + 2, 73, 8, 11, C.skyLight);
+    g.rect(x0 + 2, 73, 8, 3, C.sky);
+    g.rect(x0 + 2, 73, 8, 1, C.tealDeep);
+    g.px(x0 + 3, 80, C.white);
+    g.px(x0 + 4, 79, C.white);
+    g.rect(x0 + 2, 86, 8, 7, C.tealDark);
+    g.rect(x0 + 2, 86, 8, 1, C.tealLight);
+  };
+  leaf(52);
+  leaf(64);
+  g.rect(63, 70, 2, 26, C.tealDeep);
+  g.px(62, 84, C.yellow);
+  g.px(65, 84, C.yellow);
+
+  // cột gạch xanh nhạt: hai cột góc và hai cột cạnh lối vào
+  for (const x of [16, 102]) brickPillar(g, x, 50, 96, 10, true);
+  for (const x of [38, 80]) brickPillar(g, x, 50, 96, 10, true);
+
+  g.outline(C.ink, 0.6);
+  return g;
+}
+
+/** Biển tên lớp 24×11 (biển xanh chữ vàng như biển cổng). */
+function plateSprite(name: string): Img {
+  const p = new Img(24, 11);
+  p.rect(1, 1, 22, 9, "#2a58b5");
+  p.rect(2, 2, 20, 1, "#4d7fd6");
+  p.rect(2, 8, 20, 1, "#1b3d87");
+  p.box(1, 1, 22, 9, "#e9f1ff");
+  const tx = 1 + Math.round((22 - (name.length * 4 - 1)) / 2);
+  plateText(p, textOf(name), tx + 1, 4, "#13306e");
+  plateText(p, textOf(name), tx, 3, "#f8dc4a");
+  p.outline(C.ink, 0.6);
+  return p;
+}
+
 const TILE_DRAWERS: [string, Draw][] = [
   ["empty", () => {}],
   ["wall_cream", wallBg],
@@ -1135,7 +1410,44 @@ const TILE_DRAWERS: [string, Draw][] = [
     t.rect(0, 15, 16, 1, "#5a3320");
     t.rect(0, 3, 1, 13, "#6a3f26");
     t.rect(15, 3, 1, 13, "#6a3f26");
+  }],  // ---- sân chính và hành lang theo phong cách cổng trường (thêm 2026-10-10; thêm ở cuối để giữ chỉ số các tile cũ) ----
+  ["facade_roof", (t) => {
+    // mái đua nhà chính: nền xám phía sau (như cổng) và gờ đua kem
+    t.rect(0, 0, 16, 16, "#878a92");
+    speck(t, 31, 0.03, "#7d8089", 0, 0, 16, 8);
+    speck(t, 32, 0.02, "#92959d", 0, 0, 16, 8);
+    t.rect(0, 8, 16, 1, "#fff6dc");
+    t.rect(0, 9, 16, 2, C.creamLight);
+    t.rect(0, 11, 16, 2, C.cream);
+    t.rect(0, 13, 16, 1, C.creamShade);
+    t.rect(0, 14, 16, 1, C.creamDark);
+    t.rect(0, 15, 16, 1, C.creamDeep);
   }],
+  ["facade_window", (t) => facadeWindow(t, false)],
+  ["facade_window_ground", (t) => facadeWindow(t, true)],
+  ["facade_slab", facadeSlab],
+  ["pillar_brick", (t) => {
+    t.rect(0, 0, 16, 16, null);
+    brickPillar(t, 2, 0, 16, 12, false);
+    t.rect(1, 0, 1, 16, mix(C.skyPale, C.ink, 0.55));
+    t.rect(14, 0, 1, 16, mix(C.skyDeep, C.ink, 0.6));
+  }],
+  ["pillar_brick_top", (t) => {
+    t.rect(0, 0, 16, 16, null);
+    brickPillar(t, 2, 4, 16, 12, true);
+    t.rect(1, 4, 1, 12, mix(C.skyPale, C.ink, 0.55));
+    t.rect(14, 4, 1, 12, mix(C.skyDeep, C.ink, 0.6));
+    t.outline(C.ink, 0.6);
+  }],
+  ["yard_concrete", yardBg],
+  ["yard_line_h", (t) => yardLine(t, true, true, false, false)],
+  ["yard_line_v", (t) => yardLine(t, false, false, true, true)],
+  ["yard_line_tl", (t) => yardLine(t, false, true, false, true)],
+  ["yard_line_tr", (t) => yardLine(t, true, false, false, true)],
+  ["yard_line_bl", (t) => yardLine(t, false, true, true, false)],
+  ["yard_line_br", (t) => yardLine(t, true, false, true, false)],
+  ["stairs_rail_l", (t) => stairsRail(t, true)],
+  ["stairs_rail_r", (t) => stairsRail(t, false)],
 ];
 
 const COLS = 16;
@@ -1702,7 +2014,7 @@ function bikeSprite(): Img {
 
 // ---------- Atlas ----------
 const frames: Record<string, { x: number; y: number; w: number; h: number }> = {};
-const atlas = new Img(320, 192);
+const atlas = new Img(320, 288);
 function put(name: string, img: Img, x: number, y: number): void {
   atlas.blit(img, x, y);
   frames[name] = { x, y, w: img.w, h: img.h };
@@ -1738,6 +2050,10 @@ put("gate_main", gateSprite(), 0, 96);
 const TREE = bigTree();
 put("tree_big", TREE, 176, 96);
 put("tree_big_r", TREE.flipX(), 224, 96);
+// Sân chính và hành lang (2026-10-10): sảnh chính 128×96 và biển tên lớp 24×11 (mỗi lớp một khung).
+put("hall_main", hallSprite(), 0, 192);
+const CLASS_PLATES = ["12A1", "12A2", "12A3", "11B1", "11B2", "11B3", "11B4", "11B5", "11B6", "10C1", "10C2", "10C3", "10C4", "10C5", "10C6", "10C7", "10C8", "10C9"];
+CLASS_PLATES.forEach((c, i) => put(`plate_${c.toLowerCase()}`, plateSprite(c), 136 + (i % 7) * 24, 192 + Math.floor(i / 7) * 12));
 
 // ---------- Ghi file ----------
 mkdirSync("public/assets", { recursive: true });

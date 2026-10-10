@@ -35,8 +35,8 @@
 
 ## Ánh xạ khu vực MVP (người dùng đã duyệt 2026-09-30, cập nhật: 6 khu vực)
 1. Cổng trường và hàng quán (ref-01, 03)
-2. Sân chính (ref-09, 06)
-3. Hành lang lớp 12, dãy phía bắc, 3 tầng (ref-05, 10)
+2. Sân chính (ref-09, 06; từ 2026-10-10 vẽ theo cùng phong cách cổng ref-01: sảnh chính có biển "RÈN ĐỨC – LUYỆN TÀI" và cờ, hai cây lớn trong bồn gạch, lối gạch nâu giữa sân, tường rào khung tranh đỏ)
+3. Hành lang lớp 12, dãy phía bắc, 3 tầng (ref-05, 10; có biển tên lớp xanh chữ vàng trên mỗi cửa lớp, cầu thang có chiếu nghỉ, sân dưới có cây lớn trong bồn gạch)
 4. Hành lang lớp 10, dãy phía nam, 3 tầng (thêm 2026-09-30)
 5. Sân thể chất (ref-07, 08)
 6. Sân thượng hoặc dãy phòng cũ bị khóa (dùng cho phiên ban đêm)
