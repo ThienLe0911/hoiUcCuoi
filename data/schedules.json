@@ -815,8 +815,8 @@
       "day": 1,
       "period": 0,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -824,8 +824,8 @@
       "day": 1,
       "period": 1,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -833,8 +833,8 @@
       "day": 2,
       "period": 0,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -842,8 +842,8 @@
       "day": 2,
       "period": 1,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -851,8 +851,8 @@
       "day": 3,
       "period": 0,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -860,8 +860,8 @@
       "day": 3,
       "period": 1,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -869,8 +869,8 @@
       "day": 4,
       "period": 0,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -878,8 +878,8 @@
       "day": 4,
       "period": 1,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -887,8 +887,8 @@
       "day": 5,
       "period": 0,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -896,8 +896,8 @@
       "day": 5,
       "period": 1,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -905,8 +905,8 @@
       "day": 6,
       "period": 0,
       "area": "cong-truong",
-      "x": 16,
-      "y": 7,
+      "x": 13,
+      "y": 6,
       "facing": "down"
     },
     {
@@ -914,26 +914,26 @@
       "day": 6,
       "period": 1,
       "area": "cong-truong",
-      "x": 16,
+      "x": 13,
+      "y": 6,
+      "facing": "down"
+    },
+    {
+      "npc": "co-ban-kem",
+      "day": 1,
+      "period": 0,
+      "area": "cong-truong",
+      "x": 3,
       "y": 7,
       "facing": "down"
     },
     {
       "npc": "co-ban-kem",
       "day": 1,
-      "period": 0,
-      "area": "cong-truong",
-      "x": 21,
-      "y": 5,
-      "facing": "down"
-    },
-    {
-      "npc": "co-ban-kem",
-      "day": 1,
       "period": 2,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -941,8 +941,8 @@
       "day": 2,
       "period": 0,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -950,8 +950,8 @@
       "day": 2,
       "period": 2,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -959,8 +959,8 @@
       "day": 3,
       "period": 0,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -968,8 +968,8 @@
       "day": 3,
       "period": 2,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -977,8 +977,8 @@
       "day": 4,
       "period": 0,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -986,8 +986,8 @@
       "day": 4,
       "period": 2,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -995,8 +995,8 @@
       "day": 5,
       "period": 0,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1004,8 +1004,8 @@
       "day": 5,
       "period": 2,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1013,8 +1013,8 @@
       "day": 6,
       "period": 0,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1022,8 +1022,8 @@
       "day": 6,
       "period": 2,
       "area": "cong-truong",
-      "x": 21,
-      "y": 5,
+      "x": 3,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1032,7 +1032,7 @@
       "period": 0,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1041,7 +1041,7 @@
       "period": 3,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1050,7 +1050,7 @@
       "period": 0,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1059,7 +1059,7 @@
       "period": 3,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1068,7 +1068,7 @@
       "period": 0,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1077,7 +1077,7 @@
       "period": 3,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1086,7 +1086,7 @@
       "period": 0,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1095,7 +1095,7 @@
       "period": 3,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1104,7 +1104,7 @@
       "period": 0,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1113,7 +1113,7 @@
       "period": 3,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1122,7 +1122,7 @@
       "period": 0,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1131,7 +1131,7 @@
       "period": 3,
       "area": "cong-truong",
       "x": 26,
-      "y": 5,
+      "y": 7,
       "facing": "down"
     },
     {
@@ -1139,8 +1139,8 @@
       "day": 1,
       "period": 3,
       "area": "cong-truong",
-      "x": 6,
-      "y": 5,
+      "x": 4,
+      "y": 9,
       "facing": "down"
     },
     {
@@ -1148,8 +1148,8 @@
       "day": 2,
       "period": 3,
       "area": "cong-truong",
-      "x": 6,
-      "y": 5,
+      "x": 4,
+      "y": 9,
       "facing": "down"
     },
     {
@@ -1157,8 +1157,8 @@
       "day": 3,
       "period": 3,
       "area": "cong-truong",
-      "x": 6,
-      "y": 5,
+      "x": 4,
+      "y": 9,
       "facing": "down"
     },
     {
@@ -1166,8 +1166,8 @@
       "day": 4,
       "period": 3,
       "area": "cong-truong",
-      "x": 6,
-      "y": 5,
+      "x": 4,
+      "y": 9,
       "facing": "down"
     },
     {
@@ -1175,8 +1175,8 @@
       "day": 5,
       "period": 3,
       "area": "cong-truong",
-      "x": 6,
-      "y": 5,
+      "x": 4,
+      "y": 9,
       "facing": "down"
     },
     {
@@ -1184,8 +1184,8 @@
       "day": 6,
       "period": 3,
       "area": "cong-truong",
-      "x": 6,
-      "y": 5,
+      "x": 4,
+      "y": 9,
       "facing": "down"
     },
     {

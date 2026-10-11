@@ -8,11 +8,11 @@
       "spawns": {
         "default": {
           "x": 16,
-          "y": 8
+          "y": 7
         },
         "from-san-chinh": {
           "x": 16,
-          "y": 5
+          "y": 6
         }
       },
       "exits": [

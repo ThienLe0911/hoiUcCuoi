@@ -36,7 +36,7 @@ Bản thử nghiệm 30–45 phút cần chứng minh phần khám phá và khô
 
 ### FR3. Bản đồ và khu vực
 - FR3.1 6 khu vực MVP, mỗi khu là một tilemap Tiled (`.tmj`, tile 16×16):
-  1. `cong-truong` — cổng trường, xe buýt 67, xe kem, xe cháo lòng
+  1. `cong-truong` — cổng trường **theo ảnh pixel mẫu ref-01 của người dùng** (xem "Thay đổi 2026-10-08" cuối tệp): mặt tiền tường trắng có lưới xanh và khung đỏ, cổng lớn mái vòm cong biển "TRẦN PHÚ", hai cây lớn trong bồn gạch, xe buýt 67, xe kem, xe cháo lòng
   2. `san-chinh` — sân giữa, cây cổ thụ, lối vào nhà chính, khẩu hiệu "RÈN ĐỨC – LUYỆN TÀI"
   3. `hanh-lang-lop-12` — dãy hành lang 3 tầng phía bắc, mỗi tầng 3 lớp (tầng 1 trệt: lớp 12; tầng 2: 11B1–11B3; tầng 3: 11B4–11B6), xem FR3.8
   4. `hanh-lang-lop-10` — dãy hành lang 3 tầng phía nam, mỗi tầng 3 lớp, tổng cộng 10C1–10C9 (tầng 1: 10C1–10C3; tầng 2: 10C4–10C6; tầng 3: 10C7–10C9), xem FR3.8
@@ -73,6 +73,7 @@ Bản thử nghiệm 30–45 phút cần chứng minh phần khám phá và khô
 
 ### FR6. Bộ asset khởi đầu (tự tạo)
 - FR6.1 Bộ tile 16×16 tự tạo (không dùng lại ảnh gốc của TP Media hay ảnh chụp): tường kem, cột xanh da trời, lan can xanh ngọc, sàn hành lang, gạch sân, gạch tường thấp có họa tiết thoi xanh, cây, bonsai, cổng sắt xanh, ghế, bàn, sân xanh dương, rổ bóng rổ, cửa, cỏ, đường nhựa và vạch kẻ.
+- FR6.1b (bổ sung 2026-10-08, cổng trường theo ref-01) Tile/sprite tự vẽ thêm: nền xám phía sau, tường gạch men trắng, lưới xanh, khung tranh đỏ có thoi xanh, bồn cây gạch, **sprite cổng chính** (mái vòm cong, biển xanh "TRẦN PHÚ", cột gạch xanh, song sắt, cánh cổng xanh nhiều ô kính) và **sprite cây lớn**. Chỉ tham khảo bố cục/màu từ ảnh mẫu, **không dùng lại ảnh**; chữ trên biển và mọi chi tiết do script sinh.
 - FR6.2 Sprite nhân vật chính (học sinh áo trắng), sprite xe buýt 67, xe kem, xe cháo lòng, 1–2 sprite học sinh nền (đứng yên) để bản đồ không trống.
 - FR6.3 Bảng màu theo docs/product/art-reference.md; mỗi asset dễ thay thế bằng bản vẽ tay sau này mà không đổi code (đặt tên và tọa độ atlas ổn định).
 - FR6.4 Phương thức tạo (script sinh hay vẽ tay) do đề xuất tại tasks.md; kết quả cuối phải là file PNG atlas + `.tmj`.
@@ -144,3 +145,37 @@ Người dùng yêu cầu chỉnh bố cục trường cho sát thực tế, đ�
 - Hành lang lớp 12 có 3 tầng: tầng trệt là lớp 12, hai tầng trên là lớp 11; là một khu vực có 3 dải hành lang xếp chồng nối bằng cầu thang.
 
 Thay đổi tiếp (cùng ngày): tầng 2 lớp 11B1–11B3, tầng 3 lớp 11B4–11B6. Hai cầu thang phía nam sân chính **không** vào hành lang lớp 12 mà vào **khu vực mới "hành lang lớp 10"** (khu lầu phía nam, 3 lầu, mỗi lầu 3 lớp, từ 10C1 đến 10C9). **Phạm vi MVP tăng từ 5 lên 6 khu vực** theo quyết định của người dùng.
+
+## Thay đổi 2026-10-08 — thiết kế lại cổng trường theo ảnh mẫu ref-01
+Người dùng thấy cổng trường chưa giống trường cũ và gửi lại ảnh pixel mẫu (cùng ảnh `ref-01`). Bản trước dựng theo ảnh thật ref-03 (mái vòm trắng, biển nâu) nên lệch. Đã cập nhật FR3.1(1), FR6.1b:
+- **Bố cục `cong-truong` (32×11 ô, cao đúng một màn hình để thấy trọn mặt tiền; giữ nguyên 6 khu vực và đồ thị nối):** nền xám phía sau (hàng 0–1) → tường gạch men trắng (hàng 2) → lưới xanh (hàng 3–4) → dải khung tranh đỏ có thoi xanh (hàng 5); **cổng chính ở giữa** (ô 11–20, tâm giữa ô 15 và 16, hàng 0–5) gồm mái vòm cong, biển xanh "TRẦN PHÚ", bốn cột gạch xanh, song sắt, cánh cổng xanh nhiều ô kính; **hai cây lớn trong bồn gạch** (ô 8–10 và 21–23, hàng 6); vỉa hè gạch nâu hai bên (hàng 6–7) và lối xe nhựa ở giữa trước cổng; hàng 8 là bó vỉa, hàng 9 là đường (xe buýt 67, xe máy, vạch qua đường), hàng 10 là hàng bụi cây; xe kem ở rìa trái, xe cháo lòng ở rìa phải.
+- **Lối vào sân chính** là **ô (15–16, 5)** (chân cánh cổng); điểm xuất hiện `from-san-chinh` là (16, 6), mặc định là (16, 7).
+- Phần còn lại của mặt tiền là **tường cản** (không đi được); chỉ vỉa hè, lối xe và đường đi được.
+- Vị trí các NPC/đối tượng nằm ở khu này được cập nhật theo bố cục mới (lịch NPC cổng trường, băng ghế, điểm tương tác, học sinh nền); không đổi quy tắc nào ở BR1–BR5.
+- Không thay đổi: kiến trúc, quy ước dữ liệu, luồng thời gian, các khu vực khác.
+
+## Thay đổi 2026-10-10 — đồng bộ sân chính và hành lang với phong cách cổng trường
+Người dùng yêu cầu làm lại **sân chính** và **hai dãy hành lang** cho hợp với cổng trường mới (ảnh mẫu `ref-01`; ảnh thật `ref-09`, `ref-06`, `ref-05`, `ref-10` chỉ tham khảo bố cục và màu).
+
+**Nguyên tắc (để không ảnh hưởng dữ liệu đã có):** giữ nguyên kích thước bản đồ (sân chính 30×22, hành lang 30×26), vùng đi được, mọi `exit`, `spawn`, vùng `interact` và toạ độ NPC/lịch trong `data/`. Chỉ đổi đồ họa và thêm vật trang trí **ở ô không phải điểm xuất hiện, lối đi, vị trí NPC**. Không đổi kiến trúc, quy ước dữ liệu, luồng thời gian hay đồ thị nối (FR3.6).
+
+**Sân chính (`san-chinh`):**
+1. Nhà chính phía bắc: **sảnh giữa** là một sprite lớn (ô 11–18, hàng 0–5) có biển xanh chữ vàng "RÈN ĐỨC – LUYỆN TÀI" cùng kiểu biển "TRẦN PHÚ", cờ đỏ sao vàng trên đỉnh, hai cột gạch xanh nhạt như cột cổng, mảng đỏ phía sau tượng và cửa xanh ngọc; hai cánh nhà ba tầng là tường kem có dải cửa sổ xanh ngọc và cột xanh.
+2. Chân nhà (hàng 6) là gạch nâu như vỉa hè cổng, có **bốn cây lớn trong bồn gạch** (cùng kiểu hai cây ở cổng) xen chậu bonsai.
+3. Mặt sân: **lối gạch nâu** ở giữa nối cổng phía nam với sảnh; phần còn lại là sân bê tông tông ấm có vạch kẻ trắng. Giữ tượng, băng ghế, học sinh nền.
+4. Tường rào đông/tây dùng **dải khung tranh đỏ có thoi xanh** như dải ở cổng; phía nam là tường gạch men trắng, lưới xanh và hai cột gạch ở cổng chính (nối liền với cổng trường), dãy lầu lớp 10 theo cùng kiểu mặt tiền.
+
+**Hai dãy hành lang (`hanh-lang-lop-12`, `hanh-lang-lop-10`):**
+1. Mặt tiền mỗi tầng: tường kem, cửa sổ xanh ngọc, cửa lớp xanh ngọc, **biển tên lớp** (tấm biển xanh chữ vàng như biển cổng) phía trên mỗi cửa — đủ **18 lớp, mỗi dãy 9 lớp** (dãy bắc: 12A1–12A3, 11B1–11B6; dãy nam: 10C1–10C9).
+2. Lan can xanh ngọc, cột xanh, ống cứu hỏa đỏ giữ nguyên ý (ref-05).
+3. Hai đầu cầu thang có **chiếu nghỉ** ở mỗi tầng và tay vịn, thay cho dải bậc thang liền một khối.
+4. Khoảng sân nhìn từ tầng trệt (phía dưới): gạch nâu, **cây lớn trong bồn gạch** và hàng bụi như cổng trường.
+
+**FR6.1c (bổ sung):** tile/sprite tự vẽ thêm cho các khu trên: dải cửa sổ ba tầng, sàn sân bê tông có vạch, sprite sảnh chính, biển tên lớp. Cùng nguyên tắc FR6.1b (tự vẽ, không dùng lại ảnh mẫu); thêm vào **cuối** `tileset.json` để giữ chỉ số các tile cũ.
+
+**Tiêu chí chấp nhận của thay đổi này:**
+- AC-K1: toàn bộ test hiện có vẫn xanh (đặc biệt `tests/maps.test.ts`, `tests/schedule.test.ts`, `tests/npc-flow.test.ts`) — chứng tỏ vùng đi được, exit, spawn và vị trí NPC không đổi.
+- AC-K2: ảnh xem trước các khu vực được sinh lại (`docs/features/khung-game-va-ban-do/previews/`) và người dùng xem duyệt.
+- AC-K3: chạy trong trình duyệt, đi từ cổng trường vào sân chính, vào hành lang lớp 12 và lớp 10: không lỗi console, không vật cản vô hình/kẹt.
+- AC-K4: `npm run build` ≤ 5 MB.
+- Ngoài phạm vi: `san-the-chat`, `san-thuong` (giữ nguyên); vị trí NPC lớp 12 trên dải hành lang trên cùng (nợ cũ của feature NPC, xử lý riêng).
