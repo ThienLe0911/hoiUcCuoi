@@ -1,0 +1,57 @@
+{
+  "id": "kiet-mo-dau",
+  "nodes": [
+    {
+      "id": "chao",
+      "speaker": "kiet",
+      "lines": ["Ê Thiện! Mày làm gì đứng ngẩn ra đấy?", "Lát ra chơi làm ván gì không?"],
+      "next": "cam-giac"
+    },
+    {
+      "id": "cam-giac",
+      "speaker": "narration",
+      "lines": ["Giọng Kiệt vẫn y như ngày xưa. Lâu lắm rồi mình mới được nghe lại."],
+      "next": "chon"
+    },
+    {
+      "id": "chon",
+      "speaker": "narration",
+      "lines": ["Mình nên đáp lại thế nào?"],
+      "choices": [
+        { "label": "Đùa lại như ngày xưa", "effects": { "setFlags": { "ngay1.dua-lai-kiet": true } }, "goto": "dua-lai" },
+        { "label": "Hỏi: hôm nay thứ mấy?", "effects": { "setFlags": { "ngay1.hoi-thu": true } }, "goto": "hoi-thu" },
+        { "label": "Nhắc chuyện ngày bế giảng", "effects": { "setFlags": { "ngay1.nhac-be-giang": true } }, "goto": "ne-tranh" }
+      ]
+    },
+    {
+      "id": "dua-lai",
+      "speaker": "kiet",
+      "lines": ["Haha, đúng chất rồi! Ra chơi nhớ xuống sân thể chất nhé."],
+      "next": "end"
+    },
+    {
+      "id": "hoi-thu",
+      "speaker": "kiet",
+      "lines": ["Thứ Hai chứ thứ mấy! Mày ngủ gật hả?"],
+      "next": "hoi-thu-2"
+    },
+    {
+      "id": "hoi-thu-2",
+      "speaker": "narration",
+      "lines": ["Thứ Hai... tuần cuối cùng của năm lớp 12."],
+      "next": "end"
+    },
+    {
+      "id": "ne-tranh",
+      "speaker": "kiet",
+      "lines": ["...", "Chuyện cũ nhắc làm gì. Thôi vào lớp đi."],
+      "next": "ne-tranh-2"
+    },
+    {
+      "id": "ne-tranh-2",
+      "speaker": "narration",
+      "lines": ["Kiệt vẫn cười, nhưng mắt cậu ấy né sang chỗ khác."],
+      "next": "end"
+    }
+  ]
+}

@@ -4,13 +4,14 @@ import areasJson from "../../data/areas.json";
 import npcsJson from "../../data/npcs.json";
 import weatherJson from "../../data/weather.json";
 import schedulesJson from "../../data/schedules.json";
-import { validateAreas, validateNpcs, validateWeather, validateSchedules } from "./loader";
-import type { AreaDef, NpcDef, ScheduleEntry, WeatherFile } from "./schema";
+import { validateAreas, validateNpcs, validateWeather, validateSchedules, validateDialogues, checkNpcDialogueRefs } from "./loader";
+import type { AreaDef, Dialogue, NpcDef, ScheduleEntry, WeatherFile } from "./schema";
 import { collisionGrid } from "../core/mapgrid";
 import { PERIODS_PER_DAY } from "../core/time";
 import { TOTAL_DAYS } from "../config";
 
 const rawMaps = import.meta.glob("../../data/maps/*.tmj", { query: "?raw", import: "default", eager: true }) as Record<string, string>;
+const rawDialogues = import.meta.glob("../../data/dialogues/*.json", { import: "default", eager: true }) as Record<string, unknown>;
 
 export interface Content {
   areas: Map<string, AreaDef>;
@@ -19,6 +20,8 @@ export interface Content {
   npcs: Map<string, NpcDef>;
   weather: WeatherFile["weather"];
   schedules: ScheduleEntry[];
+  /** Cây thoại theo id (data/dialogues). NPC trỏ tới bằng `NpcDef.dialogue`. */
+  dialogues: Map<string, Dialogue>;
 }
 
 /** Ném lỗi tiếng Việt chỉ rõ chỗ sai nếu dữ liệu không hợp lệ. */
@@ -38,6 +41,14 @@ export function loadContent(): Content {
   const npcsData = validateNpcs(npcsJson);
   const npcs = new Map(npcsData.npcs.map((n) => [n.id, n]));
   const weatherData = validateWeather(weatherJson, { maxDay: TOTAL_DAYS });
+
+  // Hội thoại: kiểm liên kết (goto/speaker...) rồi kiểm mỗi NPC có `dialogue` trỏ tới cây thật.
+  const dialogueTrees = validateDialogues(
+    Object.entries(rawDialogues).map(([path, raw]) => ({ source: "data/dialogues/" + path.split("/").pop(), raw })),
+    { npcExists: (id) => npcs.has(id) },
+  );
+  const dialogues = new Map(dialogueTrees.map((t) => [t.id, t]));
+  checkNpcDialogueRefs(npcsData.npcs, new Set(dialogues.keys()));
 
   // cellBlocked dựng từ lớp collision của bản đồ mỗi khu vực (để kiểm tra vị trí lịch).
   const gridCache = new Map<string, (x: number, y: number) => boolean>();
@@ -76,5 +87,5 @@ export function loadContent(): Content {
   const badPeriod = schedulesData.schedules.find((e) => e.period >= PERIODS_PER_DAY);
   if (badPeriod) throw new Error(`Lịch NPC: period ${badPeriod.period} vượt số khoảng/ngày (${PERIODS_PER_DAY})`);
 
-  return { areas, maps, npcs, weather: weatherData.weather, schedules: schedulesData.schedules };
+  return { areas, maps, npcs, weather: weatherData.weather, schedules: schedulesData.schedules, dialogues };
 }

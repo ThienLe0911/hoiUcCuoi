@@ -14,7 +14,8 @@
       "kind": "main",
       "frame": "npc_kiet",
       "interactable": true,
-      "line": "Ê Thiện! Lát ra chơi làm ván gì không?"
+      "line": "Ê Thiện! Lát ra chơi làm ván gì không?",
+      "dialogue": "kiet-mo-dau"
     },
     {
       "id": "huy",
@@ -22,7 +23,8 @@
       "kind": "main",
       "frame": "npc_huy",
       "interactable": true,
-      "line": "Nhìn gì? Không có gì đâu mà xem."
+      "line": "Nhìn gì? Không có gì đâu mà xem.",
+      "dialogue": "huy-bi-nghi"
     },
     {
       "id": "ngan-trinh",
@@ -78,7 +80,8 @@
       "kind": "extra",
       "frame": "npc_lao_cong",
       "interactable": true,
-      "line": "Để bác quét cho sạch cái sân này."
+      "line": "Để bác quét cho sạch cái sân này.",
+      "dialogue": "bac-lao-cong-tro-chuyen"
     },
     {
       "id": "hoc-sinh-nen-1",

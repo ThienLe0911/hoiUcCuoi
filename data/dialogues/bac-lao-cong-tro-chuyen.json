@@ -1,0 +1,51 @@
+{
+  "id": "bac-lao-cong-tro-chuyen",
+  "nodes": [
+    {
+      "id": "chao",
+      "speaker": "bac-lao-cong",
+      "lines": ["Cháu còn lảng vảng ở trường giờ này à?", "Bác quét cái sân này mấy chục năm, nhặt được đủ thứ trên đời."],
+      "next": "menu"
+    },
+    {
+      "id": "menu",
+      "speaker": "narration",
+      "lines": ["Mình nên hỏi bác điều gì?"],
+      "choices": [
+        { "label": "Hỏi bác nhặt được những gì", "effects": { "setFlags": { "bac-lao-cong.ke-do-nhat": true } }, "goto": "ke-do" },
+        { "label": "Giúp bác quét sân", "isAction": true, "effects": { "setFlags": { "bac-lao-cong.quet-san-giup": true } }, "goto": "quet-san" },
+        {
+          "label": "Hỏi về mẩu thư bác từng nhặt",
+          "condition": { "flag": "bac-lao-cong.ke-do-nhat" },
+          "effects": { "setFlags": { "bac-lao-cong.hoi-mau-thu": true } },
+          "goto": "mau-thu"
+        },
+        { "label": "Chào bác rồi đi", "goto": "end" }
+      ]
+    },
+    {
+      "id": "ke-do",
+      "speaker": "bac-lao-cong",
+      "lines": ["Cây bút, cuốn vở, cả cái ảnh lớp ai làm rơi...", "Có cả mẩu thư gấp tư, bác cất kỹ đâu đó rồi."],
+      "next": "menu"
+    },
+    {
+      "id": "quet-san",
+      "speaker": "narration",
+      "lines": ["Mình cầm chổi phụ bác một lúc."],
+      "next": "quet-san-2"
+    },
+    {
+      "id": "quet-san-2",
+      "speaker": "bac-lao-cong",
+      "lines": ["Ngoan quá! Lần sau bác kể cháu nghe thêm."],
+      "next": "menu"
+    },
+    {
+      "id": "mau-thu",
+      "speaker": "bac-lao-cong",
+      "lines": ["Thư ấy à? Bác không đọc, chỉ nhớ nét chữ nắn nót lắm.", "Để bác tìm lại, lúc nào rảnh cháu ghé."],
+      "next": "menu"
+    }
+  ]
+}
